@@ -1,11 +1,11 @@
+package org.coli;
+
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Stream;
-
-import static java.util.Arrays.asList;
 
 /**
  * See map here: https://drive.google.com/open?id=11pTt6aFhzUzS0cw5AF7ekdZwZAXFG4pG
@@ -40,7 +40,7 @@ public class Main {
     }
 
     private static void fillPointsData() {
-        try (Stream<String> stream = Files.lines(Paths.get("src/data.txt"), StandardCharsets.UTF_8)) {
+        try (Stream<String> stream = Files.lines(Paths.get("resources/data.txt"), StandardCharsets.UTF_8)) {
             stream.forEach(s -> parseLine(s));
         } catch (IOException e) {
             e.printStackTrace();
@@ -49,7 +49,7 @@ public class Main {
 
     private static Set<String> patternLoader(boolean include) {
         Set<String> patternsSet = new HashSet<>();
-        try (Stream<String> stream = Files.lines(Paths.get("src/patternsTo" + (include ? "Include" : "Avoid") + ".txt"),
+        try (Stream<String> stream = Files.lines(Paths.get("resources/patternsTo" + (include ? "Include" : "Avoid") + ".txt"),
                 StandardCharsets.UTF_8)) {
             stream.forEach(line -> {
                 patternsSet.add(line);
