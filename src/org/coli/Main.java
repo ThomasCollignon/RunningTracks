@@ -17,16 +17,16 @@ public class Main {
     public static void main(String[] args) {
         fillPointsData();
 //        printData();
-        RouteFinder.findRoute(data,
-                10000,
-                new Parameters()
+        RouteFinder.findAndPrintRoute(data,
+                                      6000,
+                                      new Parameters()
 //                        .setExtraDistancePercentage(50)
                         .setExtraDistanceMeters(100)
 //                        .setRepeatPoint(true)
 //                        .setMandatoryPoints(new HashSet<>(asList("Bardane")))
 //                        .setPatternsToAvoid(patternLoader(false))
 //                        .setPatternsToInclude(patternLoader(true))
-        );
+                                     );
     }
 
     private static void printData() {

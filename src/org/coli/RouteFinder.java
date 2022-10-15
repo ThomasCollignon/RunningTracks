@@ -3,6 +3,9 @@ package org.coli;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static java.util.Collections.sort;
+import static org.coli.Constants.ROUTE_SEPARATOR;
+
 class RouteFinder {
 
     private static List<Route> routes = new ArrayList<>();
@@ -12,15 +15,15 @@ class RouteFinder {
      */
     private static Parameters parameters = new Parameters();
 
-    private static void findRoute(Map<String, Point> data, int distance) {
+    private static void findAndPrintRoute(Map<String, Point> data, int distance) {
         search(new Route(data), distance);
-        Collections.sort(routes);
+        sort(routes);
         routes.forEach(r -> System.out.println(r.toString()));
     }
 
-    static void findRoute(Map<String, Point> data, int distance, Parameters providedParameters) {
+    static void findAndPrintRoute(Map<String, Point> data, int distance, Parameters providedParameters) {
         parameters = providedParameters;
-        findRoute(data, distance);
+        findAndPrintRoute(data, distance);
     }
 
     private static void search(Route route, int distance) {
@@ -104,8 +107,6 @@ class RouteFinder {
 
     private static class Route extends ArrayList<Point> implements Comparable<Route> {
 
-        private static final String SEPARATOR = " - ";
-
         private int currentDistance;
 
         Route(Map<String, Point> data) {
@@ -139,9 +140,9 @@ class RouteFinder {
 
         private String toStringPoints() {
             StringBuilder output = new StringBuilder();
-            this.forEach(p -> output.append(p.getLabel() + SEPARATOR));
+            this.forEach(p -> output.append(p.getLabel() + ROUTE_SEPARATOR));
             String outputString = output.toString();
-            return output.toString().substring(0, outputString.length() - SEPARATOR.length());
+            return output.toString().substring(0, outputString.length() - ROUTE_SEPARATOR.length());
         }
 
         @Override

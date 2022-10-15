@@ -3,6 +3,8 @@ package org.coli;
 import java.util.HashSet;
 import java.util.Set;
 
+import static org.coli.Constants.STARTING_POINT;
+
 public class Parameters {
 
     /**
@@ -58,7 +60,7 @@ public class Parameters {
         this.patternsToAvoid = new HashSet<>();
         this.patternsToInclude = new HashSet<>();
         this.reverseTwinDisplayed = false;
-        this.startingPointLabel = "Home";
+        this.startingPointLabel = STARTING_POINT;
     }
 
     Set<String> getPatternsToAvoid() {
