@@ -1,6 +1,11 @@
 package org.coli;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import static java.util.Collections.sort;
@@ -162,10 +167,9 @@ class RouteFinder {
                 availableNextPoints.remove(this.get(this.size() - 2));
             }
             return availableNextPoints.stream()
-                                      .filter(p -> (!this.contains(p) || p.getLabel().equals("Tumuli") || p.getLabel()
-                                                                                                           .equals("Anglée")) ||
-                                              parameters.isRepeatPoint() ||
-                                              p.getLabel().equals(parameters.getStartingPointLabel()))
+                                      .filter(p -> !this.contains(p)
+                                              || parameters.isRepeatPoint()
+                                              || p.getLabel().equals(parameters.getStartingPointLabel()))
                                       .collect(Collectors.toSet());
         }
 
