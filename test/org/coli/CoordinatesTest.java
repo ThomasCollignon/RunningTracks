@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.coli.Constants.STARTING_POINT;
+import static org.coli.Coordinates.toRouteCoordinates;
 
 public class CoordinatesTest {
 
@@ -23,9 +24,8 @@ public class CoordinatesTest {
     }
 
     @Test
-    public void toRouteCoordinatesTest() {
+    public void toRouteCoordinatesStaticTest() {
         final String routeString = "Home - Tumuli - Commune - J - X - De-Frutos - Anglée - Home";
-
         String expected = "";
         expected += "'" + COORD_HOME + "',\n";
         expected += "'" + COORD_TUMULI + "',\n";
@@ -35,6 +35,6 @@ public class CoordinatesTest {
         expected += "'" + COORD_DE_FRUTOS + "',\n";
         expected += "'" + COORD_ANGLEE + "',\n";
         expected += "'" + COORD_HOME + "'";
-        assertThat(coordinates.toRouteCoordinates(routeString)).isEqualTo(expected);
+        assertThat(toRouteCoordinates(routeString)).isEqualTo(expected);
     }
 }

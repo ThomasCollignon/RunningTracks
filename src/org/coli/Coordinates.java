@@ -27,9 +27,10 @@ public class Coordinates extends HashMap<String, String> {
         return this.get(label);
     }
 
-    public String toRouteCoordinates(String route) {
+    public static String toRouteCoordinates(String route) {
+        Coordinates coordinates = new Coordinates();
         return Stream.of(route.split(ROUTE_SEPARATOR))
-                     .map(this::toCoordinates)
+                     .map(coordinates::toCoordinates)
                      .map(coord -> "'" + coord + "'")
                      .collect(joining(",\n"));
     }

@@ -7,6 +7,9 @@ import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Stream;
 
+import static org.coli.Constants.STARTING_POINT;
+import static org.coli.Coordinates.toRouteCoordinates;
+
 /**
  * See map here: https://drive.google.com/open?id=11pTt6aFhzUzS0cw5AF7ekdZwZAXFG4pG
  */
@@ -17,16 +20,23 @@ public class Main {
     public static void main(String[] args) {
         fillPointsData();
 //        printData();
-        RouteFinder.findAndPrintRoute(data,
-                                      6000,
-                                      new Parameters()
+        List<RouteFinder.Route> routes = RouteFinder.findAndPrintRoutes(data,
+                                       6000,
+                                       new Parameters()
 //                        .setExtraDistancePercentage(50)
                         .setExtraDistanceMeters(500)
 //                        .setRepeatPoint(true)
 //                        .setMandatoryPoints(new HashSet<>(asList("Bardane")))
 //                        .setPatternsToAvoid(patternLoader(false))
 //                        .setPatternsToInclude(patternLoader(true))
-                                     );
+                                      );
+
+        // Display the first match as an array
+        System.out.println("");
+        System.out.println("First route is:");
+        String routeString = routes.get(0).toString();
+        String routeString_noPrefix = routeString.substring(routeString.indexOf(STARTING_POINT));
+        System.out.println(toRouteCoordinates(routeString_noPrefix));
     }
 
     private static void printData() {

@@ -20,15 +20,16 @@ class RouteFinder {
      */
     private static Parameters parameters = new Parameters();
 
-    private static void findAndPrintRoute(Map<String, Point> data, int distance) {
+    private static List<Route> findAndPrintRoutes(Map<String, Point> data, int distance) {
         search(new Route(data), distance);
         sort(routes);
         routes.forEach(r -> System.out.println(r.toString()));
+        return routes;
     }
 
-    static void findAndPrintRoute(Map<String, Point> data, int distance, Parameters providedParameters) {
+    static List<Route> findAndPrintRoutes(Map<String, Point> data, int distance, Parameters providedParameters) {
         parameters = providedParameters;
-        findAndPrintRoute(data, distance);
+        return findAndPrintRoutes(data, distance);
     }
 
     private static void search(Route route, int distance) {
@@ -110,7 +111,7 @@ class RouteFinder {
         return 0;
     }
 
-    private static class Route extends ArrayList<Point> implements Comparable<Route> {
+    public static class Route extends ArrayList<Point> implements Comparable<Route> {
 
         private int currentDistance;
 
