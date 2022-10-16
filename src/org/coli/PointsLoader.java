@@ -3,7 +3,6 @@ package org.coli;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Stream;
 
@@ -13,11 +12,12 @@ import static org.coli.Constants.RESOURCES_PATH;
 
 public class PointsLoader {
 
-    private final Map<String, Point> pointsMap = new HashMap<>();
+    private final PointsMap pointsMap = new PointsMap();
 
-    public static Map<String, Point> load(String runZone) {
+    public static PointsMap load(String runZone, String startingPoint) {
         PointsLoader pointsLoader = new PointsLoader();
         pointsLoader.fillPointsData(runZone);
+        pointsLoader.pointsMap.setStartingPointLabel(startingPoint);
         return pointsLoader.pointsMap;
     }
 

@@ -15,9 +15,9 @@ public class TestConstants {
     static Point point_l = new Point("L");
     static Point point_sabliere = new Point("Sablière");
 
-    static Map<String, Point> pointsMap = initPointsMap();
+    static PointsMap pointsMap = initPointsMap();
 
-    private static Map<String, Point> initPointsMap() {
+    private static PointsMap initPointsMap() {
         point_home.getLinkedPoints().put(point_tumuli, 290);
         point_home.getLinkedPoints().put(point_anglee, 600);
         point_tumuli.getLinkedPoints().put(point_home, 290);
@@ -35,7 +35,7 @@ public class TestConstants {
         point_sabliere.getLinkedPoints().put(point_c, 1100);
         point_sabliere.getLinkedPoints().put(point_tumuli, 1000);
 
-        return new HashMap<String, Point>() {{
+        Map<String, Point> mapTmp = new HashMap<String, Point>() {{
             put("Home", point_home);
             put("Tumuli", point_tumuli);
             put("Anglée", point_anglee);
@@ -44,5 +44,11 @@ public class TestConstants {
             put("L", point_l);
             put("Sablière", point_sabliere);
         }};
+
+        PointsMap pointsMapTmp = new PointsMap();
+        pointsMapTmp.putAll(mapTmp);
+        pointsMapTmp.setStartingPointLabel("Home");
+
+        return pointsMapTmp;
     }
 }

@@ -5,21 +5,20 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.stream.Stream;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.coli.Constants.RUN_ZONE_LIBERSART;
-import static org.coli.Constants.STARTING_POINT_LIBERSART;
 import static org.coli.Coordinates.toRouteCoordinates;
+import static org.coli.PointsLoader.load;
 
 /**
  * See map <a href="https://drive.google.com/open?id=11pTt6aFhzUzS0cw5AF7ekdZwZAXFG4pG">here</a>
  */
 public class Main {
 
-    private static final Map<String, Point> data = PointsLoader.load(RUN_ZONE_LIBERSART);
+    private static final PointsMap data = load(RUN_ZONE_LIBERSART, "Home");
 
     public static void main(String[] args) {
 //        printData();
@@ -38,7 +37,7 @@ public class Main {
         System.out.println();
         System.out.println("First route is:");
         String routeString = routes.get(0).toString();
-        String routeString_noPrefix = routeString.substring(routeString.indexOf(STARTING_POINT_LIBERSART));
+        String routeString_noPrefix = routeString.substring(routeString.indexOf(data.getStartingPointLabel()));
         System.out.println(toRouteCoordinates(routeString_noPrefix));
     }
 

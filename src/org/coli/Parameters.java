@@ -3,8 +3,6 @@ package org.coli;
 import java.util.HashSet;
 import java.util.Set;
 
-import static org.coli.Constants.STARTING_POINT_LIBERSART;
-
 public class Parameters {
 
     /**
@@ -47,8 +45,6 @@ public class Parameters {
      */
     private boolean reverseTwinDisplayed;
 
-    private String startingPointLabel;
-
     private boolean extraDistancePercentageFlag = false;
 
     Parameters() {
@@ -60,7 +56,6 @@ public class Parameters {
         this.patternsToAvoid = new HashSet<>();
         this.patternsToInclude = new HashSet<>();
         this.reverseTwinDisplayed = false;
-        this.startingPointLabel = STARTING_POINT_LIBERSART;
     }
 
     Set<String> getPatternsToAvoid() {
@@ -83,15 +78,6 @@ public class Parameters {
 
     boolean isExtraDistancePercentageFlag() {
         return extraDistancePercentageFlag;
-    }
-
-    String getStartingPointLabel() {
-        return startingPointLabel;
-    }
-
-    public Parameters setStartingPointLabel(String startingPointLabel) {
-        this.startingPointLabel = startingPointLabel;
-        return this;
     }
 
     boolean isReverseTwinDisplayed() {

@@ -3,7 +3,6 @@ package org.coli;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.coli.Constants.STARTING_POINT_LIBERSART;
 import static org.coli.Coordinates.toRouteCoordinates;
 
 public class CoordinatesTest {
@@ -20,7 +19,7 @@ public class CoordinatesTest {
 
     @Test
     public void toCoordinatesTest() {
-        assertThat(coordinates.toCoordinates(STARTING_POINT_LIBERSART)).isEqualTo(COORD_HOME);
+        assertThat(coordinates.toCoordinates("Home")).isEqualTo(COORD_HOME);
     }
 
     @Test
