@@ -3,7 +3,7 @@ package org.coli;
 import java.util.HashSet;
 import java.util.Set;
 
-import static org.coli.Constants.STARTING_POINT;
+import static org.coli.Constants.STARTING_POINT_LIBERSART;
 
 public class Parameters {
 
@@ -60,7 +60,7 @@ public class Parameters {
         this.patternsToAvoid = new HashSet<>();
         this.patternsToInclude = new HashSet<>();
         this.reverseTwinDisplayed = false;
-        this.startingPointLabel = STARTING_POINT;
+        this.startingPointLabel = STARTING_POINT_LIBERSART;
     }
 
     Set<String> getPatternsToAvoid() {

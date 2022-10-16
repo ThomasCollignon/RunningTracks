@@ -1,11 +1,11 @@
 Home Tumuli 290
 Home Anglée 600
 Tumuli Sablière 1000
-Tumuli D 950
+Tumuli Daix 950
 Sablière C 1100
 C L 220
-D L 260
-D Anglée 400
+Daix L 260
+Daix Anglée 400
 Total Sablière 1300
 O Cimetière 450
 Matelle Cimetière 1600
