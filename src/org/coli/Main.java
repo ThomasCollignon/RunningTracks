@@ -9,7 +9,8 @@ import java.util.Set;
 import java.util.stream.Stream;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.coli.Constants.RUN_ZONE_LIBERSART;
+import static org.coli.Constants.RESOURCES_PATH;
+import static org.coli.Constants.RUN_ZONE_CHASTRE;
 import static org.coli.Coordinates.toRouteCoordinates;
 import static org.coli.PointsLoader.load;
 
@@ -18,15 +19,16 @@ import static org.coli.PointsLoader.load;
  */
 public class Main {
 
-    private static final PointsMap data = load(RUN_ZONE_LIBERSART, "Home");
+//    private static final PointsMap data = load(RUN_ZONE_LIBERSART, "Home");
+    private static final PointsMap pointsMap = load(RUN_ZONE_CHASTRE, "Commune");
 
     public static void main(String[] args) {
 //        printData();
-        List<Route> routes = RouteFinder.findRoutes(data,
-                                                          4000,
-                                                          new Parameters()
+        List<Route> routes = RouteFinder.findRoutes(pointsMap,
+                                                    12000,
+                                                    new Parameters()
 //                        .setExtraDistancePercentage(50)
-                        .setExtraDistanceMeters(3000)
+                        .setExtraDistanceMeters(2000)
 //                        .setRepeatPoint(true)
 //                        .setMandatoryPoints(new HashSet<>(asList("Bardane")))
 //                        .setPatternsToAvoid(patternLoader(false))
@@ -40,13 +42,13 @@ public class Main {
         System.out.println();
         System.out.println("First route is:");
         String routeString = routes.get(0).toString();
-        String routeString_noPrefix = routeString.substring(routeString.indexOf(data.getStartingPointLabel()));
+        String routeString_noPrefix = routeString.substring(routeString.indexOf(pointsMap.getStartingPointLabel()));
         System.out.println(toRouteCoordinates(routeString_noPrefix));
     }
 
     private static void printData() {
-        System.out.println(data.keySet());
-        data.forEach((k, v) -> {
+        System.out.println(pointsMap.keySet());
+        pointsMap.forEach((k, v) -> {
             System.out.println(k);
             v.printListLinks();
             System.out.println();
@@ -56,7 +58,7 @@ public class Main {
     private static Set<String> patternLoader(boolean include) {
         Set<String> patternsSet = new HashSet<>();
         try (Stream<String> stream = Files.lines(Paths.get(
-                "resources/patternsTo" + (include ? "Include" : "Avoid") + ".txt"), UTF_8)) {
+                RESOURCES_PATH + "patternsTo" + (include ? "Include" : "Avoid") + ".txt"), UTF_8)) {
             stream.forEach(line -> {
                 patternsSet.add(line);
                 if (!include) {

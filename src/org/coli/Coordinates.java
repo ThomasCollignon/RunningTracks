@@ -8,14 +8,16 @@ import java.util.stream.Stream;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.nio.file.Files.lines;
 import static java.util.stream.Collectors.joining;
+import static org.coli.Constants.RESOURCES_PATH;
 import static org.coli.Constants.ROUTE_SEPARATOR;
 
 public class Coordinates extends HashMap<String, String> {
 
     public Coordinates() {
         super();
-        try (Stream<String> stream = lines(Paths.get("resources/coordinates.txt"), UTF_8)) {
-            stream.map(line -> line.split(" "))
+        try (Stream<String> stream = lines(Paths.get(RESOURCES_PATH + "coordinates.txt"), UTF_8)) {
+            stream.filter(line -> !line.isEmpty())
+                  .map(line -> line.split(" "))
                   .forEach(array -> this.put(array[0], array[1] + " " + array[2]));
         }
         catch (IOException e) {
@@ -23,7 +25,7 @@ public class Coordinates extends HashMap<String, String> {
         }
     }
 
-    public String toCoordinates(String label) {
+    private String toCoordinates(String label) {
         return this.get(label);
     }
 

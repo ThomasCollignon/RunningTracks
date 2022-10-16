@@ -18,11 +18,6 @@ public class CoordinatesTest {
     public static final String COORD_ANGLEE = "50.64997714337066, 4.713064208095772";
 
     @Test
-    public void toCoordinatesTest() {
-        assertThat(coordinates.toCoordinates("Home")).isEqualTo(COORD_HOME);
-    }
-
-    @Test
     public void toRouteCoordinatesStaticTest() {
         final String routeString = "Home - Tumuli - Commune - J - X - De-Frutos - Anglée - Home";
         String expected = "";
