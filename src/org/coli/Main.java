@@ -22,16 +22,19 @@ public class Main {
 
     public static void main(String[] args) {
 //        printData();
-        List<RouteFinder.Route> routes = RouteFinder.findAndPrintRoutes(data,
-                                       6000,
-                                       new Parameters()
+        List<Route> routes = RouteFinder.findRoutes(data,
+                                                          4000,
+                                                          new Parameters()
 //                        .setExtraDistancePercentage(50)
-                        .setExtraDistanceMeters(500)
+                        .setExtraDistanceMeters(3000)
 //                        .setRepeatPoint(true)
 //                        .setMandatoryPoints(new HashSet<>(asList("Bardane")))
 //                        .setPatternsToAvoid(patternLoader(false))
 //                        .setPatternsToInclude(patternLoader(true))
-                                      );
+                                                         );
+
+        // Print routes
+        routes.forEach(r -> System.out.println(r.toString()));
 
         // Display the first match as an array
         System.out.println();

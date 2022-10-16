@@ -1,39 +1,38 @@
 package org.coli;
 
-import lombok.Getter;
-
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 import static java.util.Collections.sort;
-import static org.coli.Constants.ROUTE_SEPARATOR;
 
 class RouteFinder {
 
-    private static List<Route> routes = new ArrayList<>();
+    private final List<Route> routes;
 
     /**
      * Initialized with default parameters
      */
-    private static Parameters parameters = new Parameters();
+    private Parameters parameters;
 
-    private static List<Route> findAndPrintRoutes(PointsMap data, int distance) {
-        search(new Route(data), distance);
+    private RouteFinder() {
+        routes = new ArrayList<>();
+        parameters = new Parameters();
+    }
+
+    private List<Route> findRoutes(PointsMap pointsMap, int distance) {
+        search(new Route(pointsMap, parameters), distance);
         sort(routes);
-        routes.forEach(r -> System.out.println(r.toString()));
         return routes;
     }
 
-    static List<Route> findAndPrintRoutes(PointsMap data, int distance, Parameters providedParameters) {
-        parameters = providedParameters;
-        return findAndPrintRoutes(data, distance);
+    static List<Route> findRoutes(PointsMap pointsMap, int distance, Parameters providedParameters) {
+        RouteFinder routeFinder = new RouteFinder();
+        routeFinder.parameters = providedParameters;
+        return routeFinder.findRoutes(pointsMap, distance);
     }
 
-    private static void search(Route route, int distance) {
+    private void search(Route route, int distance) {
         switch (totalDistanceFlag(route, distance)) {
             case -1:
                 continueSearch(route, distance);
@@ -55,7 +54,7 @@ class RouteFinder {
      *
      * @param route
      */
-    private static void addRouteIfMatchesCriteria(Route route) {
+    private void addRouteIfMatchesCriteria(Route route) {
         Route reversedRoute = new Route(route);
         Collections.reverse(reversedRoute);
         if (route.getLastPoint().getLabel().equals(route.getStartingPointLabel()) &&
@@ -67,8 +66,7 @@ class RouteFinder {
         }
     }
 
-
-    private static void continueSearch(Route route, int distance) {
+    private void continueSearch(Route route, int distance) {
         route.getAvailableNextPoints().forEach(p -> {
             Route newRoute = new Route(route);
             newRoute.add(p);
@@ -87,14 +85,14 @@ class RouteFinder {
      * <li><code>1</code> if the current distance is above upper bound
      * </ul>
      */
-    private static int totalDistanceFlag(Route route, int distance) {
+    private int totalDistanceFlag(Route route, int distance) {
         if (parameters.isExtraDistancePercentageFlag() && parameters.getExtraDistanceMeters() != 0) {
             throw new RuntimeException("Both extra distance percentage and meters can't be filled at the same time.");
         }
         double lowerBound = 0;
         double upperBound = 0;
         if (parameters.isExtraDistancePercentageFlag()) {
-            double exceedingPercentageDouble = (double) parameters.getExtraDistancePercentage();
+            double exceedingPercentageDouble = parameters.getExtraDistancePercentage();
             lowerBound = ((100 - exceedingPercentageDouble) / 100) * distance;
             upperBound = ((100 + exceedingPercentageDouble) / 100) * distance;
         }
@@ -112,103 +110,4 @@ class RouteFinder {
         return 0;
     }
 
-    @Getter
-    public static class Route extends ArrayList<Point> implements Comparable<Route> {
-
-        private int currentDistance;
-        private String startingPointLabel;
-
-        Route(PointsMap data) {
-            super();
-            setCurrentDistance(0);
-            this.add(data.get(data.getStartingPointLabel()));
-            startingPointLabel = data.getStartingPointLabel();
-        }
-
-        Route(Route toBeCloned) {
-            super(toBeCloned);
-            currentDistance = toBeCloned.getCurrentDistance();
-            startingPointLabel = toBeCloned.getStartingPointLabel();
-        }
-
-        /**
-         * Checks if the route goes twice by the same point
-         *
-         * @return <code>true</code> if there is at least one point (excluding home point) by witch the route passes more than once
-         */
-        public boolean containsNoRepeat() {
-            Set<Point> pointsSet = new HashSet<>();
-            pointsSet.addAll(this);
-            return this.size() - pointsSet.size() > 1 ? false : true;
-        }
-
-        public String toString() {
-            StringBuilder output = new StringBuilder();
-            output.append(getCurrentDistance() + " ");
-            output.append(toStringPoints());
-            return output.toString();
-        }
-
-        private String toStringPoints() {
-            StringBuilder output = new StringBuilder();
-            this.forEach(p -> output.append(p.getLabel() + ROUTE_SEPARATOR));
-            String outputString = output.toString();
-            return output.toString().substring(0, outputString.length() - ROUTE_SEPARATOR.length());
-        }
-
-        @Override
-        public boolean add(Point point) {
-            if (this.size() < 1) {
-                this.setCurrentDistance(0);
-            } else {
-                this.setCurrentDistance(this.getCurrentDistance() + this.getDistanceTo(point));
-            }
-            return super.add(point);
-        }
-
-        Set<Point> getAvailableNextPoints() {
-            Set<Point> availableNextPoints = new HashSet<>();
-            availableNextPoints.addAll(getLastPoint().getLinkedPoints().keySet());
-            if (this.size() > 1 && !parameters.isTurnaround()) {
-                availableNextPoints.remove(this.get(this.size() - 2));
-            }
-            return availableNextPoints.stream()
-                                      .filter(p -> !this.contains(p)
-                                              || parameters.isRepeatPoint()
-                                              || p.getLabel().equals(this.getStartingPointLabel()))
-                                      .collect(Collectors.toSet());
-        }
-
-        private Point getLastPoint() {
-            return this.get(this.size() - 1);
-        }
-
-        int getDistanceTo(Point destination) {
-            return getLastPoint().getLinkedPoints().get(destination);
-        }
-
-        Route setCurrentDistance(int currentDistance) {
-            this.currentDistance = currentDistance;
-            return this;
-        }
-
-        @Override
-        public int compareTo(Route o) {
-            return Integer.valueOf(this.getCurrentDistance()).compareTo(Integer.valueOf(o.getCurrentDistance()));
-        }
-
-        boolean includesPatternToAvoid() {
-            String routeString = this.toStringPoints();
-            return parameters.getPatternsToAvoid()
-                             .stream()
-                             .anyMatch(routeString::contains);
-        }
-
-        boolean includesPatternToInclude() {
-            String routeString = this.toStringPoints();
-            return parameters.getPatternsToInclude()
-                             .stream()
-                             .allMatch(routeString::contains);
-        }
-    }
 }
