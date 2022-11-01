@@ -28,7 +28,7 @@ public class Main {
                                                     12000,
                                                     new Parameters()
 //                        .setExtraDistancePercentage(50)
-                        .setExtraDistanceMeters(2000)
+                        .setExtraDistanceMeters(200)
 //                        .setRepeatPoint(true)
 //                        .setMandatoryPoints(new HashSet<>(asList("Bardane")))
 //                        .setPatternsToAvoid(patternLoader(false))
