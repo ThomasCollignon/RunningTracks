@@ -1,11 +1,9 @@
-package org.coli;
+package org.coli.routegenerator;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class TestConstants {
-
-    static final String RUN_ZONE_TEST = "test";
 
     static Point point_home = new Point("Home");
     static Point point_tumuli = new Point("Tumuli");

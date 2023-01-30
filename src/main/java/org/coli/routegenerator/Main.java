@@ -1,4 +1,4 @@
-package org.coli;
+package org.coli.routegenerator;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -9,23 +9,22 @@ import java.util.Set;
 import java.util.stream.Stream;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.coli.Constants.RESOURCES_PATH;
-import static org.coli.Constants.RUN_ZONE_CHASTRE;
-import static org.coli.Coordinates.toRouteCoordinates;
-import static org.coli.PointsLoader.load;
+import static org.coli.routegenerator.Constants.RESOURCES_PATH;
+import static org.coli.routegenerator.Constants.RUN_ZONE_LIBERSART;
+import static org.coli.routegenerator.PointsLoader.load;
 
 /**
  * See map <a href="https://drive.google.com/open?id=11pTt6aFhzUzS0cw5AF7ekdZwZAXFG4pG">here</a>
  */
 public class Main {
 
-//    private static final PointsMap data = load(RUN_ZONE_LIBERSART, "Home");
-    private static final PointsMap pointsMap = load(RUN_ZONE_CHASTRE, "Commune");
+//    private static final PointsMap pointsMap = load(RUN_ZONE_LIBERSART, "Home");
+    private static final PointsMap pointsMap = PointsLoader.load(Constants.RUN_ZONE_CHASTRE, "Commune");
 
     public static void main(String[] args) {
 //        printData();
         List<Route> routes = RouteFinder.findRoutes(pointsMap,
-                                                    12000,
+                                                    5000,
                                                     new Parameters()
 //                        .setExtraDistancePercentage(50)
                         .setExtraDistanceMeters(200)
@@ -41,9 +40,10 @@ public class Main {
         // Display the first match as an array
         System.out.println();
         System.out.println("First route is:");
+        System.out.println(routes.get(0));
         String routeString = routes.get(0).toString();
         String routeString_noPrefix = routeString.substring(routeString.indexOf(pointsMap.getStartingPointLabel()));
-        System.out.println(toRouteCoordinates(routeString_noPrefix));
+        System.out.println(Coordinates.toRouteCoordinates(routeString_noPrefix));
     }
 
     private static void printData() {

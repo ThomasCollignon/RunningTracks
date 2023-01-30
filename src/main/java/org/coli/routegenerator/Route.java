@@ -1,4 +1,4 @@
-package org.coli;
+package org.coli.routegenerator;
 
 import lombok.Getter;
 
@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static org.coli.Constants.ROUTE_SEPARATOR;
+import static org.coli.routegenerator.Constants.ROUTE_SEPARATOR;
 
 @Getter
 public class Route extends ArrayList<Point> implements Comparable<Route> {
@@ -87,7 +87,7 @@ public class Route extends ArrayList<Point> implements Comparable<Route> {
     }
 
     @Override
-    public int compareTo(org.coli.Route o) {
+    public int compareTo(Route o) {
         return Integer.valueOf(this.getCurrentDistance()).compareTo(Integer.valueOf(o.getCurrentDistance()));
     }
 

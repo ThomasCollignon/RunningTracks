@@ -1,4 +1,4 @@
-package org.coli;
+package org.coli.routegenerator;
 
 import java.util.ArrayList;
 import java.util.Collections;

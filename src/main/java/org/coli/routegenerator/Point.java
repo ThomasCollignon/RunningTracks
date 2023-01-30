@@ -1,4 +1,4 @@
-package org.coli;
+package org.coli.routegenerator;
 
 import lombok.RequiredArgsConstructor;
 import lombok.Value;

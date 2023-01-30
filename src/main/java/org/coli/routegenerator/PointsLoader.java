@@ -1,4 +1,4 @@
-package org.coli;
+package org.coli.routegenerator;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -7,8 +7,8 @@ import java.util.Map;
 import java.util.stream.Stream;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.coli.Constants.RESOURCES_EXTENSION;
-import static org.coli.Constants.RESOURCES_PATH;
+import static org.coli.routegenerator.Constants.RESOURCES_EXTENSION;
+import static org.coli.routegenerator.Constants.RESOURCES_PATH;
 
 public class PointsLoader {
 
