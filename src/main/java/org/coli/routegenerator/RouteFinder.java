@@ -26,10 +26,10 @@ class RouteFinder {
         return routes;
     }
 
-    static List<Route> findRoutes(PointsMap pointsMap, int distance, Parameters providedParameters) {
+    static List<Route> findRoutes(PointsMap pointsMap, int distanceInMeters, Parameters providedParameters) {
         RouteFinder routeFinder = new RouteFinder();
         routeFinder.parameters = providedParameters;
-        return routeFinder.findRoutes(pointsMap, distance);
+        return routeFinder.findRoutes(pointsMap, distanceInMeters);
     }
 
     private void search(Route route, int distance) {

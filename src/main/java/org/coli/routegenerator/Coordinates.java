@@ -23,7 +23,7 @@ public class Coordinates extends HashMap<String, String> {
         }
     }
 
-    private String toCoordinates(String label) {
+    public String toCoordinates(String label) {
         return this.get(label);
     }
 

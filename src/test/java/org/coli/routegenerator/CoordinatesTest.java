@@ -17,7 +17,7 @@ public class CoordinatesTest {
     public static final String COORD_ANGLEE = "50.64997714337066, 4.713064208095772";
 
     @Test
-    public void toRouteCoordinatesStaticTest() {
+    public void toRouteCoordinates() {
         final String routeString = "Home - Tumuli - Commune - J - X - De-Frutos - Anglée - Home";
         String expected = "";
         expected += "'" + COORD_HOME + "',\n";

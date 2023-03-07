@@ -24,7 +24,7 @@ public class Main {
     public static void main(String[] args) {
 //        printData();
         List<Route> routes = RouteFinder.findRoutes(pointsMap,
-                                                    5000,
+                                                    10000,
                                                     new Parameters()
 //                        .setExtraDistancePercentage(50)
                         .setExtraDistanceMeters(200)
@@ -43,7 +43,8 @@ public class Main {
         System.out.println(routes.get(0));
         String routeString = routes.get(0).toString();
         String routeString_noPrefix = routeString.substring(routeString.indexOf(pointsMap.getStartingPointLabel()));
-        System.out.println(Coordinates.toRouteCoordinates(routeString_noPrefix));
+        String coordinates = Coordinates.toRouteCoordinates(routeString_noPrefix);
+        System.out.println(coordinates);
     }
 
     private static void printData() {
