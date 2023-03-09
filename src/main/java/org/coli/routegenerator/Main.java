@@ -21,7 +21,7 @@ public class Main {
 //    private static final PointsMap pointsMap = load(RUN_ZONE_LIBERSART, "Home");
     private static final PointsMap pointsMap = PointsLoader.load(Constants.RUN_ZONE_CHASTRE, "Commune");
 
-    public static void main(String[] args) {
+    public static void testRun(String[] args) {
 //        printData();
         List<Route> routes = RouteFinder.findRoutes(pointsMap,
                                                     10000,
