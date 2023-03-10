@@ -25,8 +25,7 @@ public class PointsLoader {
         try (Stream<String> stream =
                      Files.lines(Paths.get(RESOURCES_PATH + runZone + RESOURCES_EXTENSION), UTF_8)) {
             stream.forEach(this::parseLine);
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

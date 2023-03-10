@@ -17,7 +17,8 @@ class RouteFinder {
 
     private RouteFinder() {
         routes = new ArrayList<>();
-        parameters = new Parameters();
+        parameters = Parameters.builder()
+                               .build();
     }
 
     private List<Route> findRoutes(PointsMap pointsMap, int distance) {
@@ -57,21 +58,26 @@ class RouteFinder {
     private void addRouteIfMatchesCriteria(Route route) {
         Route reversedRoute = new Route(route);
         Collections.reverse(reversedRoute);
-        if (route.getLastPoint().getLabel().equals(route.getStartingPointLabel()) &&
-                parameters.getMandatoryPoints().stream().allMatch(l -> route.contains(new Point(l))) &&
+        if (route.getLastPoint()
+                 .getLabel()
+                 .equals(route.getStartingPointLabel()) &&
+                parameters.getMandatoryPoints()
+                          .stream()
+                          .allMatch(l -> route.contains(new Point(l))) &&
                 (parameters.isReverseTwinDisplayed() || !routes.contains(reversedRoute)) &&
-                !route.includesPatternToAvoid() &&
-                route.includesPatternToInclude()) {
+                !route.includesAnyRouteToExclude() &&
+                route.includesAllRoutesToInclude()) {
             routes.add(new Route(route));
         }
     }
 
     private void continueSearch(Route route, int distance) {
-        route.getAvailableNextPoints().forEach(p -> {
-            Route newRoute = new Route(route);
-            newRoute.add(p);
-            search(newRoute, distance);
-        });
+        route.getAvailableNextPoints()
+             .forEach(p -> {
+                 Route newRoute = new Route(route);
+                 newRoute.add(p);
+                 search(newRoute, distance);
+             });
     }
 
     /**

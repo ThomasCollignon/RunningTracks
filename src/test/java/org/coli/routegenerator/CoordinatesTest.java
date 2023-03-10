@@ -1,10 +1,7 @@
 package org.coli.routegenerator;
 
 import org.assertj.core.api.Assertions;
-import org.coli.routegenerator.Coordinates;
 import org.junit.jupiter.api.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 public class CoordinatesTest {
 
@@ -28,6 +25,7 @@ public class CoordinatesTest {
         expected += "'" + COORD_DE_FRUTOS + "',\n";
         expected += "'" + COORD_ANGLEE + "',\n";
         expected += "'" + COORD_HOME + "'";
-        Assertions.assertThat(Coordinates.toRouteCoordinates(routeString)).isEqualTo(expected);
+        Assertions.assertThat(Coordinates.toRouteCoordinates(routeString))
+                  .isEqualTo(expected);
     }
 }

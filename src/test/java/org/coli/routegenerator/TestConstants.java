@@ -16,22 +16,38 @@ public class TestConstants {
     static PointsMap pointsMap = initPointsMap();
 
     private static PointsMap initPointsMap() {
-        point_home.getLinkedPoints().put(point_tumuli, 290);
-        point_home.getLinkedPoints().put(point_anglee, 600);
-        point_tumuli.getLinkedPoints().put(point_home, 290);
-        point_tumuli.getLinkedPoints().put(point_daix, 950);
-        point_tumuli.getLinkedPoints().put(point_sabliere, 1000);
-        point_anglee.getLinkedPoints().put(point_home, 600);
-        point_anglee.getLinkedPoints().put(point_daix, 400);
-        point_daix.getLinkedPoints().put(point_anglee, 400);
-        point_daix.getLinkedPoints().put(point_tumuli, 950);
-        point_daix.getLinkedPoints().put(point_l, 260);
-        point_c.getLinkedPoints().put(point_sabliere, 1100);
-        point_c.getLinkedPoints().put(point_l, 220);
-        point_l.getLinkedPoints().put(point_c, 220);
-        point_l.getLinkedPoints().put(point_daix, 260);
-        point_sabliere.getLinkedPoints().put(point_c, 1100);
-        point_sabliere.getLinkedPoints().put(point_tumuli, 1000);
+        point_home.getLinkedPoints()
+                  .put(point_tumuli, 290);
+        point_home.getLinkedPoints()
+                  .put(point_anglee, 600);
+        point_tumuli.getLinkedPoints()
+                    .put(point_home, 290);
+        point_tumuli.getLinkedPoints()
+                    .put(point_daix, 950);
+        point_tumuli.getLinkedPoints()
+                    .put(point_sabliere, 1000);
+        point_anglee.getLinkedPoints()
+                    .put(point_home, 600);
+        point_anglee.getLinkedPoints()
+                    .put(point_daix, 400);
+        point_daix.getLinkedPoints()
+                  .put(point_anglee, 400);
+        point_daix.getLinkedPoints()
+                  .put(point_tumuli, 950);
+        point_daix.getLinkedPoints()
+                  .put(point_l, 260);
+        point_c.getLinkedPoints()
+               .put(point_sabliere, 1100);
+        point_c.getLinkedPoints()
+               .put(point_l, 220);
+        point_l.getLinkedPoints()
+               .put(point_c, 220);
+        point_l.getLinkedPoints()
+               .put(point_daix, 260);
+        point_sabliere.getLinkedPoints()
+                      .put(point_c, 1100);
+        point_sabliere.getLinkedPoints()
+                      .put(point_tumuli, 1000);
 
         Map<String, Point> mapTmp = new HashMap<String, Point>() {{
             put("Home", point_home);

@@ -17,8 +17,7 @@ public class Coordinates extends HashMap<String, String> {
             stream.filter(line -> !line.isEmpty())
                   .map(line -> line.split(" "))
                   .forEach(array -> this.put(array[0], array[1] + " " + array[2]));
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

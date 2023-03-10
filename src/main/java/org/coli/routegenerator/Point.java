@@ -17,7 +17,8 @@ public class Point {
     Map<Point, Integer> linkedPoints = new HashMap<>();
 
     public void printListLinks() {
-        this.getLinkedPoints().forEach((k, v) -> System.out.println(" " + k.getLabel() + " " + v));
+        this.getLinkedPoints()
+            .forEach((k, v) -> System.out.println(" " + k.getLabel() + " " + v));
     }
 
     @Override
@@ -38,7 +39,10 @@ public class Point {
     public String toString() {
         return "Point{" +
                 "label='" + label + '\'' +
-                ", linkedPoints=" + linkedPoints.keySet().stream().map(Point::getLabel).collect(toSet()) +
+                ", linkedPoints=" + linkedPoints.keySet()
+                                                .stream()
+                                                .map(Point::getLabel)
+                                                .collect(toSet()) +
                 '}';
     }
 }

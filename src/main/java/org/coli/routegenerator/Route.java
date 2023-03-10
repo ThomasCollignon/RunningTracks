@@ -8,13 +8,14 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import static org.coli.routegenerator.Constants.ROUTE_SEPARATOR;
+import static org.coli.routegenerator.Utils.reverseRoute;
 
 @Getter
 public class Route extends ArrayList<Point> implements Comparable<Route> {
 
     private final String startingPointLabel;
+    private final Parameters parameters;
     private int currentDistance;
-    private Parameters parameters;
 
     Route(PointsMap pointsMap, Parameters parameters) {
         super();
@@ -39,21 +40,21 @@ public class Route extends ArrayList<Point> implements Comparable<Route> {
     public boolean containsNoRepeat() {
         Set<Point> pointsSet = new HashSet<>();
         pointsSet.addAll(this);
-        return this.size() - pointsSet.size() > 1 ? false : true;
+        return this.size() - pointsSet.size() <= 1;
     }
 
     public String toString() {
-        StringBuilder output = new StringBuilder();
-        output.append(getCurrentDistance() + " ");
-        output.append(toStringPoints());
-        return output.toString();
+        String output = getCurrentDistance() + " " +
+                toStringPoints();
+        return output;
     }
 
     private String toStringPoints() {
         StringBuilder output = new StringBuilder();
         this.forEach(p -> output.append(p.getLabel() + ROUTE_SEPARATOR));
         String outputString = output.toString();
-        return output.toString().substring(0, outputString.length() - ROUTE_SEPARATOR.length());
+        return output
+                .substring(0, outputString.length() - ROUTE_SEPARATOR.length());
     }
 
     @Override
@@ -67,14 +68,16 @@ public class Route extends ArrayList<Point> implements Comparable<Route> {
     }
 
     Set<Point> getAvailableNextPoints() {
-        Set<Point> availableNextPoints = new HashSet<>(getLastPoint().getLinkedPoints().keySet());
+        Set<Point> availableNextPoints = new HashSet<>(getLastPoint().getLinkedPoints()
+                                                                     .keySet());
         if (this.size() > 1 && !parameters.isTurnaround()) {
             availableNextPoints.remove(this.get(this.size() - 2));
         }
         return availableNextPoints.stream()
                                   .filter(p -> !this.contains(p)
                                           || parameters.isRepeatPoint()
-                                          || p.getLabel().equals(this.getStartingPointLabel()))
+                                          || p.getLabel()
+                                              .equals(this.getStartingPointLabel()))
                                   .collect(Collectors.toSet());
     }
 
@@ -83,25 +86,28 @@ public class Route extends ArrayList<Point> implements Comparable<Route> {
     }
 
     int getDistanceTo(Point destination) {
-        return getLastPoint().getLinkedPoints().get(destination);
+        return getLastPoint().getLinkedPoints()
+                             .get(destination);
     }
 
     @Override
     public int compareTo(Route o) {
-        return Integer.valueOf(this.getCurrentDistance()).compareTo(Integer.valueOf(o.getCurrentDistance()));
+        return Integer.valueOf(this.getCurrentDistance())
+                      .compareTo(Integer.valueOf(o.getCurrentDistance()));
     }
 
-    boolean includesPatternToAvoid() {
+    boolean includesAnyRouteToExclude() {
         String routeString = this.toStringPoints();
-        return parameters.getPatternsToAvoid()
+        return parameters.getExcludeRoutes()
                          .stream()
                          .anyMatch(routeString::contains);
     }
 
-    boolean includesPatternToInclude() {
+    boolean includesAllRoutesToInclude() {
         String routeString = this.toStringPoints();
-        return parameters.getPatternsToInclude()
+        return parameters.getIncludeRoutes()
                          .stream()
-                         .allMatch(routeString::contains);
+                         .allMatch(routeToInclude -> routeString.contains(routeToInclude) ||
+                                 routeString.contains(reverseRoute(routeToInclude)));
     }
 }
