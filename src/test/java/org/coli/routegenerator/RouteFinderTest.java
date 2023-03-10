@@ -6,7 +6,9 @@ import java.io.IOException;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.coli.routegenerator.TestConstants.*;
+import static org.coli.routegenerator.TestConstants.LONG_ROUTE;
+import static org.coli.routegenerator.TestConstants.SHORT_ROUTE;
+import static org.coli.routegenerator.TestConstants.TEST_POINTS;
 import static org.coli.routegenerator.Utils.excludeRoutesFromFile;
 import static org.coli.routegenerator.Utils.includeRoutesFromFile;
 import static org.junit.jupiter.api.Assertions.assertEquals;

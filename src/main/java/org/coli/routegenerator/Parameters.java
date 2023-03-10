@@ -13,6 +13,8 @@ import java.util.Set;
 @Builder
 public class Parameters {
 
+    static int DEFAULT_EXTRA_DISTANCE_METERS = 500;
+
     /**
      * If false the path won't include turnarounds
      */
@@ -35,7 +37,7 @@ public class Parameters {
      * Defines the extra or lower meters that are accepted around the chosen distance
      */
     @Builder.Default
-    int extraDistanceMeters = 0;
+    int extraDistanceMeters = DEFAULT_EXTRA_DISTANCE_METERS;
 
     /**
      * Points through which the route must pass. If empty there is no restrictions.

@@ -2,24 +2,20 @@ package org.coli.routegenerator;
 
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import static java.util.Collections.shuffle;
-import static org.coli.routegenerator.Constants.RUN_ZONE_CHASTRE;
+import static org.coli.routegenerator.Parameters.DEFAULT_EXTRA_DISTANCE_METERS;
 
 @Service
 public class RTService {
 
-    private static final String STARTING_POINT_LABEL = "Commune";
     private final Map<String, List<Route>> routesCache = new HashMap<>();
-    private PointsMap pointsMap;
 
-    public List<String> getRandomRoute(int distanceKm) {
-        int extraDistanceMeters = 500;
-        String cacheKey = distanceKm + "-" + 500;
+    List<String> getRandomRoute(int distanceKm, PointsMap pointsMap) {
+        String cacheKey = distanceKm + "-" + DEFAULT_EXTRA_DISTANCE_METERS;
         if (routesCache.containsKey(cacheKey)) {
             List<Route> routes = routesCache.get(cacheKey);
             shuffle(routes);
@@ -27,18 +23,18 @@ public class RTService {
         }
         List<Route> routes = RouteFinder.findRoutes(pointsMap, distanceKm * 1000,
                                                     Parameters.builder()
-                                                              .extraDistanceMeters(extraDistanceMeters)
                                                               .build());
         if (routes.isEmpty()) {
-            throw new RuntimeException("No route found");
+            throw new RTException("No route found");
         }
         routesCache.put(cacheKey, routes);
         shuffle(routes);
         return Utils.toListOfCoordinates(routes.get(0));
     }
 
-    @PostConstruct
-    void loadPointsMap() {
-        pointsMap = PointsLoader.load(RUN_ZONE_CHASTRE, STARTING_POINT_LABEL);
+    static class RTException extends RuntimeException {
+        RTException(String message) {
+            super(message);
+        }
     }
 }

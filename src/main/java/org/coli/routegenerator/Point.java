@@ -1,6 +1,5 @@
 package org.coli.routegenerator;
 
-import lombok.RequiredArgsConstructor;
 import lombok.Value;
 
 import java.util.HashMap;
@@ -10,16 +9,10 @@ import java.util.Objects;
 import static java.util.stream.Collectors.toSet;
 
 @Value
-@RequiredArgsConstructor
 public class Point {
 
     String label;
     Map<Point, Integer> linkedPoints = new HashMap<>();
-
-    public void printListLinks() {
-        this.getLinkedPoints()
-            .forEach((k, v) -> System.out.println(" " + k.getLabel() + " " + v));
-    }
 
     @Override
     public boolean equals(Object o) {

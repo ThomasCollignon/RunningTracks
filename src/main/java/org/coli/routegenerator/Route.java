@@ -48,8 +48,7 @@ public class Route extends ArrayList<Point> implements Comparable<Route> {
         StringBuilder output = new StringBuilder();
         this.forEach(p -> output.append(p.getLabel() + ROUTE_SEPARATOR));
         String outputString = output.toString();
-        return output
-                .substring(0, outputString.length() - ROUTE_SEPARATOR.length());
+        return output.substring(0, outputString.length() - ROUTE_SEPARATOR.length());
     }
 
     @Override

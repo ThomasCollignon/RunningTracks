@@ -1,5 +1,9 @@
 package org.coli.routegenerator;
 
+import lombok.Getter;
+import org.springframework.stereotype.Component;
+
+import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -9,10 +13,17 @@ import java.util.stream.Stream;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.coli.routegenerator.Constants.RESOURCES_EXTENSION;
 import static org.coli.routegenerator.Constants.RESOURCES_PATH;
+import static org.coli.routegenerator.Constants.RUN_ZONE_CHASTRE;
+import static org.coli.routegenerator.Constants.RUN_ZONE_LIBERSART;
 
+@Component
 public class PointsLoader {
 
     private final PointsMap pointsMap = new PointsMap();
+    @Getter
+    private PointsMap pointsMapChastre;
+    @Getter
+    private PointsMap pointsMapLibersart;
 
     public static PointsMap load(String runZone, String startingPoint) {
         PointsLoader pointsLoader = new PointsLoader();
@@ -52,5 +63,11 @@ public class PointsLoader {
         if (!point2Links.containsKey(point1)) {
             point2Links.put(point1, distance);
         }
+    }
+
+    @PostConstruct
+    void loadPointsMap() {
+        pointsMapChastre = load(RUN_ZONE_CHASTRE, "Commune");
+        pointsMapLibersart = load(RUN_ZONE_LIBERSART, "Home");
     }
 }
