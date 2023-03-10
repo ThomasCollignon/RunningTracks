@@ -17,14 +17,14 @@ class Runner {
     @Disabled
     static void testRun() {
         List<Route> routes = RouteFinder.findRoutes(pointsMap,
-                10000, Parameters.builder()
-                                 //                .extraDistancePercentage(50)
-                                 .extraDistanceMeters(200)
-                                 //                .repeatPoint(true)
-                                 //                .mandatoryPoints(new HashSet<>(asList("Bardane")))
+                                                    10000, Parameters.builder()
+                                                                     //                .extraDistancePercentage(50)
+                                                                     .extraDistanceMeters(200)
+                                                                     //                .repeatPoint(true)
+                                                                     //                .mandatoryPoints(new HashSet<>(asList("Bardane")))
 //                                                 .excludeRoutes(patternLoader(false))
 //                                                 .includeRoutes(patternLoader(true))
-                                 .build()
+                                                                     .build()
         );
 
         // Print routes
@@ -34,10 +34,5 @@ class Runner {
         System.out.println();
         System.out.println("First route is:");
         System.out.println(routes.get(0));
-        String routeString = routes.get(0)
-                                   .toString();
-        String routeString_noPrefix = routeString.substring(routeString.indexOf(pointsMap.getStartingPointLabel()));
-        String coordinates = Coordinates.toRouteCoordinates(routeString_noPrefix);
-        System.out.println(coordinates);
     }
 }

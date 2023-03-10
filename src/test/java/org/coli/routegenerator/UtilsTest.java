@@ -6,12 +6,14 @@ import java.io.IOException;
 import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.coli.routegenerator.TestConstants.SHORT_ROUTE;
+import static org.coli.routegenerator.TestConstants.SHORT_ROUTE_COORDINATES;
 
 class UtilsTest {
 
     @Test
     void includeRoutesFromFile() throws IOException {
-        Set<String> result = Utils.includeRoutesFromFile("includeRoute.txt");
+        Set<String> result = Utils.includeRoutesFromFile("includeRoutes.txt");
         assertThat(result).contains("C - L")
                           .contains("Sablière - Tumuli")
                           .hasSize(2);
@@ -19,7 +21,7 @@ class UtilsTest {
 
     @Test
     void excludeRoutesFromFile() throws IOException {
-        Set<String> result = Utils.excludeRoutesFromFile("excludeRoute.txt");
+        Set<String> result = Utils.excludeRoutesFromFile("excludeRoutes.txt");
         assertThat(result).contains("C - L")
                           .contains("L - C")
                           .hasSize(2);
@@ -32,6 +34,6 @@ class UtilsTest {
 
     @Test
     void toListOfCoordinates() {
-
+        assertThat(Utils.toListOfCoordinates(SHORT_ROUTE)).isEqualTo(SHORT_ROUTE_COORDINATES);
     }
 }

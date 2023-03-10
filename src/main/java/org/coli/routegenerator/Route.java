@@ -14,12 +14,10 @@ import static org.coli.routegenerator.Utils.reverseRoute;
 public class Route extends ArrayList<Point> implements Comparable<Route> {
 
     private final String startingPointLabel;
-    private final Parameters parameters;
     private int currentDistance;
 
-    Route(PointsMap pointsMap, Parameters parameters) {
+    Route(PointsMap pointsMap) {
         super();
-        this.parameters = parameters;
         currentDistance = 0;
         this.add(pointsMap.get(pointsMap.getStartingPointLabel()));
         startingPointLabel = pointsMap.getStartingPointLabel();
@@ -29,7 +27,6 @@ public class Route extends ArrayList<Point> implements Comparable<Route> {
         super(toBeCloned);
         currentDistance = toBeCloned.getCurrentDistance();
         startingPointLabel = toBeCloned.getStartingPointLabel();
-        parameters = toBeCloned.getParameters();
     }
 
     /**
@@ -38,15 +35,13 @@ public class Route extends ArrayList<Point> implements Comparable<Route> {
      * @return <code>true</code> if there is at least one point (excluding home point) by witch the route passes more than once
      */
     public boolean containsNoRepeat() {
-        Set<Point> pointsSet = new HashSet<>();
-        pointsSet.addAll(this);
+        Set<Point> pointsSet = new HashSet<>(this);
         return this.size() - pointsSet.size() <= 1;
     }
 
+    @Override
     public String toString() {
-        String output = getCurrentDistance() + " " +
-                toStringPoints();
-        return output;
+        return getCurrentDistance() + " " + toStringPoints();
     }
 
     private String toStringPoints() {
@@ -67,15 +62,15 @@ public class Route extends ArrayList<Point> implements Comparable<Route> {
         return super.add(point);
     }
 
-    Set<Point> getAvailableNextPoints() {
+    Set<Point> getAvailableNextPoints(boolean turnaround, boolean repeatPoint) {
         Set<Point> availableNextPoints = new HashSet<>(getLastPoint().getLinkedPoints()
                                                                      .keySet());
-        if (this.size() > 1 && !parameters.isTurnaround()) {
+        if (this.size() > 1 && !turnaround) {
             availableNextPoints.remove(this.get(this.size() - 2));
         }
         return availableNextPoints.stream()
                                   .filter(p -> !this.contains(p)
-                                          || parameters.isRepeatPoint()
+                                          || repeatPoint
                                           || p.getLabel()
                                               .equals(this.getStartingPointLabel()))
                                   .collect(Collectors.toSet());
@@ -96,18 +91,15 @@ public class Route extends ArrayList<Point> implements Comparable<Route> {
                       .compareTo(Integer.valueOf(o.getCurrentDistance()));
     }
 
-    boolean includesAnyRouteToExclude() {
-        String routeString = this.toStringPoints();
-        return parameters.getExcludeRoutes()
-                         .stream()
-                         .anyMatch(routeString::contains);
+    boolean includesAnyRouteToExclude(Set<String> excludedRoutes) {
+        return excludedRoutes.stream()
+                             .anyMatch(this.toStringPoints()::contains);
     }
 
-    boolean includesAllRoutesToInclude() {
+    boolean includesAllRoutesToInclude(Set<String> includedRoutes) {
         String routeString = this.toStringPoints();
-        return parameters.getIncludeRoutes()
-                         .stream()
-                         .allMatch(routeToInclude -> routeString.contains(routeToInclude) ||
-                                 routeString.contains(reverseRoute(routeToInclude)));
+        return includedRoutes.stream()
+                             .allMatch(routeToInclude -> routeString.contains(routeToInclude) ||
+                                     routeString.contains(reverseRoute(routeToInclude)));
     }
 }

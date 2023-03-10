@@ -17,6 +17,9 @@ import static org.coli.routegenerator.Constants.ROUTE_SEPARATOR;
 
 public class Utils {
 
+    private Utils() {
+    }
+
     static Set<String> excludeRoutesFromFile(String fileName) throws IOException {
         return readFileFromResourcesDirectory(fileName).flatMap(route -> Stream.of(route, reverseRoute(route)))
                                                        .collect(toSet());
@@ -40,10 +43,9 @@ public class Utils {
     }
 
     static List<String> toListOfCoordinates(Route route) {
-        Coordinates coordinates = new Coordinates();
         return route.stream()
                     .map(Point::getLabel)
-                    .map(coordinates::toCoordinates)
+                    .map(label -> new Coordinates().toCoordinates(label))
                     .collect(toList());
     }
 }

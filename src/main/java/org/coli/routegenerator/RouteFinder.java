@@ -21,16 +21,16 @@ class RouteFinder {
                                .build();
     }
 
-    private List<Route> findRoutes(PointsMap pointsMap, int distance) {
-        search(new Route(pointsMap, parameters), distance);
-        sort(routes);
-        return routes;
-    }
-
     static List<Route> findRoutes(PointsMap pointsMap, int distanceInMeters, Parameters providedParameters) {
         RouteFinder routeFinder = new RouteFinder();
         routeFinder.parameters = providedParameters;
         return routeFinder.findRoutes(pointsMap, distanceInMeters);
+    }
+
+    private List<Route> findRoutes(PointsMap pointsMap, int distance) {
+        search(new Route(pointsMap), distance);
+        sort(routes);
+        return routes;
     }
 
     private void search(Route route, int distance) {
@@ -65,14 +65,14 @@ class RouteFinder {
                           .stream()
                           .allMatch(l -> route.contains(new Point(l))) &&
                 (parameters.isReverseTwinDisplayed() || !routes.contains(reversedRoute)) &&
-                !route.includesAnyRouteToExclude() &&
-                route.includesAllRoutesToInclude()) {
+                !route.includesAnyRouteToExclude(parameters.getExcludeRoutes()) &&
+                route.includesAllRoutesToInclude(parameters.getIncludeRoutes())) {
             routes.add(new Route(route));
         }
     }
 
     private void continueSearch(Route route, int distance) {
-        route.getAvailableNextPoints()
+        route.getAvailableNextPoints(parameters.isTurnaround(), parameters.isRepeatPoint())
              .forEach(p -> {
                  Route newRoute = new Route(route);
                  newRoute.add(p);

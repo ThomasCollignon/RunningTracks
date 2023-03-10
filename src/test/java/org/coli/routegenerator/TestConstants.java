@@ -1,19 +1,42 @@
 package org.coli.routegenerator;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import static java.util.Arrays.asList;
 
 public class TestConstants {
 
-    static Point point_home = new Point("Home");
-    static Point point_tumuli = new Point("Tumuli");
-    static Point point_anglee = new Point("Anglée");
-    static Point point_daix = new Point("Daix");
-    static Point point_c = new Point("C");
-    static Point point_l = new Point("L");
-    static Point point_sabliere = new Point("Sablière");
+    final static Point point_home = new Point("Home");
+    final static Point point_tumuli = new Point("Tumuli");
+    final static Point point_anglee = new Point("Anglée");
+    final static Point point_daix = new Point("Daix");
+    final static Point point_c = new Point("C");
+    final static Point point_l = new Point("L");
+    final static Point point_sabliere = new Point("Sablière");
 
-    static PointsMap pointsMap = initPointsMap();
+    final static PointsMap TEST_POINTS = initPointsMap();
+    final static Route LONG_ROUTE = initLongRoute();
+    final static Route SHORT_ROUTE = initShortRoute();
+
+    final static List<String> SHORT_ROUTE_COORDINATES = asList("50.65292179181078, 4.718251399671132",
+                                                               "50.64997714337066, 4.713064208095772",
+                                                               "50.65311797305349, 4.711112599509838",
+                                                               "50.65458508553609, 4.721509615286826",
+                                                               "50.65292179181078, 4.718251399671132");
+
+    private static Route initLongRoute() {
+        Route longRoute = new Route(TEST_POINTS);
+        longRoute.add(point_anglee);
+        longRoute.add(point_daix);
+        longRoute.add(point_l);
+        longRoute.add(point_c);
+        longRoute.add(point_sabliere);
+        longRoute.add(point_tumuli);
+        longRoute.add(point_home);
+        return longRoute;
+    }
 
     private static PointsMap initPointsMap() {
         point_home.getLinkedPoints()
@@ -64,5 +87,14 @@ public class TestConstants {
         pointsMapTmp.setStartingPointLabel("Home");
 
         return pointsMapTmp;
+    }
+
+    private static Route initShortRoute() {
+        Route shortRoute = new Route(TEST_POINTS);
+        shortRoute.add(point_anglee);
+        shortRoute.add(point_daix);
+        shortRoute.add(point_tumuli);
+        shortRoute.add(point_home);
+        return shortRoute;
     }
 }

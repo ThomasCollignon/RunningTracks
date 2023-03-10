@@ -14,8 +14,8 @@ import static org.coli.routegenerator.Constants.RUN_ZONE_CHASTRE;
 public class RTService {
 
     private static final String STARTING_POINT_LABEL = "Commune";
-    private PointsMap pointsMap;
     private final Map<String, List<Route>> routesCache = new HashMap<>();
+    private PointsMap pointsMap;
 
     public List<String> getRandomRoute(int distanceKm) {
         int extraDistanceMeters = 500;
@@ -26,9 +26,9 @@ public class RTService {
             return Utils.toListOfCoordinates(routes.get(0));
         }
         List<Route> routes = RouteFinder.findRoutes(pointsMap, distanceKm * 1000,
-                Parameters.builder()
-                          .extraDistanceMeters(extraDistanceMeters)
-                          .build());
+                                                    Parameters.builder()
+                                                              .extraDistanceMeters(extraDistanceMeters)
+                                                              .build());
         if (routes.isEmpty()) {
             throw new RuntimeException("No route found");
         }

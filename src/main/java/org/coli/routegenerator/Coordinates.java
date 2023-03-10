@@ -7,7 +7,6 @@ import java.util.stream.Stream;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.nio.file.Files.lines;
-import static java.util.stream.Collectors.joining;
 
 public class Coordinates extends HashMap<String, String> {
 
@@ -24,13 +23,5 @@ public class Coordinates extends HashMap<String, String> {
 
     public String toCoordinates(String label) {
         return this.get(label);
-    }
-
-    public static String toRouteCoordinates(String route) {
-        Coordinates coordinates = new Coordinates();
-        return Stream.of(route.split(Constants.ROUTE_SEPARATOR))
-                     .map(coordinates::toCoordinates)
-                     .map(coord -> "'" + coord + "'")
-                     .collect(joining(",\n"));
     }
 }
