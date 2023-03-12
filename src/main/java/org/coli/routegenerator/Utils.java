@@ -5,12 +5,15 @@ import org.apache.commons.io.IOUtils;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Consumer;
 import java.util.stream.Stream;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
+import static java.nio.file.Files.lines;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toSet;
 import static org.coli.routegenerator.Constants.ROUTE_SEPARATOR;
@@ -29,6 +32,18 @@ public class Utils {
         return readFileFromResourcesDirectory(fileName).collect(toSet());
     }
 
+    static void readFileAndConsumeLines(String fileName, Consumer<Stream<String>> consumer) {
+        try (Stream<String> stream = lines(Paths.get(fileName), UTF_8)) {
+            consumer.accept(stream);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * @param filename ex.: "myFile.txt"
+     * @return a Stream of the lines of this file
+     */
     static Stream<String> readFileFromResourcesDirectory(String filename) throws IOException {
         InputStream inputStream = Utils.class.getClassLoader()
                                              .getResourceAsStream(filename);

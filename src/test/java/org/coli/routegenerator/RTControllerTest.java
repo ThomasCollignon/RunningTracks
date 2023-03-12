@@ -34,6 +34,14 @@ class RTControllerTest {
     @MockBean
     private PointsLoader pointsLoaderMock;
 
+    private String expectedShortRouteCoordinatesFormatted() {
+        return SHORT_ROUTE_COORDINATES.stream()
+                                      .map(coord -> "\"" + coord + "\"")
+                                      .collect(toList())
+                                      .toString()
+                                      .replace("\", \"", "\",\"");
+    }
+
     @Test
     void home() throws Exception {
         when(rtServiceMock.getRandomRoute(anyInt(), any())).thenReturn(SHORT_ROUTE_COORDINATES);
@@ -42,13 +50,5 @@ class RTControllerTest {
                     .andDo(print())
                     .andExpect(status().isOk())
                     .andExpect(content().string(equalTo(expectedShortRouteCoordinatesFormatted())));
-    }
-
-    private String expectedShortRouteCoordinatesFormatted() {
-        return SHORT_ROUTE_COORDINATES.stream()
-                                      .map(coord -> "\"" + coord + "\"")
-                                      .collect(toList())
-                                      .toString()
-                                      .replace("\", \"", "\",\"");
     }
 }

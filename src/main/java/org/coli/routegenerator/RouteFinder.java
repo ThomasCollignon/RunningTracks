@@ -90,20 +90,18 @@ class RouteFinder {
      * </ul>
      */
     private int totalDistanceFlag(Route route, int distance) {
-        if (parameters.isExtraDistancePercentageFlag() && parameters.getExtraDistanceMeters() != 0) {
-            throw new RTException("Both extra distance percentage and meters can't be filled at the same time.");
-        }
         double lowerBound = 0;
         double upperBound = 0;
         if (parameters.isExtraDistancePercentageFlag()) {
             double exceedingPercentageDouble = parameters.getExtraDistancePercentage();
             lowerBound = ((100 - exceedingPercentageDouble) / 100) * distance;
             upperBound = ((100 + exceedingPercentageDouble) / 100) * distance;
-        }
-        int extraDistanceMeters = parameters.getExtraDistanceMeters();
-        if (extraDistanceMeters != 0) {
-            lowerBound = (double) distance - extraDistanceMeters;
-            upperBound = (double) distance + extraDistanceMeters;
+        } else {
+            int extraDistanceMeters = parameters.getExtraDistanceMeters();
+            if (extraDistanceMeters != 0) {
+                lowerBound = (double) distance - extraDistanceMeters;
+                upperBound = (double) distance + extraDistanceMeters;
+            }
         }
         if (route.getCurrentDistance() < lowerBound) {
             return -1;

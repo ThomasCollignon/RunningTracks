@@ -1,24 +1,21 @@
 package org.coli.routegenerator;
 
-import java.io.IOException;
-import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.stream.Stream;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
-import static java.nio.file.Files.lines;
+import static org.coli.routegenerator.Constants.RESOURCES_PATH;
 
 public class Coordinates extends HashMap<String, String> {
 
     public Coordinates() {
         super();
-        try (Stream<String> stream = lines(Paths.get(Constants.RESOURCES_PATH + "coordinates.txt"), UTF_8)) {
-            stream.filter(line -> !line.isEmpty())
-                  .map(line -> line.split(" "))
-                  .forEach(array -> this.put(array[0], array[1] + " " + array[2]));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        Utils.readFileAndConsumeLines(RESOURCES_PATH + "coordinates.txt", this::parseStream);
+    }
+
+    private void parseStream(Stream<String> stream) {
+        stream.filter(line -> !line.isEmpty())
+              .map(line -> line.split(" "))
+              .forEach(array -> this.put(array[0], array[1] + " " + array[2]));
     }
 
     public String toCoordinates(String label) {

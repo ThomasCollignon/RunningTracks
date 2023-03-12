@@ -14,6 +14,7 @@ import java.util.Set;
 public class Parameters {
 
     static final int DEFAULT_EXTRA_DISTANCE_METERS = 500;
+    static final int DEFAULT_EXTRA_DISTANCE_PERCENTAGE = 10;
 
     /**
      * If false the path won't include turnarounds
@@ -29,12 +30,14 @@ public class Parameters {
 
     /**
      * Defines the range that is accepted around the chosen distance
+     * Only applies if extraDistancePercentageFlag is true (default is false)
      */
     @Builder.Default
-    int extraDistancePercentage = 10;
+    int extraDistancePercentage = DEFAULT_EXTRA_DISTANCE_PERCENTAGE;
 
     /**
-     * Defines the extra or lower meters that are accepted around the chosen distance
+     * Defines the extra or lower meters that are accepted around the chosen distance.
+     * Doesn't apply if extraDistancePercentageFlag is true (default is false)
      */
     @Builder.Default
     int extraDistanceMeters = DEFAULT_EXTRA_DISTANCE_METERS;
@@ -63,6 +66,9 @@ public class Parameters {
     @Builder.Default
     boolean reverseTwinDisplayed = false;
 
+    /**
+     * The extra distance uses a percentage, not a distance in meters
+     */
     @Builder.Default
     boolean extraDistancePercentageFlag = false;
 

@@ -1,12 +1,16 @@
 package org.coli.routegenerator;
 
-import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.HashMap;
 
-@Data
+@EqualsAndHashCode
 public class PointsMap extends HashMap<String, Point> {
 
+    @Getter
+    @Setter
     private String startingPointLabel;
 
 }
