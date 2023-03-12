@@ -13,7 +13,7 @@ import java.util.Set;
 @Builder
 public class Parameters {
 
-    static int DEFAULT_EXTRA_DISTANCE_METERS = 500;
+    static final int DEFAULT_EXTRA_DISTANCE_METERS = 500;
 
     /**
      * If false the path won't include turnarounds

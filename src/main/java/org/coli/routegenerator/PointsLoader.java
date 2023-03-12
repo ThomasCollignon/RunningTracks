@@ -7,7 +7,6 @@ import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Map;
 import java.util.stream.Stream;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
@@ -47,22 +46,14 @@ public class PointsLoader {
     }
 
     private void addLink(String point1Label, String point2Label, Integer distance) {
-        if (!pointsMap.containsKey(point1Label)) {
-            pointsMap.put(point1Label, new Point(point1Label));
-        }
-        if (!pointsMap.containsKey(point2Label)) {
-            pointsMap.put(point2Label, new Point(point2Label));
-        }
+        pointsMap.computeIfAbsent(point1Label, k -> new Point(point1Label));
+        pointsMap.computeIfAbsent(point2Label, k -> new Point(point2Label));
         Point point1 = pointsMap.get(point1Label);
         Point point2 = pointsMap.get(point2Label);
-        Map<Point, Integer> point1Links = point1.getLinkedPoints();
-        if (!point1Links.containsKey(point2)) {
-            point1Links.put(point2, distance);
-        }
-        Map<Point, Integer> point2Links = point2.getLinkedPoints();
-        if (!point2Links.containsKey(point1)) {
-            point2Links.put(point1, distance);
-        }
+        point1.getLinkedPoints()
+              .computeIfAbsent(point2, k -> distance);
+        point2.getLinkedPoints()
+              .computeIfAbsent(point1, k -> distance);
     }
 
     @PostConstruct

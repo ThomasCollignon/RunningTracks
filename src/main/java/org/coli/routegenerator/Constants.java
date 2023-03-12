@@ -9,4 +9,6 @@ public class Constants {
     public static final String RUN_ZONE_CHASTRE = "chastre";
     public static final String ROUTE_SEPARATOR = " - ";
 
+    private Constants() {
+    }
 }

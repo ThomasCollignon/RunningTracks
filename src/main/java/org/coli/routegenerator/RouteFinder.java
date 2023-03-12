@@ -27,33 +27,11 @@ class RouteFinder {
         return routeFinder.findRoutes(pointsMap, distanceInMeters);
     }
 
-    private List<Route> findRoutes(PointsMap pointsMap, int distance) {
-        search(new Route(pointsMap), distance);
-        sort(routes);
-        return routes;
-    }
-
-    private void search(Route route, int distance) {
-        switch (totalDistanceFlag(route, distance)) {
-            case -1:
-                continueSearch(route, distance);
-                break;
-            case 0:
-                addRouteIfMatchesCriteria(route);
-                continueSearch(route, distance);
-                break;
-            default:
-                break;
-        }
-    }
-
     /**
      * Adds the route to the output list only if it matches the criteria:
      * - the last point is the home point
      * - all the mandatory points are reached at least once (cf parameters)
      * - this route reversed is not already present in the list (cf parameters)
-     *
-     * @param route
      */
     private void addRouteIfMatchesCriteria(Route route) {
         Route reversedRoute = new Route(route);
@@ -80,6 +58,26 @@ class RouteFinder {
              });
     }
 
+    private List<Route> findRoutes(PointsMap pointsMap, int distance) {
+        search(new Route(pointsMap), distance);
+        sort(routes);
+        return routes;
+    }
+
+    private void search(Route route, int distance) {
+        switch (totalDistanceFlag(route, distance)) {
+            case -1:
+                continueSearch(route, distance);
+                break;
+            case 0:
+                addRouteIfMatchesCriteria(route);
+                continueSearch(route, distance);
+                break;
+            default:
+                break;
+        }
+    }
+
     /**
      * Check if the current total distance is withing required range.
      *
@@ -93,7 +91,7 @@ class RouteFinder {
      */
     private int totalDistanceFlag(Route route, int distance) {
         if (parameters.isExtraDistancePercentageFlag() && parameters.getExtraDistanceMeters() != 0) {
-            throw new RuntimeException("Both extra distance percentage and meters can't be filled at the same time.");
+            throw new RTException("Both extra distance percentage and meters can't be filled at the same time.");
         }
         double lowerBound = 0;
         double upperBound = 0;
@@ -104,8 +102,8 @@ class RouteFinder {
         }
         int extraDistanceMeters = parameters.getExtraDistanceMeters();
         if (extraDistanceMeters != 0) {
-            lowerBound = distance - extraDistanceMeters;
-            upperBound = distance + extraDistanceMeters;
+            lowerBound = (double) distance - extraDistanceMeters;
+            upperBound = (double) distance + extraDistanceMeters;
         }
         if (route.getCurrentDistance() < lowerBound) {
             return -1;

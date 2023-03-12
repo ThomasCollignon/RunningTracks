@@ -31,10 +31,4 @@ public class RTService {
         shuffle(routes);
         return Utils.toListOfCoordinates(routes.get(0));
     }
-
-    static class RTException extends RuntimeException {
-        RTException(String message) {
-            super(message);
-        }
-    }
 }

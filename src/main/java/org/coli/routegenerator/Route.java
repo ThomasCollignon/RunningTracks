@@ -4,6 +4,7 @@ import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -29,28 +30,6 @@ public class Route extends ArrayList<Point> implements Comparable<Route> {
         startingPointLabel = toBeCloned.getStartingPointLabel();
     }
 
-    /**
-     * Checks if the route goes twice by the same point
-     *
-     * @return <code>true</code> if there is at least one point (excluding home point) by witch the route passes more than once
-     */
-    public boolean containsNoRepeat() {
-        Set<Point> pointsSet = new HashSet<>(this);
-        return this.size() - pointsSet.size() <= 1;
-    }
-
-    @Override
-    public String toString() {
-        return getCurrentDistance() + " " + toStringPoints();
-    }
-
-    private String toStringPoints() {
-        StringBuilder output = new StringBuilder();
-        this.forEach(p -> output.append(p.getLabel() + ROUTE_SEPARATOR));
-        String outputString = output.toString();
-        return output.substring(0, outputString.length() - ROUTE_SEPARATOR.length());
-    }
-
     @Override
     public boolean add(Point point) {
         if (this.size() < 1) {
@@ -61,6 +40,20 @@ public class Route extends ArrayList<Point> implements Comparable<Route> {
         return super.add(point);
     }
 
+    @Override
+    public int compareTo(Route o) {
+        return Integer.compare(this.getCurrentDistance(), o.getCurrentDistance());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Route points = (Route) o;
+        return currentDistance == points.currentDistance && startingPointLabel.equals(points.startingPointLabel);
+    }
+
     Set<Point> getAvailableNextPoints(boolean turnaround, boolean repeatPoint) {
         Set<Point> availableNextPoints = new HashSet<>(getLastPoint().getLinkedPoints()
                                                                      .keySet());
@@ -68,15 +61,9 @@ public class Route extends ArrayList<Point> implements Comparable<Route> {
             availableNextPoints.remove(this.get(this.size() - 2));
         }
         return availableNextPoints.stream()
-                                  .filter(p -> !this.contains(p)
-                                          || repeatPoint
-                                          || p.getLabel()
-                                              .equals(this.getStartingPointLabel()))
+                                  .filter(p -> !this.contains(p) || repeatPoint || p.getLabel()
+                                                                                    .equals(this.getStartingPointLabel()))
                                   .collect(Collectors.toSet());
-    }
-
-    Point getLastPoint() {
-        return this.get(this.size() - 1);
     }
 
     int getDistanceTo(Point destination) {
@@ -84,10 +71,20 @@ public class Route extends ArrayList<Point> implements Comparable<Route> {
                              .get(destination);
     }
 
+    Point getLastPoint() {
+        return this.get(this.size() - 1);
+    }
+
     @Override
-    public int compareTo(Route o) {
-        return Integer.valueOf(this.getCurrentDistance())
-                      .compareTo(Integer.valueOf(o.getCurrentDistance()));
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), startingPointLabel, currentDistance);
+    }
+
+    boolean includesAllRoutesToInclude(Set<String> includedRoutes) {
+        String routeString = this.toStringPoints();
+        return includedRoutes.stream()
+                             .allMatch(routeToInclude -> routeString.contains(routeToInclude) || routeString.contains(
+                                     reverseRoute(routeToInclude)));
     }
 
     boolean includesAnyRouteToExclude(Set<String> excludedRoutes) {
@@ -95,10 +92,16 @@ public class Route extends ArrayList<Point> implements Comparable<Route> {
                              .anyMatch(this.toStringPoints()::contains);
     }
 
-    boolean includesAllRoutesToInclude(Set<String> includedRoutes) {
-        String routeString = this.toStringPoints();
-        return includedRoutes.stream()
-                             .allMatch(routeToInclude -> routeString.contains(routeToInclude) ||
-                                     routeString.contains(reverseRoute(routeToInclude)));
+    @Override
+    public String toString() {
+        return getCurrentDistance() + " " + toStringPoints();
+    }
+
+    private String toStringPoints() {
+        StringBuilder output = new StringBuilder();
+        this.forEach(p -> output.append(p.getLabel())
+                                .append(ROUTE_SEPARATOR));
+        String outputString = output.toString();
+        return output.substring(0, outputString.length() - ROUTE_SEPARATOR.length());
     }
 }

@@ -13,6 +13,6 @@ class RTServiceTest {
     void getRandomRoute() {
         RTService rtService = new RTService();
         assertThat(rtService.getRandomRoute(2, TEST_POINTS)).isEqualTo(SHORT_ROUTE_COORDINATES);
-        assertThrows(RTService.RTException.class, () -> rtService.getRandomRoute(20, TEST_POINTS));
+        assertThrows(RTException.class, () -> rtService.getRandomRoute(20, TEST_POINTS));
     }
 }
