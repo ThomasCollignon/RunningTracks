@@ -1,0 +1,26 @@
+name: Maven verify and checks coverage
+run-name: Maven verify and checks coverage
+
+on:
+  push:
+    branches: master
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3 # downloads a copy of the repository on the runner.
+      - name: Set up JDK 8
+        uses: actions/setup-java@v3
+        with:
+          java-version: '8'
+          distribution: 'corretto' # supported distributions: https://github.com/actions/setup-java#supported-distributions
+          cache: maven
+      - name: Maven verify, includes coverage check
+        run: mvn -B verify # -B is batch (non-interactive) mode
+
+      # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
+      - name: Submit dependency graph
+        uses: advanced-security/maven-dependency-submission-action@v3
