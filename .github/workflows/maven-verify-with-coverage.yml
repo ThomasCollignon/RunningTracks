@@ -3,7 +3,6 @@ run-name: Maven verify and checks coverage
 
 on:
   push:
-    branches: master
 
 jobs:
   build:
