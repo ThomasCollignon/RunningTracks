@@ -1,10 +1,10 @@
 package org.coli.routegenerator;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -12,6 +12,7 @@ import static org.coli.routegenerator.Constants.ROUTE_SEPARATOR;
 import static org.coli.routegenerator.Utils.reverseRoute;
 
 @Getter
+@EqualsAndHashCode(callSuper = true)
 public class Route extends ArrayList<Point> implements Comparable<Route> {
 
     private final String startingPointLabel;
@@ -45,15 +46,6 @@ public class Route extends ArrayList<Point> implements Comparable<Route> {
         return Integer.compare(this.getCurrentDistance(), o.getCurrentDistance());
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
-        Route points = (Route) o;
-        return currentDistance == points.currentDistance && startingPointLabel.equals(points.startingPointLabel);
-    }
-
     Set<Point> getAvailableNextPoints(boolean turnaround, boolean repeatPoint) {
         Set<Point> availableNextPoints = new HashSet<>(getLastPoint().getLinkedPoints()
                                                                      .keySet());
@@ -75,11 +67,6 @@ public class Route extends ArrayList<Point> implements Comparable<Route> {
         return this.get(this.size() - 1);
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), startingPointLabel, currentDistance);
-    }
-
     boolean includesAllRoutesToInclude(Set<String> includedRoutes) {
         String routeString = this.toStringPoints();
         return includedRoutes.stream()
@@ -90,11 +77,6 @@ public class Route extends ArrayList<Point> implements Comparable<Route> {
     boolean includesAnyRouteToExclude(Set<String> excludedRoutes) {
         return excludedRoutes.stream()
                              .anyMatch(this.toStringPoints()::contains);
-    }
-
-    @Override
-    public String toString() {
-        return getCurrentDistance() + " " + toStringPoints();
     }
 
     private String toStringPoints() {

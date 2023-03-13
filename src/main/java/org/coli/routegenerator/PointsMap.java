@@ -6,7 +6,7 @@ import lombok.Setter;
 
 import java.util.HashMap;
 
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = true)
 public class PointsMap extends HashMap<String, Point> {
 
     @Getter
