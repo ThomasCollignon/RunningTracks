@@ -14,19 +14,20 @@ class RunnerIT {
 
     //    private static final PointsMap pointsMap = load(RUN_ZONE_LIBERSART, "Home");
     private static final PointsMap pointsMap = PointsLoader.load(Constants.RUN_ZONE_CHASTRE, "Commune");
+    private final RouteFinder routeFinder = new RouteFinder();
 
     @Test
     @Disabled("To be used for quick tests")
     void testRun() {
-        List<Route> routes = RouteFinder.findRoutes(pointsMap,
-                                                    10000, Parameters.builder()
-                                                                     //                .extraDistancePercentage(50)
-                                                                     .extraDistanceMeters(200)
-                                                                     //                .repeatPoint(true)
-                                                                     //                .mandatoryPoints(new HashSet<>(asList("Bardane")))
+        List<Route> routes = routeFinder.findRoutes(pointsMap,
+                                                    10000, Options.builder()
+                                                                  //                .extraDistancePercentage(50)
+                                                                  .extraDistanceMeters(200)
+                                                                  //                .repeatPoint(true)
+                                                                  //                .mandatoryPoints(new HashSet<>(asList("Bardane")))
 //                                                 .excludeRoutes(patternLoader(false))
 //                                                 .includeRoutes(patternLoader(true))
-                                                                     .build()
+                                                                  .build()
         );
 
         // Print routes

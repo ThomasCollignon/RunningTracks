@@ -11,7 +11,7 @@ import java.util.Set;
  */
 @Value
 @Builder
-public class Parameters {
+public class Options {
 
     static final int DEFAULT_EXTRA_DISTANCE_METERS = 500;
     static final int DEFAULT_EXTRA_DISTANCE_PERCENTAGE = 10;

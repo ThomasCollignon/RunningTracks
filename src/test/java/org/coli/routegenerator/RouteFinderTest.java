@@ -15,35 +15,35 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class RouteFinderTest {
 
-    @Test
-    void findRoutes_exclude() throws IOException {
-        List<Route> foundRoutes = RouteFinder.findRoutes(TEST_POINTS, 3000,
-                                                         Parameters.builder()
-                                                                   .extraDistanceMeters(1000)
-                                                                   .excludeRoutes(excludeRoutesFromFile(
-                                                                           "excludeRoutes.txt"))
-                                                                   .build());
-        assertThat(foundRoutes).contains(SHORT_ROUTE)
-                               .hasSize(1);
-    }
+    private final RouteFinder routeFinder = new RouteFinder();
 
     @Test
-    void findRoutes_include() throws IOException {
-        List<Route> foundRoutes = RouteFinder.findRoutes(TEST_POINTS, 3000,
-                                                         Parameters.builder()
-                                                                   .extraDistanceMeters(1000)
-                                                                   .includeRoutes(includeRoutesFromFile(
-                                                                           "includeRoutes.txt"))
-                                                                   .build());
+    void findRoutes_include_exclude() throws IOException {
+        List<Route> foundRoutes = routeFinder.findRoutes(TEST_POINTS, 3000,
+                                                         Options.builder()
+                                                                .extraDistanceMeters(1000)
+                                                                .includeRoutes(includeRoutesFromFile(
+                                                                        "includeRoutes.txt"))
+                                                                .build());
         assertThat(foundRoutes).contains(LONG_ROUTE)
                                .hasSize(1);
+
+        foundRoutes = routeFinder.findRoutes(TEST_POINTS, 3000,
+                                             Options.builder()
+                                                    .extraDistanceMeters(1000)
+                                                    .excludeRoutes(excludeRoutesFromFile(
+                                                            "excludeRoutes.txt"))
+                                                    .build());
+        assertThat(foundRoutes).contains(SHORT_ROUTE)
+                               .hasSize(1);
+
     }
 
     @Test
-    void findRoutes_long_by_extra_distanc() {
-        List<Route> foundRoutes = RouteFinder.findRoutes(TEST_POINTS, 3800, Parameters.builder()
-                                                                                      .extraDistanceMeters(100)
-                                                                                      .build());
+    void findRoutes_long_by_extra_distance() {
+        List<Route> foundRoutes = routeFinder.findRoutes(TEST_POINTS, 3800, Options.builder()
+                                                                                   .extraDistanceMeters(100)
+                                                                                   .build());
         assertThat(foundRoutes).contains(LONG_ROUTE)
                                .hasSize(1);
         assertEquals(3870, foundRoutes.get(0)
@@ -52,10 +52,10 @@ class RouteFinderTest {
 
     @Test
     void findRoutes_multiple() {
-        List<Route> foundRoutes = RouteFinder.findRoutes(TEST_POINTS, 3000,
-                                                         Parameters.builder()
-                                                                   .extraDistanceMeters(1000)
-                                                                   .build());
+        List<Route> foundRoutes = routeFinder.findRoutes(TEST_POINTS, 3000,
+                                                         Options.builder()
+                                                                .extraDistanceMeters(1000)
+                                                                .build());
         assertThat(foundRoutes).contains(SHORT_ROUTE)
                                .contains(LONG_ROUTE)
                                .hasSize(2);
@@ -63,18 +63,18 @@ class RouteFinderTest {
 
     @Test
     void findRoutes_none() {
-        List<Route> foundRoutes = RouteFinder.findRoutes(TEST_POINTS, 3000, Parameters.builder()
-                                                                                      .extraDistanceMeters(100)
-                                                                                      .build());
+        List<Route> foundRoutes = routeFinder.findRoutes(TEST_POINTS, 3000, Options.builder()
+                                                                                   .extraDistanceMeters(100)
+                                                                                   .build());
         assertThat(foundRoutes).isEmpty();
     }
 
 
     @Test
     void findRoutes_short_by_extra_distance() {
-        List<Route> foundRoutes = RouteFinder.findRoutes(TEST_POINTS, 2200, Parameters.builder()
-                                                                                      .extraDistanceMeters(100)
-                                                                                      .build());
+        List<Route> foundRoutes = routeFinder.findRoutes(TEST_POINTS, 2200, Options.builder()
+                                                                                   .extraDistanceMeters(100)
+                                                                                   .build());
         assertThat(foundRoutes).contains(SHORT_ROUTE)
                                .hasSize(1);
         assertEquals(2240, foundRoutes.get(0)
@@ -83,15 +83,15 @@ class RouteFinderTest {
 
     @Test
     void findRoutes_short_by_extra_percentage() {
-        List<Route> foundRoutes = RouteFinder.findRoutes(TEST_POINTS, 2200, Parameters.builder()
-                                                                                      .extraDistancePercentageFlag(true)
-                                                                                      .extraDistancePercentage(1)
-                                                                                      .build());
+        List<Route> foundRoutes = routeFinder.findRoutes(TEST_POINTS, 2200, Options.builder()
+                                                                                   .extraDistancePercentageFlag(true)
+                                                                                   .extraDistancePercentage(1)
+                                                                                   .build());
         assertThat(foundRoutes).isEmpty();
 
-        foundRoutes = RouteFinder.findRoutes(TEST_POINTS, 2200, Parameters.builder()
-                                                                          .extraDistancePercentageFlag(true)
-                                                                          .build());
+        foundRoutes = routeFinder.findRoutes(TEST_POINTS, 2200, Options.builder()
+                                                                       .extraDistancePercentageFlag(true)
+                                                                       .build());
         assertThat(foundRoutes).contains(SHORT_ROUTE)
                                .hasSize(1);
         assertEquals(2240, foundRoutes.get(0)

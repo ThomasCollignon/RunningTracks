@@ -1,37 +1,28 @@
 package org.coli.routegenerator;
 
+import org.springframework.stereotype.Component;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import static java.util.Collections.sort;
 
+@Component
 class RouteFinder {
 
-    private final List<Route> routes;
+    private List<Route> routes;
 
     /**
-     * Initialized with default parameters
+     * Initialized with default options
      */
-    private Parameters parameters;
-
-    private RouteFinder() {
-        routes = new ArrayList<>();
-        parameters = Parameters.builder()
-                               .build();
-    }
-
-    static List<Route> findRoutes(PointsMap pointsMap, int distanceInMeters, Parameters providedParameters) {
-        RouteFinder routeFinder = new RouteFinder();
-        routeFinder.parameters = providedParameters;
-        return routeFinder.findRoutes(pointsMap, distanceInMeters);
-    }
+    private Options options;
 
     /**
      * Adds the route to the output list only if it matches the criteria:
      * - the last point is the home point
-     * - all the mandatory points are reached at least once (cf parameters)
-     * - this route reversed is not already present in the list (cf parameters)
+     * - all the mandatory points are reached at least once (cf options)
+     * - this route reversed is not already present in the list (cf options)
      */
     private void addRouteIfMatchesCriteria(Route route) {
         Route reversedRoute = new Route(route);
@@ -39,18 +30,18 @@ class RouteFinder {
         if (route.getLastPoint()
                  .getLabel()
                  .equals(route.getStartingPointLabel()) &&
-                parameters.getMandatoryPoints()
-                          .stream()
-                          .allMatch(l -> route.contains(new Point(l))) &&
-                (parameters.isReverseTwinDisplayed() || !routes.contains(reversedRoute)) &&
-                !route.includesAnyRouteToExclude(parameters.getExcludeRoutes()) &&
-                route.includesAllRoutesToInclude(parameters.getIncludeRoutes())) {
+                options.getMandatoryPoints()
+                       .stream()
+                       .allMatch(l -> route.contains(new Point(l))) &&
+                (options.isReverseTwinDisplayed() || !routes.contains(reversedRoute)) &&
+                !route.includesAnyRouteToExclude(options.getExcludeRoutes()) &&
+                route.includesAllRoutesToInclude(options.getIncludeRoutes())) {
             routes.add(new Route(route));
         }
     }
 
     private void continueSearch(Route route, int distance) {
-        route.getAvailableNextPoints(parameters.isTurnaround(), parameters.isRepeatPoint())
+        route.getAvailableNextPoints(options.isTurnaround(), options.isRepeatPoint())
              .forEach(p -> {
                  Route newRoute = new Route(route);
                  newRoute.add(p);
@@ -58,7 +49,9 @@ class RouteFinder {
              });
     }
 
-    private List<Route> findRoutes(PointsMap pointsMap, int distance) {
+    List<Route> findRoutes(PointsMap pointsMap, int distance, Options providedOptions) {
+        options = providedOptions;
+        routes = new ArrayList<>();
         search(new Route(pointsMap), distance);
         sort(routes);
         return routes;
@@ -92,12 +85,12 @@ class RouteFinder {
     private int totalDistanceFlag(Route route, int distance) {
         double lowerBound = 0;
         double upperBound = 0;
-        if (parameters.isExtraDistancePercentageFlag()) {
-            double exceedingPercentageDouble = parameters.getExtraDistancePercentage();
+        if (options.isExtraDistancePercentageFlag()) {
+            double exceedingPercentageDouble = options.getExtraDistancePercentage();
             lowerBound = ((100 - exceedingPercentageDouble) / 100) * distance;
             upperBound = ((100 + exceedingPercentageDouble) / 100) * distance;
         } else {
-            int extraDistanceMeters = parameters.getExtraDistanceMeters();
+            int extraDistanceMeters = options.getExtraDistanceMeters();
             if (extraDistanceMeters != 0) {
                 lowerBound = (double) distance - extraDistanceMeters;
                 upperBound = (double) distance + extraDistanceMeters;
