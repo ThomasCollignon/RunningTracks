@@ -86,7 +86,6 @@
                                     </limits>
                                     <excludes>
                                         <exclude>org.coli.routegenerator.RTApplication</exclude>
-                                        <exclude>org.coli.routegenerator.RTService</exclude>
                                         <exclude>*Test</exclude>
                                     </excludes>
                                 </rule>

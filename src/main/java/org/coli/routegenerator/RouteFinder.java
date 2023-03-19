@@ -1,6 +1,6 @@
 package org.coli.routegenerator;
 
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -8,7 +8,7 @@ import java.util.List;
 
 import static java.util.Collections.sort;
 
-@Component
+@Service
 class RouteFinder {
 
     private List<Route> routes;
@@ -17,6 +17,14 @@ class RouteFinder {
      * Initialized with default options
      */
     private Options options;
+
+    List<Route> findRoutes(PointsMap pointsMap, int distance, Options providedOptions) {
+        options = providedOptions;
+        routes = new ArrayList<>();
+        search(new Route(pointsMap), distance);
+        sort(routes);
+        return routes;
+    }
 
     /**
      * Adds the route to the output list only if it matches the criteria:
@@ -29,13 +37,13 @@ class RouteFinder {
         Collections.reverse(reversedRoute);
         if (route.getLastPoint()
                  .getLabel()
-                 .equals(route.getStartingPointLabel()) &&
-                options.getMandatoryPoints()
-                       .stream()
-                       .allMatch(l -> route.contains(new Point(l))) &&
-                (options.isReverseTwinDisplayed() || !routes.contains(reversedRoute)) &&
-                !route.includesAnyRouteToExclude(options.getExcludeRoutes()) &&
-                route.includesAllRoutesToInclude(options.getIncludeRoutes())) {
+                 .equals(route.getStartingPointLabel())
+                && options.getMandatoryPoints()
+                          .stream()
+                          .allMatch(l -> route.contains(new Point(l)))
+                && (options.isReverseTwinDisplayed() || !routes.contains(reversedRoute))
+                && !route.includesAnyRouteToExclude(options.getExcludeRoutes())
+                && route.includesAllRoutesToInclude(options.getIncludeRoutes())) {
             routes.add(new Route(route));
         }
     }
@@ -47,14 +55,6 @@ class RouteFinder {
                  newRoute.add(p);
                  search(newRoute, distance);
              });
-    }
-
-    List<Route> findRoutes(PointsMap pointsMap, int distance, Options providedOptions) {
-        options = providedOptions;
-        routes = new ArrayList<>();
-        search(new Route(pointsMap), distance);
-        sort(routes);
-        return routes;
     }
 
     private void search(Route route, int distance) {

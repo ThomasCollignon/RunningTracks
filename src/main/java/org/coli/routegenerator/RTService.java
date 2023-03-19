@@ -1,8 +1,9 @@
 package org.coli.routegenerator;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -10,11 +11,11 @@ import static java.util.Collections.shuffle;
 import static org.coli.routegenerator.Options.DEFAULT_EXTRA_DISTANCE_METERS;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class RTService {
 
     private final RouteFinder routeFinder;
-    private final Map<String, List<Route>> routesCache;
+    private final Map<String, List<Route>> routesCache = new HashMap<>();
 
     List<String> getRandomRoute(int distanceKm, PointsMap pointsMap) {
         String cacheKey = distanceKm + "-" + DEFAULT_EXTRA_DISTANCE_METERS;
