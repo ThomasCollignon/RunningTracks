@@ -1,5 +1,6 @@
 package org.coli.routegenerator;
 
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -23,6 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * Still, no better way to have a UT of the web part with lower tiers mocked.
  */
 @WebMvcTest
+@Tag("slow")
 class RTControllerTest {
 
     @Autowired
@@ -34,14 +36,6 @@ class RTControllerTest {
     @MockBean
     private PointsLoader pointsLoaderMock;
 
-    private String expectedShortRouteCoordinatesFormatted() {
-        return SHORT_ROUTE_COORDINATES.stream()
-                                      .map(coord -> "\"" + coord + "\"")
-                                      .collect(toList())
-                                      .toString()
-                                      .replace("\", \"", "\",\"");
-    }
-
     @Test
     void home() throws Exception {
         when(rtServiceMock.getRandomRoute(anyInt(), any())).thenReturn(SHORT_ROUTE_COORDINATES);
@@ -50,5 +44,13 @@ class RTControllerTest {
                     .andDo(print())
                     .andExpect(status().isOk())
                     .andExpect(content().string(equalTo(expectedShortRouteCoordinatesFormatted())));
+    }
+
+    private String expectedShortRouteCoordinatesFormatted() {
+        return SHORT_ROUTE_COORDINATES.stream()
+                                      .map(coord -> "\"" + coord + "\"")
+                                      .collect(toList())
+                                      .toString()
+                                      .replace("\", \"", "\",\"");
     }
 }

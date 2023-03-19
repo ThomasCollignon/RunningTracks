@@ -17,7 +17,7 @@ class RunnerIT {
     private final RouteFinder routeFinder = new RouteFinder();
 
     @Test
-    @Disabled("To be used for quick tests")
+    @Disabled("RunnerIT disabled, to be used for manual tests")
     void testRun() {
         List<Route> routes = routeFinder.findRoutes(pointsMap,
                                                     10000, Options.builder()
