@@ -2,7 +2,6 @@ package org.coli.routegenerator;
 
 import org.apache.commons.io.IOUtils;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
@@ -50,14 +49,13 @@ public class Utils {
     }
 
     private static Stream<String> readFileFromResourcesDirectory(String filename) {
-        InputStream inputStream = Utils.class.getClassLoader()
-                                             .getResourceAsStream(filename);
-        if (inputStream == null) throw new RTException("Can't find file " + filename + " in /resources.");
         String fileString;
-        try {
+        try (InputStream inputStream = Utils.class.getClassLoader()
+                                                  .getResourceAsStream(filename)) {
+            if (inputStream == null) throw new RTException("Can't find file " + filename + " in /resources.");
             fileString = IOUtils.toString(inputStream, UTF_8);
-        } catch (IOException e) { // Not covered by UT because hard to reproduce or mock
-            throw new RTException("Issue parsing file " + filename + "\n" + e.getMessage());
+        } catch (Exception e) {
+            throw new RTException("Issue reading or parsing file " + filename + "\n" + e.getMessage());
         }
         return Arrays.stream(fileString.split("\n"));
     }
