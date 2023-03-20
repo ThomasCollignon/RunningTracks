@@ -12,9 +12,9 @@ public class TestConstants {
     final static Point point_tumuli = new Point("Tumuli");
     final static Point point_anglee = new Point("Anglée");
     final static Point point_daix = new Point("Daix");
-    final static Point point_c = new Point("C");
-    final static Point point_l = new Point("L");
-    final static Point point_sabliere = new Point("Sablière");
+    final static Point point_c = new Point("C"); // long route
+    final static Point point_l = new Point("L"); // long route
+    final static Point point_sabliere = new Point("Sablière"); // long route
 
     final static PointsMap TEST_POINTS = initPointsMap();
     final static Route LONG_ROUTE = initLongRoute();

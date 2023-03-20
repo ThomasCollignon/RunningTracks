@@ -2,8 +2,10 @@ package org.coli.routegenerator;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.HashSet;
 import java.util.List;
 
+import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.coli.routegenerator.TestConstants.LONG_ROUTE;
 import static org.coli.routegenerator.TestConstants.SHORT_ROUTE;
@@ -24,8 +26,7 @@ class RouteFinderTest {
                                                                 .includeRoutes(includeRoutesFromFile(
                                                                         "includeRoutes.txt"))
                                                                 .build());
-        assertThat(foundRoutes).contains(LONG_ROUTE)
-                               .hasSize(1);
+        assertThat(foundRoutes).containsOnly(LONG_ROUTE);
 
         foundRoutes = routeFinder.findRoutes(TEST_POINTS, 3000,
                                              Options.builder()
@@ -33,9 +34,7 @@ class RouteFinderTest {
                                                     .excludeRoutes(excludeRoutesFromFile(
                                                             "excludeRoutes.txt"))
                                                     .build());
-        assertThat(foundRoutes).contains(SHORT_ROUTE)
-                               .hasSize(1);
-
+        assertThat(foundRoutes).containsOnly(SHORT_ROUTE);
     }
 
     @Test
@@ -43,8 +42,7 @@ class RouteFinderTest {
         List<Route> foundRoutes = routeFinder.findRoutes(TEST_POINTS, 3800, Options.builder()
                                                                                    .extraDistanceMeters(100)
                                                                                    .build());
-        assertThat(foundRoutes).contains(LONG_ROUTE)
-                               .hasSize(1);
+        assertThat(foundRoutes).containsOnly(LONG_ROUTE);
         assertEquals(3870, foundRoutes.get(0)
                                       .getCurrentDistance());
     }
@@ -61,6 +59,16 @@ class RouteFinderTest {
     }
 
     @Test
+    void findRoutes_multiple_mandatoryPoints() {
+        List<Route> foundRoutes = routeFinder.findRoutes(TEST_POINTS, 3000,
+                                                         Options.builder()
+                                                                .extraDistanceMeters(1000)
+                                                                .mandatoryPoints(new HashSet<>(asList("Daix", "C")))
+                                                                .build());
+        assertThat(foundRoutes).containsOnly(LONG_ROUTE);
+    }
+
+    @Test
     void findRoutes_none() {
         List<Route> foundRoutes = routeFinder.findRoutes(TEST_POINTS, 3000, Options.builder()
                                                                                    .extraDistanceMeters(100)
@@ -74,8 +82,7 @@ class RouteFinderTest {
         List<Route> foundRoutes = routeFinder.findRoutes(TEST_POINTS, 2200, Options.builder()
                                                                                    .extraDistanceMeters(100)
                                                                                    .build());
-        assertThat(foundRoutes).contains(SHORT_ROUTE)
-                               .hasSize(1);
+        assertThat(foundRoutes).containsOnly(SHORT_ROUTE);
         assertEquals(2240, foundRoutes.get(0)
                                       .getCurrentDistance());
     }
@@ -91,8 +98,7 @@ class RouteFinderTest {
         foundRoutes = routeFinder.findRoutes(TEST_POINTS, 2200, Options.builder()
                                                                        .extraDistancePercentageFlag(true)
                                                                        .build());
-        assertThat(foundRoutes).contains(SHORT_ROUTE)
-                               .hasSize(1);
+        assertThat(foundRoutes).containsOnly(SHORT_ROUTE);
         assertEquals(2240, foundRoutes.get(0)
                                       .getCurrentDistance());
     }
