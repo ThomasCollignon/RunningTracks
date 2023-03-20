@@ -10,6 +10,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * See map <a href="https://drive.google.com/open?id=11pTt6aFhzUzS0cw5AF7ekdZwZAXFG4pG">here</a>
  */
+@Disabled("RunnerIT disabled, to be used for manual tests")
 class RunnerIT {
 
     //    private static final PointsMap pointsMap = load(RUN_ZONE_LIBERSART, "Home");
@@ -17,7 +18,6 @@ class RunnerIT {
     private final RouteFinder routeFinder = new RouteFinder();
 
     @Test
-    @Disabled("RunnerIT disabled, to be used for manual tests")
     void testRun() {
         List<Route> routes = routeFinder.findRoutes(pointsMap,
                                                     10000, Options.builder()

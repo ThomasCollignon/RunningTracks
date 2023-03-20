@@ -37,13 +37,17 @@ class RTControllerTest {
     private PointsLoader pointsLoaderMock;
 
     @Test
-    void home() throws Exception {
+    void home() {
         when(rtServiceMock.getRandomRoute(anyInt(), any())).thenReturn(SHORT_ROUTE_COORDINATES);
         when(pointsLoaderMock.getPointsMapChastre()).thenReturn(TEST_POINTS);
-        this.mockMvc.perform(get("/"))
-                    .andDo(print())
-                    .andExpect(status().isOk())
-                    .andExpect(content().string(equalTo(expectedShortRouteCoordinatesFormatted())));
+        try {
+            this.mockMvc.perform(get("/"))
+                        .andDo(print())
+                        .andExpect(status().isOk())
+                        .andExpect(content().string(equalTo(expectedShortRouteCoordinatesFormatted())));
+        } catch (Exception e) {
+            throw new RTException("Error when using mockMvc\n" + e.getMessage());
+        }
     }
 
     private String expectedShortRouteCoordinatesFormatted() {

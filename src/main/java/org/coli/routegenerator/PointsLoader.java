@@ -8,7 +8,6 @@ import javax.annotation.PostConstruct;
 import java.util.stream.Stream;
 
 import static org.coli.routegenerator.Constants.RESOURCES_EXTENSION;
-import static org.coli.routegenerator.Constants.RESOURCES_PATH;
 import static org.coli.routegenerator.Constants.RUN_ZONE_CHASTRE;
 import static org.coli.routegenerator.Constants.RUN_ZONE_LIBERSART;
 
@@ -44,7 +43,7 @@ public class PointsLoader {
     }
 
     private void fillPointsData(String runZone) {
-        Utils.readFileAndConsumeLines(RESOURCES_PATH + runZone + RESOURCES_EXTENSION, this::parseStream);
+        Utils.readFileAndConsumeLines(runZone + RESOURCES_EXTENSION, this::parseStream);
     }
 
     @PostConstruct

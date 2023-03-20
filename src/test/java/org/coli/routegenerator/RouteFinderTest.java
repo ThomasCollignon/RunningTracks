@@ -2,7 +2,6 @@ package org.coli.routegenerator;
 
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -18,7 +17,7 @@ class RouteFinderTest {
     private final RouteFinder routeFinder = new RouteFinder();
 
     @Test
-    void findRoutes_include_exclude() throws IOException {
+    void findRoutes_include_exclude() {
         List<Route> foundRoutes = routeFinder.findRoutes(TEST_POINTS, 3000,
                                                          Options.builder()
                                                                 .extraDistanceMeters(1000)
