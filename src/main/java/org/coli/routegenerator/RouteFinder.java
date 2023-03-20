@@ -1,5 +1,6 @@
 package org.coli.routegenerator;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -9,6 +10,7 @@ import java.util.List;
 import static java.util.Collections.sort;
 
 @Service
+@Slf4j
 class RouteFinder {
 
     private List<Route> routes;
@@ -19,6 +21,7 @@ class RouteFinder {
     private Options options;
 
     List<Route> findRoutes(PointsMap pointsMap, int distance, Options providedOptions) {
+        log.debug("Finding routes with options " + providedOptions);
         options = providedOptions;
         routes = new ArrayList<>();
         search(new Route(pointsMap), distance);

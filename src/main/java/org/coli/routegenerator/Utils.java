@@ -1,5 +1,6 @@
 package org.coli.routegenerator;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 
 import java.io.InputStream;
@@ -13,7 +14,9 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toSet;
 import static org.coli.routegenerator.Constants.ROUTE_SEPARATOR;
+import static org.coli.routegenerator.Coordinates.coordinates;
 
+@Slf4j
 public class Utils {
 
     private Utils() {
@@ -44,11 +47,12 @@ public class Utils {
     static List<String> toListOfCoordinates(Route route) {
         return route.stream()
                     .map(Point::getLabel)
-                    .map(label -> new Coordinates().toCoordinates(label))
+                    .map(label -> coordinates().get(label))
                     .collect(toList());
     }
 
     private static Stream<String> readFileFromResourcesDirectory(String filename) {
+        log.info("reading file resources/" + filename);
         String fileString;
         try (InputStream inputStream = Utils.class.getClassLoader()
                                                   .getResourceAsStream(filename)) {

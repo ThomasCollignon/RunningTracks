@@ -5,13 +5,18 @@ import java.util.stream.Stream;
 
 public class Coordinates extends HashMap<String, String> {
 
-    public Coordinates() {
+    private static Coordinates instance;
+
+    private Coordinates() {
         super();
         Utils.readFileAndConsumeLines("coordinates.txt", this::parseStream);
     }
 
-    public String toCoordinates(String label) {
-        return this.get(label);
+    public static Coordinates coordinates() {
+        if (instance == null) {
+            instance = new Coordinates();
+        }
+        return instance;
     }
 
     private void parseStream(Stream<String> stream) {

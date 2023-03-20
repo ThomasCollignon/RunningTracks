@@ -16,6 +16,21 @@ public class Options {
     static final int DEFAULT_EXTRA_DISTANCE_METERS = 500;
     static final int DEFAULT_EXTRA_DISTANCE_PERCENTAGE = 10;
 
+    @Override
+    public String toString() {
+        return "Options{" +
+                "\n\tturnaround=" + turnaround +
+                ", \n\trepeatPoint=" + repeatPoint +
+                ", \n\textraDistancePercentage=" + extraDistancePercentage +
+                ", \n\textraDistanceMeters=" + extraDistanceMeters +
+                ", \n\tmandatoryPoints=" + mandatoryPoints +
+                ", \n\tincludeRoutes=" + includeRoutes +
+                ", \n\texcludeRoutes=" + excludeRoutes +
+                ", \n\treverseTwinDisplayed=" + reverseTwinDisplayed +
+                ", \n\textraDistancePercentageFlag=" + extraDistancePercentageFlag +
+                '}';
+    }
+
     /**
      * If false the path won't include turnarounds
      */
