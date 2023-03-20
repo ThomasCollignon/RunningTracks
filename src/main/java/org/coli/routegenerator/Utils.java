@@ -47,7 +47,7 @@ public class Utils {
     static List<String> toListOfCoordinates(Route route) {
         return route.stream()
                     .map(Point::getLabel)
-                    .map(label -> coordinates().get(label))
+                    .map(label -> coordinates().getOrException(label))
                     .collect(toList());
     }
 
