@@ -48,7 +48,7 @@ public class PointsLoader {
 
     @PostConstruct
     private void loadPointsMap() {
-        pointsMapChastre = load(RUN_ZONE_CHASTRE, "Commune");
+        pointsMapChastre = load(RUN_ZONE_CHASTRE, "Commune-Chastre");
         pointsMapLibersart = load(RUN_ZONE_LIBERSART, "Home");
     }
 

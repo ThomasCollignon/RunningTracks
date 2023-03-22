@@ -14,7 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class RunnerIT {
 
     //    private static final PointsMap pointsMap = load(RUN_ZONE_LIBERSART, "Home");
-    private static final PointsMap pointsMap = PointsLoader.load(Constants.RUN_ZONE_CHASTRE, "Commune");
+    private static final PointsMap pointsMap = PointsLoader.load(Constants.RUN_ZONE_CHASTRE, "Commune-Chastre");
     private final RouteFinder routeFinder = new RouteFinder();
 
     @Test

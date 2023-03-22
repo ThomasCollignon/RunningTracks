@@ -1,15 +1,15 @@
-Commune Tunnel 700
+Commune-Chastre Tunnel 700
 Tunnel Marais 550
 Chapelle Cimetière 1600
 Chapelle C2 170
 C2 C1 350
 C1 C3 270
 C2 C3 400
-Commune C1 300
+Commune-Chastre C1 300
 C3 Chapelle 350
 C3 Tunnel 600
 Tunnel Hévillers-top 1200
-Rond-Point Commune 550
+Rond-Point Commune-Chastre 550
 Rond-Point Tunnel 1100
 Féchère Marais 550
 B1 Féchère 280
@@ -54,7 +54,7 @@ Ernage Prés2 450
 Ernage Ernage-gare 600
 Ernage-gare Cortil1 1800
 Delvaux Tombes 290
-Tombes Commune 800
+Tombes Commune-Chastre 800
 Gotteaux Delvaux 1200
 Bouvier Gotteaux 650
 Bouvier Cortil1 400
