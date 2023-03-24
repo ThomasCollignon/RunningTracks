@@ -8,8 +8,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static java.util.stream.Collectors.toList;
-import static org.coli.routegenerator.TestConstants.SHORT_ROUTE_COORDINATES;
-import static org.coli.routegenerator.TestConstants.TEST_POINTS;
+import static org.coli.routegenerator.TestConstants.SHORT_ROUTE_LIBERSART_COORDINATES;
+import static org.coli.routegenerator.TestConstants.TEST_POINTS_LIBERSART;
 import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
@@ -38,8 +38,8 @@ class RTControllerTest {
 
     @Test
     void home() {
-        when(rtServiceMock.getRandomRoute(anyInt(), any())).thenReturn(SHORT_ROUTE_COORDINATES);
-        when(pointsLoaderMock.getPointsMapChastre()).thenReturn(TEST_POINTS);
+        when(rtServiceMock.getRandomRoute(anyInt(), any())).thenReturn(SHORT_ROUTE_LIBERSART_COORDINATES);
+        when(pointsLoaderMock.getPointsMapChastre()).thenReturn(TEST_POINTS_LIBERSART);
         try {
             this.mockMvc.perform(get("/"))
                         .andDo(print())
@@ -51,10 +51,10 @@ class RTControllerTest {
     }
 
     private String expectedShortRouteCoordinatesFormatted() {
-        return SHORT_ROUTE_COORDINATES.stream()
-                                      .map(coord -> "\"" + coord + "\"")
-                                      .collect(toList())
-                                      .toString()
-                                      .replace("\", \"", "\",\"");
+        return SHORT_ROUTE_LIBERSART_COORDINATES.stream()
+                                                .map(coord -> "\"" + coord + "\"")
+                                                .collect(toList())
+                                                .toString()
+                                                .replace("\", \"", "\",\"");
     }
 }

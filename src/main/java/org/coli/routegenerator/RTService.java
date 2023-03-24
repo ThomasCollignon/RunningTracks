@@ -18,7 +18,7 @@ public class RTService {
     private final Map<String, List<Route>> routesCache = new HashMap<>();
 
     List<String> getRandomRoute(int distanceKm, PointsMap pointsMap) {
-        String cacheKey = distanceKm + "-" + DEFAULT_EXTRA_DISTANCE_METERS;
+        String cacheKey = pointsMap.getStartingPointLabel() + "-" + distanceKm + "-" + DEFAULT_EXTRA_DISTANCE_METERS;
         if (routesCache.containsKey(cacheKey)) {
             List<Route> routes = routesCache.get(cacheKey);
             shuffle(routes);

@@ -10,8 +10,8 @@ import java.util.stream.Stream;
 import static java.util.Collections.singleton;
 import static java.util.stream.Collectors.toSet;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.coli.routegenerator.TestConstants.SHORT_ROUTE;
-import static org.coli.routegenerator.TestConstants.SHORT_ROUTE_COORDINATES;
+import static org.coli.routegenerator.TestConstants.SHORT_ROUTE_LIBERSART;
+import static org.coli.routegenerator.TestConstants.SHORT_ROUTE_LIBERSART_COORDINATES;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class UtilsTest {
@@ -50,6 +50,6 @@ class UtilsTest {
 
     @Test
     void toListOfCoordinates() {
-        assertThat(Utils.toListOfCoordinates(SHORT_ROUTE)).isEqualTo(SHORT_ROUTE_COORDINATES);
+        assertThat(Utils.toListOfCoordinates(SHORT_ROUTE_LIBERSART)).isEqualTo(SHORT_ROUTE_LIBERSART_COORDINATES);
     }
 }

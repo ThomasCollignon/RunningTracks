@@ -10,6 +10,8 @@ import java.util.stream.Stream;
 import static org.coli.routegenerator.Constants.RESOURCES_EXTENSION;
 import static org.coli.routegenerator.Constants.RUN_ZONE_CHASTRE;
 import static org.coli.routegenerator.Constants.RUN_ZONE_LIBERSART;
+import static org.coli.routegenerator.Constants.STARTING_POINT_CHASTRE;
+import static org.coli.routegenerator.Constants.STARTING_POINT_LIBERSART;
 
 @Component
 public class PointsLoader {
@@ -48,8 +50,8 @@ public class PointsLoader {
 
     @PostConstruct
     private void loadPointsMap() {
-        pointsMapChastre = load(RUN_ZONE_CHASTRE, "Commune-Chastre");
-        pointsMapLibersart = load(RUN_ZONE_LIBERSART, "Home");
+        pointsMapChastre = load(RUN_ZONE_CHASTRE, STARTING_POINT_CHASTRE);
+        pointsMapLibersart = load(RUN_ZONE_LIBERSART, STARTING_POINT_LIBERSART);
     }
 
     private void parseStream(Stream<String> stream) {
