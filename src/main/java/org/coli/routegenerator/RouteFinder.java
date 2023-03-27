@@ -13,6 +13,12 @@ import static java.util.Collections.sort;
 @Slf4j
 class RouteFinder {
 
+    /**
+     * see <a href="https://developers.google.com/maps/documentation/javascript/directions#waypoint-limits">Limitation
+     * of Google Directions API</a>
+     */
+    private static final int MAX_NUMBER_OF_WAYPOINTS = 25;
+
     private List<Route> routes;
 
     /**
@@ -30,24 +36,23 @@ class RouteFinder {
     }
 
     /**
-     * Adds the route to the output list only if it matches the criteria:
-     * - the last point is the home point
-     * - all the mandatory points are reached at least once (cf options)
-     * - this route reversed is not already present in the list (cf options)
+     * Adds the route to the output list only if it matches the criteria: - the last point is the home point - all the
+     * mandatory points are reached at least once (cf options) - this route reversed is not already present in the list
+     * (cf options)
      */
     private void addRouteIfMatchesCriteria(Route route) {
         if (startingPointInTheMiddle(route)) return;
+        if (route.size() > MAX_NUMBER_OF_WAYPOINTS) return;
+
         Route reversedRoute = new Route(route);
         Collections.reverse(reversedRoute);
         if (route.getLastPoint()
                  .getLabel()
-                 .equals(route.getStartingPointLabel())
-                && options.getMandatoryPoints()
-                          .stream()
-                          .allMatch(l -> route.contains(new Point(l)))
-                && (options.isReverseTwinDisplayed() || !routes.contains(reversedRoute))
-                && !route.includesAnyRouteToExclude(options.getExcludeRoutes())
-                && route.includesAllRoutesToInclude(options.getIncludeRoutes())) {
+                 .equals(route.getStartingPointLabel()) && options.getMandatoryPoints()
+                                                                  .stream()
+                                                                  .allMatch(l -> route.contains(new Point(l))) && (options.isReverseTwinDisplayed() || !routes.contains(
+                reversedRoute)) && !route.includesAnyRouteToExclude(options.getExcludeRoutes()) && route.includesAllRoutesToInclude(
+                options.getIncludeRoutes())) {
             routes.add(new Route(route));
         }
     }
