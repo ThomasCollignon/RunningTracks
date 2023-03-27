@@ -6,8 +6,8 @@ import lombok.Getter;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
 
+import static java.util.stream.Collectors.toSet;
 import static org.coli.routegenerator.Constants.ROUTE_SEPARATOR;
 import static org.coli.routegenerator.Utils.reverseRoute;
 
@@ -55,7 +55,7 @@ public class Route extends ArrayList<Point> implements Comparable<Route> {
         return availableNextPoints.stream()
                                   .filter(p -> !this.contains(p) || repeatPoint || p.getLabel()
                                                                                     .equals(this.getStartingPointLabel()))
-                                  .collect(Collectors.toSet());
+                                  .collect(toSet());
     }
 
     int getDistanceTo(Point destination) {

@@ -6,12 +6,10 @@ C2 C1 350
 C1 C3 270
 C2 C3 400
 Commune-Chastre C1 300
-C3 Chapelle 350
 C3 Tunnel 600
 Tunnel Hévillers-top 1200
 Rond-Point Commune-Chastre 550
 Rond-Point Tunnel 1100
-Féchère Marais 550
 B1 Féchère 280
 B1 B2 250
 B2 Féchère 300
@@ -21,13 +19,10 @@ Alvaux Al-Poudre-bas 800
 Alvaux NP1 700
 Tollet Al-Poudre-bas 550
 Tollet Hévillers-top 400
-Gare-Blanmont Marais 450
 Gare-Blanmont Hévillers-top 600
 Al-Poudre Gare-Blanmont 550
 Al-Poudre Al-Poudre-bas 250
 Montagne-top Montagne-base 170
-Montagne-top Cimetière 700
-Montagne-base Cimetière 650
 Montagne-top Pierrère 500
 Hévillers-top Pierrère 400
 Pierrère Cimetière 450
@@ -98,3 +93,6 @@ Monument Cortil4 550
 Monument Cortil1 300
 Cortil3 Cortil2 600
 Cortil3 Cortil4 450
+Chateau Marais 180
+Chateau Gare-Blanmont 260
+Chateau Féchère 350

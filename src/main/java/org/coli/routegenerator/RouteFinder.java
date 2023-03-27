@@ -36,6 +36,7 @@ class RouteFinder {
      * - this route reversed is not already present in the list (cf options)
      */
     private void addRouteIfMatchesCriteria(Route route) {
+        if (startingPointInTheMiddle(route)) return;
         Route reversedRoute = new Route(route);
         Collections.reverse(reversedRoute);
         if (route.getLastPoint()
@@ -49,6 +50,13 @@ class RouteFinder {
                 && route.includesAllRoutesToInclude(options.getIncludeRoutes())) {
             routes.add(new Route(route));
         }
+    }
+
+    private boolean startingPointInTheMiddle(Route route) {
+        return route.stream()
+                    .filter(point -> point.getLabel()
+                                          .equals(route.getStartingPointLabel()))
+                    .count() > 2;
     }
 
     private void continueSearch(Route route, int distance) {

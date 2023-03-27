@@ -1,5 +1,6 @@
 package org.coli.routegenerator;
 
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashSet;
@@ -7,16 +8,33 @@ import java.util.List;
 
 import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.coli.routegenerator.Constants.RUN_ZONE_CHASTRE;
+import static org.coli.routegenerator.Constants.STARTING_POINT_CHASTRE;
 import static org.coli.routegenerator.TestConstants.LONG_ROUTE_LIBERSART;
 import static org.coli.routegenerator.TestConstants.SHORT_ROUTE_LIBERSART;
 import static org.coli.routegenerator.TestConstants.TEST_POINTS_LIBERSART;
 import static org.coli.routegenerator.Utils.excludeRoutesFromFile;
 import static org.coli.routegenerator.Utils.includeRoutesFromFile;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@Slf4j
 class RouteFinderTest {
 
     private final RouteFinder routeFinder = new RouteFinder();
+
+    @Test
+    void avoid_multiple_passage_through_starting_point() {
+        List<Route> routes = routeFinder.findRoutes(PointsLoader.load(RUN_ZONE_CHASTRE, STARTING_POINT_CHASTRE),
+                                                    10000,
+                                                    Options.builder()
+                                                           .build());
+        assertTrue(routes.stream()
+                         .noneMatch(route -> route.stream()
+                                                  .filter(point -> point.getLabel()
+                                                                        .equals(STARTING_POINT_CHASTRE))
+                                                  .count() > 2));
+    }
 
     @Test
     void findRoutes_include_exclude() {
