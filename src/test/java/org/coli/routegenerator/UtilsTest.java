@@ -73,9 +73,9 @@ class UtilsTest {
     }
 
     @Test
-    void rtSort() {
+    void rtSort2() {
         List<Route> routes = prepareRoutesForRtSort();
-        List<Route> sortedRoutes = Utils.rtSort(routes);
+        List<Route> sortedRoutes = Utils.rtSort2(routes);
 
         assertEquals(1d, sortedRoutes.get(0).getCenterLat());
         assertEquals(1d, sortedRoutes.get(0).getCenterLng());
@@ -86,14 +86,14 @@ class UtilsTest {
         assertEquals(2d, sortedRoutes.get(2).getCenterLat());
         assertEquals(6d, sortedRoutes.get(2).getCenterLng());
 
-        assertEquals(5d, sortedRoutes.get(3).getCenterLat());
+        assertEquals(3d, sortedRoutes.get(3).getCenterLat());
         assertEquals(2d, sortedRoutes.get(3).getCenterLng());
 
-        assertEquals(4d, sortedRoutes.get(4).getCenterLat());
-        assertEquals(4d, sortedRoutes.get(4).getCenterLng());
+        assertEquals(5d, sortedRoutes.get(4).getCenterLat());
+        assertEquals(2d, sortedRoutes.get(4).getCenterLng());
 
-        assertEquals(3d, sortedRoutes.get(5).getCenterLat());
-        assertEquals(2d, sortedRoutes.get(5).getCenterLng());
+        assertEquals(4d, sortedRoutes.get(5).getCenterLat());
+        assertEquals(4d, sortedRoutes.get(5).getCenterLng());
     }
 
     private List<Route> prepareRoutesForRtSort() {

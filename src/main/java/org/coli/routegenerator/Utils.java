@@ -26,18 +26,22 @@ public class Utils {
 
     /**
      * Sorts the routes in the order they should be displayed at each new request. Algo: the next route is the most
-     * remote route from the last one, in the sense of the distance between the routes center, being the average of
+     * remote route from the two last ones, in the sense of the distance between the routes center, being the average of
      * coordinates.
      */
-    static List<Route> rtSort(List<Route> routes) {
+    static List<Route> rtSort2(List<Route> routes) {
         List<Route> sortedRoutes = new ArrayList<>();
-        Route lastRoute = routes.get(0);
-        sortedRoutes.add(lastRoute);
+        Route routeOneAgo = routes.get(0);
+        Route routeTwoAgo;
+        sortedRoutes.add(routeOneAgo);
         List<Route> remainingRoutes;
+        int counter = 0;
         while (sortedRoutes.size() < routes.size()) {
             remainingRoutes = routes.stream().filter(r -> !sortedRoutes.contains(r)).collect(toList());
-            lastRoute = getFarthestRouteFrom(lastRoute, remainingRoutes);
-            sortedRoutes.add(lastRoute);
+            routeTwoAgo = sortedRoutes.get(counter);
+            routeOneAgo = getFarthestRouteFrom2(routeOneAgo, routeTwoAgo, remainingRoutes);
+            sortedRoutes.add(routeOneAgo);
+            if (sortedRoutes.size() > 2) counter++;
         }
         return sortedRoutes;
     }
@@ -77,9 +81,10 @@ public class Utils {
                     .collect(toList());
     }
 
-    private static Route getFarthestRouteFrom(Route originRoute, List<Route> routes) {
+    private static Route getFarthestRouteFrom2(Route routeOneAgo, Route routeTwoAgo, List<Route> routes) {
         return routes.stream()
-                     .max(comparing(r -> distanceBetweenCentersOf(r, originRoute)))
+                     .max(comparing(r -> distanceBetweenCentersOf(r, routeOneAgo)
+                             + distanceBetweenCentersOf(r, routeTwoAgo)))
                      .orElseThrow(() -> new RTException("Problem when comparing routes"));
     }
 

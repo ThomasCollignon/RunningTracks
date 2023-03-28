@@ -33,7 +33,7 @@ public class RTService {
             throw new RTException("No route found");
         }
         shuffle(routes);
-        routesCache.put(cacheKey, new CachedRoutes(Utils.rtSort(routes)));
+        routesCache.put(cacheKey, new CachedRoutes(Utils.rtSort2(routes)));
         return getAnotherRoute(distanceKm, runZone);
     }
 }
