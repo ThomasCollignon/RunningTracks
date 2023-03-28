@@ -26,7 +26,7 @@ public class RTController {
         log.debug("Controller reached with"
                           + "\n\tdistanceKmString = " + distanceKmString
                           + "\n\tstartingPoint = " + runZone);
-        return new RestModel(rtService.getRandomRoute(parseInt(distanceKmString), runZone));
+        return new RestModel(rtService.getAnotherRoute(parseInt(distanceKmString), runZone));
     }
 
     static class RestModel extends ArrayList<String> {

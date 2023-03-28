@@ -31,7 +31,7 @@ class RouteFinder {
     private Options options;
 
     List<Route> findRoutes(String runZone, int distance, Options providedOptions) {
-        log.debug("Finding routes in " + runZone + " of " + distance + " m, with options " + providedOptions);
+        log.debug("Finding routes in " + runZone + " of " + distance + "m, with " + providedOptions);
         PointsMap pointsMap = runZone.equals(RUN_ZONE_LIBERSART)
                               ? pointsLoader.getPointsMapLibersart()
                               : pointsLoader.getPointsMapChastre();
@@ -59,6 +59,7 @@ class RouteFinder {
                                                                   .allMatch(l -> route.contains(new Point(l))) && (options.isReverseTwinDisplayed() || !routes.contains(
                 reversedRoute)) && !route.includesAnyRouteToExclude(options.getExcludeRoutes()) && route.includesAllRoutesToInclude(
                 options.getIncludeRoutes())) {
+            route.computeCenter();
             routes.add(new Route(route));
         }
     }

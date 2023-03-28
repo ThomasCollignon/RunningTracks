@@ -37,27 +37,27 @@ class RTServiceTest {
     }
 
     @Test
-    void getRandomRoute_withCache() {
+    void getAnotherRoute_withCache() {
         when(routeFinderMock.findRoutes(eq(RUN_ZONE_LIBERSART), anyInt(), any()))
                 .thenReturn(singletonList(SHORT_ROUTE_LIBERSART));
         when(routeFinderMock.findRoutes(eq(RUN_ZONE_CHASTRE), anyInt(), any()))
                 .thenReturn(singletonList(ROUTE_CHASTRE));
 
-        rtService.getRandomRoute(10, RUN_ZONE_LIBERSART);
-        rtService.getRandomRoute(10, RUN_ZONE_CHASTRE);
-        rtService.getRandomRoute(20, RUN_ZONE_LIBERSART);
+        rtService.getAnotherRoute(10, RUN_ZONE_LIBERSART);
+        rtService.getAnotherRoute(10, RUN_ZONE_CHASTRE);
+        rtService.getAnotherRoute(20, RUN_ZONE_LIBERSART);
         verify(routeFinderMock, times(3)).findRoutes(any(), anyInt(), any());
-        rtService.getRandomRoute(10, RUN_ZONE_LIBERSART);
-        rtService.getRandomRoute(10, RUN_ZONE_CHASTRE);
+        rtService.getAnotherRoute(10, RUN_ZONE_LIBERSART);
+        rtService.getAnotherRoute(10, RUN_ZONE_CHASTRE);
         verifyNoMoreInteractions(routeFinderMock);
         clearInvocations(routeFinderMock);
-        rtService.getRandomRoute(20, RUN_ZONE_CHASTRE);
+        rtService.getAnotherRoute(20, RUN_ZONE_CHASTRE);
         verify(routeFinderMock).findRoutes(eq(RUN_ZONE_CHASTRE), eq(20000), any());
     }
 
     @Test
-    void getRandomRoute_noRoute() {
+    void getAnotherRoute_noRoute() {
         when(routeFinderMock.findRoutes(any(), anyInt(), any())).thenReturn(new ArrayList<>());
-        assertThatThrownBy(() -> rtService.getRandomRoute(10, RUN_ZONE_LIBERSART)).isInstanceOf(RTException.class);
+        assertThatThrownBy(() -> rtService.getAnotherRoute(10, RUN_ZONE_LIBERSART)).isInstanceOf(RTException.class);
     }
 }

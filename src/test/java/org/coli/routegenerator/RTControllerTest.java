@@ -34,7 +34,7 @@ class RTControllerTest {
 
     @Test
     void home() {
-        when(rtServiceMock.getRandomRoute(anyInt(), any())).thenReturn(SHORT_ROUTE_LIBERSART_COORDINATES);
+        when(rtServiceMock.getAnotherRoute(anyInt(), any())).thenReturn(SHORT_ROUTE_LIBERSART_COORDINATES);
         try {
             this.mockMvc.perform(get("/"))
                         .andDo(print())

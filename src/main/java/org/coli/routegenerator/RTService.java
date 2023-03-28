@@ -15,22 +15,25 @@ public class RTService {
 
     private final RouteFinder routeFinder;
 
-    private final Map<String, List<Route>> routesCache = new HashMap<>();
+    private final Map<String, CachedRoutes> routesCache = new HashMap<>();
 
-    List<String> getRandomRoute(int distanceKm, String runZone) {
+    /**
+     * Returns a route in another direction than the previously returned one. Algo: the returned route is the most
+     * remote route from the last one, in the sense of the distance between the routes center, being the average of
+     * coordinates.
+     */
+    List<String> getAnotherRoute(int distanceKm, String runZone) {
         String cacheKey = runZone + "-" + distanceKm;
         if (routesCache.containsKey(cacheKey)) {
-            List<Route> routes = routesCache.get(cacheKey);
-            shuffle(routes);
-            return Utils.toListOfCoordinates(routes.get(0));
+            return Utils.toListOfCoordinates(routesCache.get(cacheKey).next());
         }
         List<Route> routes = routeFinder.findRoutes(runZone, distanceKm * 1000, Options.builder()
                                                                                        .build());
         if (routes.isEmpty()) {
             throw new RTException("No route found");
         }
-        routesCache.put(cacheKey, routes);
         shuffle(routes);
-        return Utils.toListOfCoordinates(routes.get(0));
+        routesCache.put(cacheKey, new CachedRoutes(Utils.rtSort(routes)));
+        return getAnotherRoute(distanceKm, runZone);
     }
 }

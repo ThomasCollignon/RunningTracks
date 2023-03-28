@@ -10,6 +10,8 @@ import static org.coli.routegenerator.Constants.STARTING_POINT_LIBERSART;
 
 public class TestConstants {
 
+    final static double ONE_METER = 0.00001d; // approx
+
     // Libersart
     final static Point point_home = new Point("Home");
     final static Point point_tumuli = new Point("Tumuli");
@@ -23,11 +25,12 @@ public class TestConstants {
     final static Route LONG_ROUTE_LIBERSART = initLongRouteLibersart();
     final static Route SHORT_ROUTE_LIBERSART = initShortRouteLibersart();
 
-    final static List<String> SHORT_ROUTE_LIBERSART_COORDINATES = asList("50.65292179181078, 4.718251399671132",
-                                                                         "50.64997714337066, 4.713064208095772",
-                                                                         "50.65311797305349, 4.711112599509838",
-                                                                         "50.65458508553609, 4.721509615286826",
-                                                                         "50.65292179181078, 4.718251399671132");
+    final static List<String> SHORT_ROUTE_LIBERSART_COORDINATES =
+            asList("50.65292179181078, 4.718251399671132",
+                   "50.64997714337066, 4.713064208095772",
+                   "50.65311797305349, 4.711112599509838",
+                   "50.65458508553609, 4.721509615286826",
+                   "50.65292179181078, 4.718251399671132");
 
     // Chastre
     final static Point point_commune_chastre = new Point("Commune-Chastre");

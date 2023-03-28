@@ -5,10 +5,13 @@ import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
+import static java.lang.Double.NaN;
 import static java.util.stream.Collectors.toSet;
 import static org.coli.routegenerator.Constants.ROUTE_SEPARATOR;
+import static org.coli.routegenerator.Coordinates.coordinates;
 import static org.coli.routegenerator.Utils.reverseRoute;
 
 @Getter
@@ -17,6 +20,11 @@ public class Route extends ArrayList<Point> {
 
     private final String startingPointLabel;
     private int currentDistance;
+
+    @EqualsAndHashCode.Exclude
+    private double centerLat;
+    @EqualsAndHashCode.Exclude
+    private double centerLng;
 
     Route(PointsMap pointsMap) {
         super();
@@ -29,6 +37,8 @@ public class Route extends ArrayList<Point> {
         super(toBeCloned);
         currentDistance = toBeCloned.getCurrentDistance();
         startingPointLabel = toBeCloned.getStartingPointLabel();
+        centerLat = toBeCloned.getCenterLat();
+        centerLng = toBeCloned.getCenterLng();
     }
 
     @Override
@@ -48,6 +58,22 @@ public class Route extends ArrayList<Point> {
                                 .append(ROUTE_SEPARATOR));
         String outputString = output.toString();
         return output.substring(0, outputString.length() - ROUTE_SEPARATOR.length());
+    }
+
+    void computeCenter() {
+        List<String> lats = new ArrayList<>();
+        List<String> lngs = new ArrayList<>();
+        this.stream()
+            .limit(this.size() - 1L) // skip arrival (starting point)
+            .skip(1) // skip starting point
+            .map(point -> coordinates().getOrException(point.getLabel())
+                                       .split(","))
+            .forEach(coordsString -> {
+                lats.add(coordsString[0]);
+                lngs.add(coordsString[1]);
+            });
+        centerLat = averageOf(lats);
+        centerLng = averageOf(lngs);
     }
 
     Set<Point> getAvailableNextPoints(boolean turnaround, boolean repeatPoint) {
@@ -81,5 +107,12 @@ public class Route extends ArrayList<Point> {
     boolean includesAnyRouteToExclude(Set<String> excludedRoutes) {
         return excludedRoutes.stream()
                              .anyMatch(this.toString()::contains);
+    }
+
+    private double averageOf(List<String> stringCoords) {
+        return stringCoords.stream()
+                           .mapToDouble(Double::parseDouble)
+                           .average()
+                           .orElse(NaN);
     }
 }

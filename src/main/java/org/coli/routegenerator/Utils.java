@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
@@ -11,6 +12,7 @@ import java.util.function.Consumer;
 import java.util.stream.Stream;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
+import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toSet;
 import static org.coli.routegenerator.Constants.ROUTE_SEPARATOR;
@@ -20,6 +22,30 @@ import static org.coli.routegenerator.Coordinates.coordinates;
 public class Utils {
 
     private Utils() {
+    }
+
+    /**
+     * Sorts the routes in the order they should be displayed at each new request. Algo: the next route is the most
+     * remote route from the last one, in the sense of the distance between the routes center, being the average of
+     * coordinates.
+     */
+    static List<Route> rtSort(List<Route> routes) {
+        List<Route> sortedRoutes = new ArrayList<>();
+        Route lastRoute = routes.get(0);
+        sortedRoutes.add(lastRoute);
+        List<Route> remainingRoutes;
+        while (sortedRoutes.size() < routes.size()) {
+            remainingRoutes = routes.stream().filter(r -> !sortedRoutes.contains(r)).collect(toList());
+            lastRoute = getFarthestRouteFrom(lastRoute, remainingRoutes);
+            sortedRoutes.add(lastRoute);
+        }
+        return sortedRoutes;
+    }
+
+    static Double distanceBetweenCentersOf(Route route1, Route route2) {
+        double latsSquared = Math.pow((route1.getCenterLat() - route2.getCenterLat()), 2);
+        double lngsSquared = Math.pow((route1.getCenterLng() - route2.getCenterLng()), 2);
+        return Math.sqrt(latsSquared + lngsSquared);
     }
 
     static Set<String> excludeRoutesFromFile(String fileName) {
@@ -49,6 +75,12 @@ public class Utils {
                     .map(Point::getLabel)
                     .map(label -> coordinates().getOrException(label))
                     .collect(toList());
+    }
+
+    private static Route getFarthestRouteFrom(Route originRoute, List<Route> routes) {
+        return routes.stream()
+                     .max(comparing(r -> distanceBetweenCentersOf(r, originRoute)))
+                     .orElseThrow(() -> new RTException("Problem when comparing routes"));
     }
 
     private static Stream<String> readFileFromResourcesDirectory(String filename) {
