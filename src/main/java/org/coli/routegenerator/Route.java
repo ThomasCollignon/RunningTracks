@@ -13,7 +13,7 @@ import static org.coli.routegenerator.Utils.reverseRoute;
 
 @Getter
 @EqualsAndHashCode(callSuper = true)
-public class Route extends ArrayList<Point> implements Comparable<Route> {
+public class Route extends ArrayList<Point> {
 
     private final String startingPointLabel;
     private int currentDistance;
@@ -42,8 +42,12 @@ public class Route extends ArrayList<Point> implements Comparable<Route> {
     }
 
     @Override
-    public int compareTo(Route o) {
-        return Integer.compare(this.getCurrentDistance(), o.getCurrentDistance());
+    public String toString() {
+        StringBuilder output = new StringBuilder();
+        this.forEach(p -> output.append(p.getLabel())
+                                .append(ROUTE_SEPARATOR));
+        String outputString = output.toString();
+        return output.substring(0, outputString.length() - ROUTE_SEPARATOR.length());
     }
 
     Set<Point> getAvailableNextPoints(boolean turnaround, boolean repeatPoint) {
@@ -68,7 +72,7 @@ public class Route extends ArrayList<Point> implements Comparable<Route> {
     }
 
     boolean includesAllRoutesToInclude(Set<String> includedRoutes) {
-        String routeString = this.toStringPoints();
+        String routeString = this.toString();
         return includedRoutes.stream()
                              .allMatch(routeToInclude -> routeString.contains(routeToInclude) || routeString.contains(
                                      reverseRoute(routeToInclude)));
@@ -76,14 +80,6 @@ public class Route extends ArrayList<Point> implements Comparable<Route> {
 
     boolean includesAnyRouteToExclude(Set<String> excludedRoutes) {
         return excludedRoutes.stream()
-                             .anyMatch(this.toStringPoints()::contains);
-    }
-
-    private String toStringPoints() {
-        StringBuilder output = new StringBuilder();
-        this.forEach(p -> output.append(p.getLabel())
-                                .append(ROUTE_SEPARATOR));
-        String outputString = output.toString();
-        return output.substring(0, outputString.length() - ROUTE_SEPARATOR.length());
+                             .anyMatch(this.toString()::contains);
     }
 }

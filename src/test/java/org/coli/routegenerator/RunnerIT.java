@@ -1,7 +1,10 @@
 package org.coli.routegenerator;
 
+import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.HashMap;
 import java.util.List;
@@ -10,39 +13,37 @@ import java.util.Map;
 import static java.util.Arrays.stream;
 import static java.util.stream.Collectors.joining;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.coli.routegenerator.Constants.RUN_ZONE_CHASTRE;
 import static org.coli.routegenerator.Coordinates.coordinates;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * See map <a href="https://drive.google.com/open?id=11pTt6aFhzUzS0cw5AF7ekdZwZAXFG4pG">here</a>
  */
+@SpringBootTest
+@RequiredArgsConstructor(onConstructor = @__(@Autowired)) // or @Autowired on the properties
 @Disabled("RunnerIT disabled, to be used for manual tests")
 class RunnerIT {
 
+    private final RouteFinder routeFinder;
+
     @Test
     void testRun() {
-        //    private static final PointsMap pointsMap = load(RUN_ZONE_LIBERSART, "Home");
-        final PointsMap pointsMap = PointsLoader.load(Constants.RUN_ZONE_CHASTRE, "Commune-Chastre");
-        final RouteFinder routeFinder = new RouteFinder();
-
-        List<Route> routes = routeFinder.findRoutes(pointsMap,
+        List<Route> routes = routeFinder.findRoutes(RUN_ZONE_CHASTRE,
                                                     10000, Options.builder()
                                                                   //                .extraDistancePercentage(50)
                                                                   .extraDistanceMeters(200)
                                                                   //                .repeatPoint(true)
                                                                   //                .mandatoryPoints(new HashSet<>(asList("Bardane")))
-//                                                 .excludeRoutes(patternLoader(false))
-//                                                 .includeRoutes(patternLoader(true))
+                                                                  //                                                 .excludeRoutes(patternLoader(false))
+                                                                  //                                                 .includeRoutes(patternLoader(true))
                                                                   .build()
         );
 
-        // Print routes
-        routes.forEach(r -> System.out.println(r.toString()));
-
-        // Display the first match as an array
+        // Display the first match
         System.out.println();
         System.out.println("First route is:");
-        System.out.println(routes.get(0));
+        System.out.println("\t" + routes.get(0));
 
         assertThat("Appease " + "SonarLint").isEqualTo("Appease SonarLint");
     }

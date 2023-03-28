@@ -18,19 +18,15 @@ import static java.lang.Integer.parseInt;
 @Slf4j
 public class RTController {
 
-    private final PointsLoader pointsLoader;
     private final RTService rtService;
 
     @GetMapping("/")
     public RestModel go(@RequestParam(defaultValue = "10") String distanceKmString,
-                        @RequestParam(defaultValue = "Chastre") String startingPoint) {
+                        @RequestParam(defaultValue = "Chastre") String runZone) {
         log.debug("Controller reached with"
                           + "\n\tdistanceKmString = " + distanceKmString
-                          + "\n\tstartingPoint = " + startingPoint);
-        final PointsMap pointsMap = startingPoint.equals("Libersart")
-                                    ? pointsLoader.getPointsMapLibersart()
-                                    : pointsLoader.getPointsMapChastre();
-        return new RestModel(rtService.getRandomRoute(parseInt(distanceKmString), pointsMap));
+                          + "\n\tstartingPoint = " + runZone);
+        return new RestModel(rtService.getRandomRoute(parseInt(distanceKmString), runZone));
     }
 
     static class RestModel extends ArrayList<String> {

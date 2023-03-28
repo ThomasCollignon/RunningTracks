@@ -1,5 +1,6 @@
 package org.coli.routegenerator;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -7,9 +8,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static java.util.Collections.sort;
+import static org.coli.routegenerator.Constants.RUN_ZONE_LIBERSART;
 
 @Service
+@RequiredArgsConstructor
 @Slf4j
 class RouteFinder {
 
@@ -19,6 +21,8 @@ class RouteFinder {
      */
     private static final int MAX_NUMBER_OF_WAYPOINTS = 25;
 
+    private final PointsLoader pointsLoader;
+
     private List<Route> routes;
 
     /**
@@ -26,12 +30,14 @@ class RouteFinder {
      */
     private Options options;
 
-    List<Route> findRoutes(PointsMap pointsMap, int distance, Options providedOptions) {
-        log.debug("Finding routes with options " + providedOptions);
+    List<Route> findRoutes(String runZone, int distance, Options providedOptions) {
+        log.debug("Finding routes in " + runZone + " of " + distance + " m, with options " + providedOptions);
+        PointsMap pointsMap = runZone.equals(RUN_ZONE_LIBERSART)
+                              ? pointsLoader.getPointsMapLibersart()
+                              : pointsLoader.getPointsMapChastre();
         options = providedOptions;
         routes = new ArrayList<>();
         search(new Route(pointsMap), distance);
-        sort(routes);
         return routes;
     }
 

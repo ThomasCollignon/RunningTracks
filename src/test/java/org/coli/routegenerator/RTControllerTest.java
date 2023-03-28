@@ -9,7 +9,6 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import static java.util.stream.Collectors.toList;
 import static org.coli.routegenerator.TestConstants.SHORT_ROUTE_LIBERSART_COORDINATES;
-import static org.coli.routegenerator.TestConstants.TEST_POINTS_LIBERSART;
 import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
@@ -20,8 +19,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
- * Using @MockBean is bad for test performance.
- * Still, no better way to have a UT of the web part with lower tiers mocked.
+ * Using @MockBean is bad for test performance. Still, no better way to have a UT of the web part with lower tiers
+ * mocked.
  */
 @WebMvcTest
 @Tag("slow")
@@ -33,13 +32,9 @@ class RTControllerTest {
     @MockBean
     private RTService rtServiceMock;
 
-    @MockBean
-    private PointsLoader pointsLoaderMock;
-
     @Test
     void home() {
         when(rtServiceMock.getRandomRoute(anyInt(), any())).thenReturn(SHORT_ROUTE_LIBERSART_COORDINATES);
-        when(pointsLoaderMock.getPointsMapChastre()).thenReturn(TEST_POINTS_LIBERSART);
         try {
             this.mockMvc.perform(get("/"))
                         .andDo(print())
