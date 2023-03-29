@@ -13,7 +13,6 @@ import java.util.stream.Stream;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.util.Comparator.comparing;
-import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toSet;
 import static org.coli.routegenerator.Constants.ROUTE_SEPARATOR;
 import static org.coli.routegenerator.Coordinates.coordinates;
@@ -37,7 +36,7 @@ public class Utils {
         List<Route> remainingRoutes;
         int counter = 0;
         while (sortedRoutes.size() < routes.size()) {
-            remainingRoutes = routes.stream().filter(r -> !sortedRoutes.contains(r)).collect(toList());
+            remainingRoutes = routes.stream().filter(r -> !sortedRoutes.contains(r)).toList();
             routeTwoAgo = sortedRoutes.get(counter);
             routeOneAgo = getFarthestRouteFrom2(routeOneAgo, routeTwoAgo, remainingRoutes);
             sortedRoutes.add(routeOneAgo);
@@ -76,9 +75,9 @@ public class Utils {
 
     static List<String> toListOfCoordinates(Route route) {
         return route.stream()
-                    .map(Point::getLabel)
+                    .map(Point::label)
                     .map(label -> coordinates().getOrException(label))
-                    .collect(toList());
+                    .toList();
     }
 
     private static Route getFarthestRouteFrom2(Route routeOneAgo, Route routeTwoAgo, List<Route> routes) {

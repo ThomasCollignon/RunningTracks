@@ -38,9 +38,9 @@ public class PointsLoader {
         pointsMap.computeIfAbsent(point2Label, k -> new Point(point2Label));
         Point point1 = pointsMap.get(point1Label);
         Point point2 = pointsMap.get(point2Label);
-        point1.getLinkedPoints()
+        point1.linkedPoints()
               .computeIfAbsent(point2, k -> distance);
-        point2.getLinkedPoints()
+        point2.linkedPoints()
               .computeIfAbsent(point1, k -> distance);
     }
 

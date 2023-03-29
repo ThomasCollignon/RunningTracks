@@ -47,7 +47,7 @@ class RouteFinderTest {
                                                                                     .build());
         assertTrue(routes.stream()
                          .noneMatch(route -> route.stream()
-                                                  .filter(point -> point.getLabel()
+                                                  .filter(point -> point.label()
                                                                         .equals(STARTING_POINT_CHASTRE))
                                                   .count() > 2));
     }

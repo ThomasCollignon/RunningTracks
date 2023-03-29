@@ -55,7 +55,7 @@ public class Route extends ArrayList<Point> {
     @Override
     public String toString() {
         StringBuilder output = new StringBuilder();
-        this.forEach(p -> output.append(p.getLabel())
+        this.forEach(p -> output.append(p.label())
                                 .append(ROUTE_SEPARATOR));
         String outputString = output.toString();
         return output.substring(0, outputString.length() - ROUTE_SEPARATOR.length());
@@ -67,7 +67,7 @@ public class Route extends ArrayList<Point> {
         this.stream()
             .limit(this.size() - 1L) // skip arrival (starting point)
             .skip(1) // skip starting point
-            .map(point -> coordinates().getOrException(point.getLabel())
+            .map(point -> coordinates().getOrException(point.label())
                                        .split(","))
             .forEach(coordsString -> {
                 lats.add(coordsString[0]);
@@ -78,7 +78,7 @@ public class Route extends ArrayList<Point> {
     }
 
     Set<Point> getAvailableNextPoints(boolean turnaround, boolean repeatPoint) {
-        Set<Point> availableNextPoints = new HashSet<>(getLastPoint().getLinkedPoints()
+        Set<Point> availableNextPoints = new HashSet<>(getLastPoint().linkedPoints()
                                                                      .keySet());
 
         // Shuffle to prevent getting the routes always in the same order
@@ -90,13 +90,13 @@ public class Route extends ArrayList<Point> {
             availableNextPoints.remove(this.get(this.size() - 2));
         }
         return availableNextPoints.stream()
-                                  .filter(p -> !this.contains(p) || repeatPoint || p.getLabel()
+                                  .filter(p -> !this.contains(p) || repeatPoint || p.label()
                                                                                     .equals(this.getStartingPointLabel()))
                                   .collect(toSet());
     }
 
     int getDistanceTo(Point destination) {
-        return getLastPoint().getLinkedPoints()
+        return getLastPoint().linkedPoints()
                              .get(destination);
     }
 

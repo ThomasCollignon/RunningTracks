@@ -53,7 +53,7 @@ class RouteFinder {
 
         Route reversedRoute = new Route(route);
         Collections.reverse(reversedRoute);
-        if (route.getLastPoint().getLabel().equals(route.getStartingPointLabel())
+        if (route.getLastPoint().label().equals(route.getStartingPointLabel())
                 && options.getMandatoryPoints().stream().allMatch(l -> route.contains(new Point(l)))
                 && (options.isReverseTwinDisplayed() || !routes.contains(reversedRoute))
                 && !route.includesAnyRouteToExclude(options.getExcludeRoutes())
@@ -85,7 +85,7 @@ class RouteFinder {
     }
 
     private boolean startingPointInTheMiddle(Route route) {
-        return route.stream().filter(point -> point.getLabel().equals(route.getStartingPointLabel())).count() > 2;
+        return route.stream().filter(point -> point.label().equals(route.getStartingPointLabel())).count() > 2;
     }
 
     private void continueSearch(Route route, int distance) {
@@ -97,17 +97,10 @@ class RouteFinder {
     }
 
     private void search(Route route, int distance) {
-        switch (totalDistanceFlag(route, distance)) {
-            case -1:
-                continueSearch(route, distance);
-                break;
-            case 0:
-                addRouteIfMatchesCriteria(route);
-                continueSearch(route, distance);
-                break;
-            default:
-                break;
-        }
+        int totalDistanceFlag = totalDistanceFlag(route, distance);
+        if (totalDistanceFlag > 0) return;
+        if (totalDistanceFlag == 0) addRouteIfMatchesCriteria(route);
+        continueSearch(route, distance);
     }
 
     /**

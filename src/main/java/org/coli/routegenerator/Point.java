@@ -1,18 +1,19 @@
 package org.coli.routegenerator;
 
-import lombok.Value;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
 import static java.util.stream.Collectors.toSet;
 
-@Value
-public class Point {
+public record Point(
+        String label,
+        Map<Point, Integer> linkedPoints
+) {
 
-    String label;
-    Map<Point, Integer> linkedPoints = new HashMap<>();
+    Point(String label) {
+        this(label, new HashMap<>());
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -34,7 +35,7 @@ public class Point {
                 "label='" + label + '\'' +
                 ", linkedPoints=" + linkedPoints.keySet()
                                                 .stream()
-                                                .map(Point::getLabel)
+                                                .map(Point::label)
                                                 .collect(toSet()) +
                 '}';
     }
