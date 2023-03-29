@@ -56,10 +56,11 @@ Odenge Orbais 1500
 Odenge Aubépines 2700
 Braibant Aubépines 1700
 Total Storm 2000
-Matelle Storm 1300
 Matelle Sablière 1400
 S St-Fiacre 900
 A St-Fiacre 550
 B St-Fiacre 1500
 A B 1100
 A Chateau-d'eau 900
+Papeteries Storm 500
+Papeteries Matelle 800
