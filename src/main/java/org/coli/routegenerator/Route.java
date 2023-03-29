@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Set;
 
 import static java.lang.Double.NaN;
+import static java.util.Collections.shuffle;
 import static java.util.stream.Collectors.toSet;
 import static org.coli.routegenerator.Constants.ROUTE_SEPARATOR;
 import static org.coli.routegenerator.Coordinates.coordinates;
@@ -79,6 +80,12 @@ public class Route extends ArrayList<Point> {
     Set<Point> getAvailableNextPoints(boolean turnaround, boolean repeatPoint) {
         Set<Point> availableNextPoints = new HashSet<>(getLastPoint().getLinkedPoints()
                                                                      .keySet());
+
+        // Shuffle to prevent getting the routes always in the same order
+        List<Point> availableNextPointsShuffled = new ArrayList<>(availableNextPoints);
+        shuffle(availableNextPointsShuffled);
+        availableNextPoints = new HashSet<>(availableNextPointsShuffled);
+
         if (this.size() > 1 && !turnaround) {
             availableNextPoints.remove(this.get(this.size() - 2));
         }

@@ -92,6 +92,17 @@ class RouteFinderTest {
     }
 
     @Test
+    void findRoutes_multiple_exclude_if_similar() {
+        List<Route> foundRoutes = routeFinder.findRoutes(RUN_ZONE_LIBERSART, 3000,
+                                                         Options.builder()
+                                                                .extraDistanceMeters(1000)
+                                                                .similarityExclusionPercentage(50)
+                                                                .build());
+        assertThat(foundRoutes).containsAnyElementsOf(asList(SHORT_ROUTE_LIBERSART, LONG_ROUTE_LIBERSART))
+                               .hasSize(1);
+    }
+
+    @Test
     void findRoutes_multiple_mandatoryPoints() {
         List<Route> foundRoutes = routeFinder.findRoutes(RUN_ZONE_LIBERSART, 3000,
                                                          Options.builder()
@@ -108,7 +119,6 @@ class RouteFinderTest {
                                                                                           .build());
         assertThat(foundRoutes).isEmpty();
     }
-
 
     @Test
     void findRoutes_short_by_extra_distance() {

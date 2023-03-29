@@ -52,32 +52,47 @@ class RouteFinder {
 
         Route reversedRoute = new Route(route);
         Collections.reverse(reversedRoute);
-        if (route.getLastPoint()
-                 .getLabel()
-                 .equals(route.getStartingPointLabel()) && options.getMandatoryPoints()
-                                                                  .stream()
-                                                                  .allMatch(l -> route.contains(new Point(l))) && (options.isReverseTwinDisplayed() || !routes.contains(
-                reversedRoute)) && !route.includesAnyRouteToExclude(options.getExcludeRoutes()) && route.includesAllRoutesToInclude(
-                options.getIncludeRoutes())) {
+        if (route.getLastPoint().getLabel().equals(route.getStartingPointLabel())
+                && options.getMandatoryPoints().stream().allMatch(l -> route.contains(new Point(l)))
+                && (options.isReverseTwinDisplayed() || !routes.contains(reversedRoute))
+                && !route.includesAnyRouteToExclude(options.getExcludeRoutes())
+                && route.includesAllRoutesToInclude(options.getIncludeRoutes())
+                && noSimilarRouteAlreadyAdded(route, routes)) {
             route.computeCenter();
             routes.add(new Route(route));
         }
     }
 
+    private boolean noSimilarRouteAlreadyAdded(Route route, List<Route> routes) {
+        return routes.stream()
+                     .noneMatch(routeInList -> percentageOfSimilarity(routeInList, route) * 100 >
+                             options.getSimilarityExclusionPercentage());
+    }
+
+    /**
+     * The number of common elements divided by the number of elements in the route with the most elements
+     */
+    private float percentageOfSimilarity(Route route1, Route route2) {
+        List<Point> route1Worker = new ArrayList<>(route1);
+        List<Point> route2Worker = new ArrayList<>(route2);
+        route1Worker.remove(route1Worker.size() - 1);
+        route2Worker.remove(route2Worker.size() - 1);
+        List<Point> routeWithMostPoints = route1Worker.size() > route2Worker.size() ? route1Worker : route2Worker;
+        List<Point> routeWithLessPoints = route1Worker.size() > route2Worker.size() ? route2Worker : route1Worker;
+        long commonPointsCount = routeWithLessPoints.stream().filter(routeWithMostPoints::contains).count();
+        return (float) commonPointsCount / routeWithMostPoints.size();
+    }
+
     private boolean startingPointInTheMiddle(Route route) {
-        return route.stream()
-                    .filter(point -> point.getLabel()
-                                          .equals(route.getStartingPointLabel()))
-                    .count() > 2;
+        return route.stream().filter(point -> point.getLabel().equals(route.getStartingPointLabel())).count() > 2;
     }
 
     private void continueSearch(Route route, int distance) {
-        route.getAvailableNextPoints(options.isTurnaround(), options.isRepeatPoint())
-             .forEach(p -> {
-                 Route newRoute = new Route(route);
-                 newRoute.add(p);
-                 search(newRoute, distance);
-             });
+        route.getAvailableNextPoints(options.isTurnaround(), options.isRepeatPoint()).forEach(p -> {
+            Route newRoute = new Route(route);
+            newRoute.add(p);
+            search(newRoute, distance);
+        });
     }
 
     private void search(Route route, int distance) {
@@ -127,5 +142,4 @@ class RouteFinder {
         }
         return 0;
     }
-
 }
