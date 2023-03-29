@@ -7,8 +7,8 @@ C L 220
 Daix L 260
 Daix Anglée 400
 Total Sablière 1300
-O Cimetière 450
-Matelle Cimetière 1600
+O Cimetière-Corroy 450
+Matelle Cimetière-Corroy 1600
 Total Braibant 1000
 Braibant N 1200
 Tumuli N 450
