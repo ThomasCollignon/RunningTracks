@@ -31,7 +31,8 @@ class RouteFinder {
     private Options options;
 
     List<Route> findRoutes(String runZone, int distance, Options providedOptions) {
-        log.debug("Finding routes in " + runZone + " of " + distance + "m, with " + providedOptions);
+        log.info("Finding routes in " + runZone + " of " + distance + " meters");
+        log.debug("with " + providedOptions);
         PointsMap pointsMap = runZone.equals(RUN_ZONE_LIBERSART)
                               ? pointsLoader.getPointsMapLibersart()
                               : pointsLoader.getPointsMapChastre();
