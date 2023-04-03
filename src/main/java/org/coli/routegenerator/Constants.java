@@ -2,6 +2,8 @@ package org.coli.routegenerator;
 
 public class Constants {
 
+    public static final String PROFILE_PROD = "PROD";
+
     public static final String RESOURCES_EXTENSION = ".txt";
 
     public static final String RUN_ZONE_LIBERSART = "Libersart";
