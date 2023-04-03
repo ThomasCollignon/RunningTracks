@@ -78,8 +78,7 @@ public class Route extends ArrayList<Point> {
     }
 
     Set<Point> getAvailableNextPoints(boolean turnaround, boolean repeatPoint) {
-        Set<Point> availableNextPoints = new HashSet<>(getLastPoint().linkedPoints()
-                                                                     .keySet());
+        Set<Point> availableNextPoints = new HashSet<>(getLastPoint().linkedPoints().keySet());
 
         // Shuffle to prevent getting the routes always in the same order
         List<Point> availableNextPointsShuffled = new ArrayList<>(availableNextPoints);

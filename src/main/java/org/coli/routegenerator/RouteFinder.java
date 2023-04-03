@@ -42,11 +42,6 @@ class RouteFinder {
         return routes;
     }
 
-    /**
-     * Adds the route to the output list only if it matches the criteria: - the last point is the home point - all the
-     * mandatory points are reached at least once (cf options) - this route reversed is not already present in the list
-     * (cf options)
-     */
     private void addRouteIfMatchesCriteria(Route route) {
         if (startingPointInTheMiddle(route)) return;
         if (route.size() > MAX_NUMBER_OF_WAYPOINTS) return;
@@ -89,11 +84,12 @@ class RouteFinder {
     }
 
     private void continueSearch(Route route, int distance) {
-        route.getAvailableNextPoints(options.isTurnaround(), options.isRepeatPoint()).forEach(p -> {
-            Route newRoute = new Route(route);
-            newRoute.add(p);
-            search(newRoute, distance);
-        });
+        route.getAvailableNextPoints(options.isTurnaround(), options.isRepeatPoint())
+             .forEach(p -> {
+                 Route newRoute = new Route(route);
+                 newRoute.add(p);
+                 search(newRoute, distance);
+             });
     }
 
     private void search(Route route, int distance) {

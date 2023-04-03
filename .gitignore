@@ -3,3 +3,4 @@ target/
 htmlReport/
 .idea/
 *iml
+flight.jfr
