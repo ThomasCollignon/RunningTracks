@@ -6,13 +6,14 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StopWatch;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.IntStream;
 
 import static java.util.Collections.shuffle;
-import static java.util.stream.IntStream.range;
 import static org.coli.routegenerator.Constants.PROFILE_PROD;
 import static org.coli.routegenerator.Constants.RUN_ZONE_CHASTRE;
 
@@ -36,8 +37,12 @@ public class RTService {
         final String zone = RUN_ZONE_CHASTRE;
         log.debug("Appease SonarLint by using the parameter event " + event);
         if (PROFILE_PROD.equals(activeProfiles)) {
-            range(8, 21).forEach(distanceKm -> findRoutesAndFillCache(distanceKm, zone));
-            log.info("Cache initialized for zone" + zone);
+            StopWatch cacheInitStopWatch = new StopWatch();
+            cacheInitStopWatch.start();
+            IntStream.range(8, 20).forEach(distanceKm -> findRoutesAndFillCache(distanceKm, zone));
+            cacheInitStopWatch.stop();
+            log.info("Cache initialized for zone" + zone
+                             + ", it took " + cacheInitStopWatch.getTotalTimeSeconds() + " seconds.");
         }
     }
 
