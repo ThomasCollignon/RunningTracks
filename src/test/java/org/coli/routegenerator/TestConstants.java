@@ -25,12 +25,11 @@ public class TestConstants {
     final static Route LONG_ROUTE_LIBERSART = initLongRouteLibersart();
     final static Route SHORT_ROUTE_LIBERSART = initShortRouteLibersart();
 
-    final static List<String> SHORT_ROUTE_LIBERSART_COORDINATES =
-            asList("50.65292179181078, 4.718251399671132",
-                   "50.64997714337066, 4.713064208095772",
-                   "50.65311797305349, 4.711112599509838",
-                   "50.65458508553609, 4.721509615286826",
-                   "50.65292179181078, 4.718251399671132");
+    final static List<String> SHORT_ROUTE_LIBERSART_COORDINATES = asList("50.65292179181078, 4.718251399671132",
+                                                                         "50.64997714337066, 4.713064208095772",
+                                                                         "50.65311797305349, 4.711112599509838",
+                                                                         "50.65458508553609, 4.721509615286826",
+                                                                         "50.65292179181078, 4.718251399671132");
 
     // Chastre
     final static Point point_commune_chastre = new Point("Commune-Chastre");
@@ -55,26 +54,16 @@ public class TestConstants {
     }
 
     private static PointsMap initPointsMapChastre() {
-        point_commune_chastre.linkedPoints()
-                             .put(point_rond_point, 550);
-        point_commune_chastre.linkedPoints()
-                             .put(point_c1, 300);
-        point_c1.linkedPoints()
-                .put(point_commune_chastre, 300);
-        point_rond_point.linkedPoints()
-                        .put(point_commune_chastre, 550);
-        point_c1.linkedPoints()
-                .put(point_c3, 270);
-        point_c3.linkedPoints()
-                .put(point_c1, 270);
-        point_c3.linkedPoints()
-                .put(point_tunnel, 600);
-        point_tunnel.linkedPoints()
-                    .put(point_c3, 600);
-        point_tunnel.linkedPoints()
-                    .put(point_rond_point, 1100);
-        point_rond_point.linkedPoints()
-                        .put(point_tunnel, 1100);
+        point_commune_chastre.linkedPoints().put(point_rond_point, 550);
+        point_commune_chastre.linkedPoints().put(point_c1, 300);
+        point_c1.linkedPoints().put(point_commune_chastre, 300);
+        point_rond_point.linkedPoints().put(point_commune_chastre, 550);
+        point_c1.linkedPoints().put(point_c3, 270);
+        point_c3.linkedPoints().put(point_c1, 270);
+        point_c3.linkedPoints().put(point_tunnel, 600);
+        point_tunnel.linkedPoints().put(point_c3, 600);
+        point_tunnel.linkedPoints().put(point_rond_point, 1100);
+        point_rond_point.linkedPoints().put(point_tunnel, 1100);
 
         Map<String, Point> mapTmp = new HashMap<>() {{
             put("Commune-Chastre", point_commune_chastre);
@@ -92,38 +81,22 @@ public class TestConstants {
     }
 
     private static PointsMap initPointsMapLibersart() {
-        point_home.linkedPoints()
-                  .put(point_tumuli, 290);
-        point_home.linkedPoints()
-                  .put(point_anglee, 600);
-        point_tumuli.linkedPoints()
-                    .put(point_home, 290);
-        point_tumuli.linkedPoints()
-                    .put(point_daix, 950);
-        point_tumuli.linkedPoints()
-                    .put(point_sabliere, 1000);
-        point_anglee.linkedPoints()
-                    .put(point_home, 600);
-        point_anglee.linkedPoints()
-                    .put(point_daix, 400);
-        point_daix.linkedPoints()
-                  .put(point_anglee, 400);
-        point_daix.linkedPoints()
-                  .put(point_tumuli, 950);
-        point_daix.linkedPoints()
-                  .put(point_l, 260);
-        point_c.linkedPoints()
-               .put(point_sabliere, 1100);
-        point_c.linkedPoints()
-               .put(point_l, 220);
-        point_l.linkedPoints()
-               .put(point_c, 220);
-        point_l.linkedPoints()
-               .put(point_daix, 260);
-        point_sabliere.linkedPoints()
-                      .put(point_c, 1100);
-        point_sabliere.linkedPoints()
-                      .put(point_tumuli, 1000);
+        point_home.linkedPoints().put(point_tumuli, 290);
+        point_home.linkedPoints().put(point_anglee, 600);
+        point_tumuli.linkedPoints().put(point_home, 290);
+        point_tumuli.linkedPoints().put(point_daix, 950);
+        point_tumuli.linkedPoints().put(point_sabliere, 1000);
+        point_anglee.linkedPoints().put(point_home, 600);
+        point_anglee.linkedPoints().put(point_daix, 400);
+        point_daix.linkedPoints().put(point_anglee, 400);
+        point_daix.linkedPoints().put(point_tumuli, 950);
+        point_daix.linkedPoints().put(point_l, 260);
+        point_c.linkedPoints().put(point_sabliere, 1100);
+        point_c.linkedPoints().put(point_l, 220);
+        point_l.linkedPoints().put(point_c, 220);
+        point_l.linkedPoints().put(point_daix, 260);
+        point_sabliere.linkedPoints().put(point_c, 1100);
+        point_sabliere.linkedPoints().put(point_tumuli, 1000);
 
         Map<String, Point> mapTmp = new HashMap<>() {{
             put("Home", point_home);

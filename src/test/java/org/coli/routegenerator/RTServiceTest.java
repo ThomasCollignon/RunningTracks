@@ -38,10 +38,11 @@ class RTServiceTest {
 
     @Test
     void getAnotherRoute_withCache() {
-        when(routeFinderMock.findRoutes(eq(RUN_ZONE_LIBERSART), anyInt(), any()))
-                .thenReturn(singletonList(SHORT_ROUTE_LIBERSART));
-        when(routeFinderMock.findRoutes(eq(RUN_ZONE_CHASTRE), anyInt(), any()))
-                .thenReturn(singletonList(ROUTE_CHASTRE));
+        when(routeFinderMock.findRoutes(eq(RUN_ZONE_LIBERSART), anyInt(), any())).thenReturn(singletonList(
+                SHORT_ROUTE_LIBERSART));
+        when(routeFinderMock.findRoutes(eq(RUN_ZONE_CHASTRE),
+                                        anyInt(),
+                                        any())).thenReturn(singletonList(ROUTE_CHASTRE));
 
         rtService.getAnotherRoute(10, RUN_ZONE_LIBERSART);
         rtService.getAnotherRoute(10, RUN_ZONE_CHASTRE);
@@ -53,6 +54,13 @@ class RTServiceTest {
         clearInvocations(routeFinderMock);
         rtService.getAnotherRoute(20, RUN_ZONE_CHASTRE);
         verify(routeFinderMock).findRoutes(eq(RUN_ZONE_CHASTRE), eq(20000), any());
+    }
+
+    @Test
+    void loadCacheChastre() {
+        when(routeFinderMock.findRoutes(any(), anyInt(), any())).thenReturn(singletonList(SHORT_ROUTE_LIBERSART));
+        rtService.loadCacheChastre(10, 15);
+        verify(routeFinderMock, times(6)).findRoutes(eq(RUN_ZONE_CHASTRE), anyInt(), any());
     }
 
     @Test

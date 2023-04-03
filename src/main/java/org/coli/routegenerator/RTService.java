@@ -29,21 +29,10 @@ public class RTService {
     @Value("${spring.profiles.active:}")
     private String activeProfiles;
 
-    /**
-     * Load cache at startup, for 8 to 20 km
-     */
     @EventListener
-    public void loadCacheChastre(ContextRefreshedEvent event) {
-        final String zone = RUN_ZONE_CHASTRE;
+    public void initCache(ContextRefreshedEvent event) {
         log.debug("Appease SonarLint by using the parameter event " + event);
-        if (PROFILE_PROD.equals(activeProfiles)) {
-            StopWatch cacheInitStopWatch = new StopWatch();
-            cacheInitStopWatch.start();
-            IntStream.range(8, 20).forEach(distanceKm -> findRoutesAndFillCache(distanceKm, zone));
-            cacheInitStopWatch.stop();
-            log.info("Cache initialized for zone" + zone
-                             + ", it took " + cacheInitStopWatch.getTotalTimeSeconds() + " seconds.");
-        }
+        if (PROFILE_PROD.equals(activeProfiles)) loadCacheChastre(8, 19);
     }
 
     /**
@@ -58,6 +47,22 @@ public class RTService {
         }
         findRoutesAndFillCache(distanceKm, runZone);
         return getAnotherRoute(distanceKm, runZone);
+    }
+
+    /**
+     * Load cache at startup
+     *
+     * @param from included
+     * @param to   included
+     */
+    void loadCacheChastre(int from, int to) {
+        final String zone = RUN_ZONE_CHASTRE;
+        StopWatch cacheInitStopWatch = new StopWatch();
+        cacheInitStopWatch.start();
+        IntStream.range(from, to + 1).forEach(distanceKm -> findRoutesAndFillCache(distanceKm, zone));
+        cacheInitStopWatch.stop();
+        log.info("Cache initialized for zone" + zone
+                         + ", it took " + cacheInitStopWatch.getTotalTimeSeconds() + " seconds.");
     }
 
     private void findRoutesAndFillCache(int distanceKm, String runZone) {
