@@ -15,8 +15,13 @@ import static org.coli.routegenerator.constant.TestConstants.ROUTE_CHASTRE;
 import static org.coli.routegenerator.constant.TestConstants.SHORT_ROUTE_LIBERSART;
 import static org.coli.routegenerator.constant.TestConstants.TEST_POINTS_LIBERSART;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.openMocks;
 
 class RouteSortServiceTest {
@@ -30,8 +35,18 @@ class RouteSortServiceTest {
     }
 
     @Test
+    void rtSort2() {
+        List<Route> routes = getRoutesWithStubbedCenter();
+        doNothing().when(routeSortServiceSpy).computeCenter(any());
+        doAnswer(call -> call.getArgument(0)).when(routeSortServiceSpy).sort(any());
+        routeSortServiceSpy.rtSort2(routes);
+        verify(routeSortServiceSpy, times(6)).computeCenter(any());
+        verify(routeSortServiceSpy).sort(any());
+    }
+
+    @Test
     void sort() {
-        List<Route> routes = prepareRoutesForRtSort();
+        List<Route> routes = getRoutesWithStubbedCenter();
         List<Route> sortedRoutes = routeSortServiceSpy.sort(routes);
 
         assertEquals(1d, sortedRoutes.get(0).getCenterLat());
@@ -68,7 +83,7 @@ class RouteSortServiceTest {
         assertThat(SHORT_ROUTE_LIBERSART.getCenterLng()).isEqualTo(4.715228808d, withPrecision(ONE_METER));
     }
 
-    private List<Route> prepareRoutesForRtSort() {
+    private List<Route> getRoutesWithStubbedCenter() {
         Route route1_1 = spy(new Route(TEST_POINTS_LIBERSART));
         doReturn(1d).when(route1_1).getCenterLat();
         doReturn(1d).when(route1_1).getCenterLng();
