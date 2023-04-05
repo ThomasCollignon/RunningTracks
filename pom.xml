@@ -62,8 +62,8 @@
 
     <build>
         <plugins>
-            <!-- Ability to build a jar from the Spring Boot app -->
-            <!-- Also: mvn spring-boot:run -->
+            <!-- Ability to build a jar with: mvn package -->
+            <!-- Also, start the app with: mvn spring-boot:run -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>

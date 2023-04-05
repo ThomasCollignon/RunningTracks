@@ -27,9 +27,8 @@ public class CacheInit {
     /**
      * Load cache at startup
      */
-    @EventListener
-    public void initCache(ContextRefreshedEvent event) {
-        log.debug("Appease SonarLint by using the parameter event " + event);
+    @EventListener(ContextRefreshedEvent.class)
+    public void initCache() {
         if (PROFILE_PROD.equals(activeProfiles)) loadCacheChastre(8, 19);
     }
 
