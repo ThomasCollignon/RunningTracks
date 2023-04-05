@@ -30,6 +30,8 @@ public class RouteFinderService {
 
     private final RouteSortService routeSortService;
 
+    private final PartialRoutesService partialRoutesService;
+
     private List<Route> routes;
 
     /**
@@ -54,20 +56,22 @@ public class RouteFinderService {
         return routeSortService.rtSort2(routes);
     }
 
-    private void addRouteIfMatchesCriteria(Route route) {
-        if (startingPointInTheMiddle(route)) return;
-        if (route.size() > MAX_NUMBER_OF_WAYPOINTS) return;
+    private void addRouteIfMatchesCriteria(final Route routeArg) {
+        if (startingPointInTheMiddle(routeArg)) return;
+        if (!routeArg.getLastPoint().label().equals(routeArg.getStartingPointLabel())) return;
+        if (!options.getMandatoryPoints().stream().allMatch(l -> routeArg.contains(new Point(l)))) return;
 
-        Route reversedRoute = new Route(route);
+        // Not tested
+        if (routeArg.includesAnyRouteToExclude(options.getExcludeRoutes())) return;
+        if (!routeArg.includesAllRoutesToInclude(options.getIncludeRoutes())) return;
+        final Route reversedRoute = new Route(routeArg);
         reverse(reversedRoute);
-        if (route.getLastPoint().label().equals(route.getStartingPointLabel())
-                && options.getMandatoryPoints().stream().allMatch(l -> route.contains(new Point(l)))
-                && (options.isReverseTwinDisplayed() || !routes.contains(reversedRoute))
-                && !route.includesAnyRouteToExclude(options.getExcludeRoutes())
-                && route.includesAllRoutesToInclude(options.getIncludeRoutes())
-                && noSimilarRouteAlreadyAdded(route, routes)) {
-            routes.add(new Route(route));
-        }
+        if (!options.isReverseTwinDisplayed() && routes.contains(reversedRoute)) return;
+        //
+
+        final Route route = partialRoutesService.applyPartialRoutesTo(routeArg);
+        if (route.size() > MAX_NUMBER_OF_WAYPOINTS) return;
+        if (noSimilarRouteAlreadyAdded(route, routes)) routes.add(new Route(route));
     }
 
     private boolean noSimilarRouteAlreadyAdded(Route route, List<Route> routes) {

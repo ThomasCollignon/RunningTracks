@@ -1,6 +1,5 @@
 package org.coli.routegenerator.service.route;
 
-import lombok.extern.slf4j.Slf4j;
 import org.coli.routegenerator.data.PointsLoader;
 import org.coli.routegenerator.service.route.sort.RouteSortService;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,7 +25,6 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.openMocks;
 
-@Slf4j
 class RouteFinderServiceTest {
 
     @InjectMocks
@@ -38,11 +36,15 @@ class RouteFinderServiceTest {
     @Mock
     private RouteSortService routeSortServiceMock;
 
+    @Mock
+    private PartialRoutesService partialRoutesServiceMock;
+
     @BeforeEach
     void setUp() {
         openMocks(this);
         when(pointsLoaderMock.getPointsMapLibersart()).thenReturn(TEST_POINTS_LIBERSART);
         when(pointsLoaderMock.getPointsMapChastre()).thenReturn(TEST_POINTS_CHASTRE);
+        when(partialRoutesServiceMock.applyPartialRoutesTo(any())).thenAnswer(call -> call.getArgument(0));
         when(routeSortServiceMock.rtSort2(any())).thenAnswer(call -> call.getArgument(0));
     }
 

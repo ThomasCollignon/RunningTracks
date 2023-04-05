@@ -1,0 +1,13 @@
+Alvaux Scavée MSG-Tunnel MSG1 MSG-Rond-point
+Commune-Chastre Tunnel Marais Chateau
+Commune-Chastre Tunnel Hévillers-top Tollet MSG2 MSG3
+Commune-Chastre C1 C2 Chapelle Chapelle-NDBS
+Ernage-pont Ernage-pont-bis Cortil2 Cortil3 Cortil4
+Cortil4 Monument Bouvier Gotteaux Delvaux Tombes
+Montagne-base Montagne-top Pierrère Hévillers-top Gare-Blanmont Chateau Marais
+SG2 SG1 Croix-St-Géry Champs6 Champs7 Champs3 Moineaux Villeroux-Bonniers Villeroux-village Chapelle-NDBS Cimetière-bas Montagne-top MSG3 MSG-Rond-point
+Tunnel Rond-Point Sucrerie Prés Prés2 Ernage Ernage-pont Gembloux
+Tollet Al-Poudre-bas Al-Poudre B1 Féchère
+Cimetière-bas Cimetière Chapelle
+Pierrère Cimetière Chapelle
+Champs7 Champs3 Champs1 Champs2 Tchatche C2 C3 Tunnel Marais Chateau

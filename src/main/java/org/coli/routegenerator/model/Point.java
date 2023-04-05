@@ -8,7 +8,7 @@ import static java.util.stream.Collectors.toSet;
 
 public record Point(
         String label,
-        Map<Point, Integer> linkedPoints
+        Map<Point, Integer> linkedPointsDistance
 ) {
 
     public Point(String label) {
@@ -33,10 +33,10 @@ public record Point(
     public String toString() {
         return "Point{" +
                 "label='" + label + '\'' +
-                ", linkedPoints=" + linkedPoints.keySet()
-                                                .stream()
-                                                .map(Point::label)
-                                                .collect(toSet()) +
+                ", linkedPointsDistance=" + linkedPointsDistance.keySet()
+                                                                .stream()
+                                                                .map(Point::label)
+                                                                .collect(toSet()) +
                 '}';
     }
 }

@@ -13,6 +13,7 @@ import java.util.Set;
 
 import static java.util.Collections.shuffle;
 import static java.util.stream.Collectors.toSet;
+import static org.coli.routegenerator.service.route.RouteHelper.ROUTE_SEPARATOR;
 
 @Getter
 @EqualsAndHashCode(callSuper = true)
@@ -59,13 +60,13 @@ public class Route extends ArrayList<Point> {
     public String toString() {
         StringBuilder output = new StringBuilder();
         this.forEach(p -> output.append(p.label())
-                                .append(RouteHelper.ROUTE_SEPARATOR));
+                                .append(ROUTE_SEPARATOR));
         String outputString = output.toString();
-        return output.substring(0, outputString.length() - RouteHelper.ROUTE_SEPARATOR.length());
+        return output.substring(0, outputString.length() - ROUTE_SEPARATOR.length());
     }
 
     Set<Point> getAvailableNextPoints(boolean turnaround, boolean repeatPoint) {
-        Set<Point> availableNextPoints = new HashSet<>(getLastPoint().linkedPoints().keySet());
+        Set<Point> availableNextPoints = new HashSet<>(getLastPoint().linkedPointsDistance().keySet());
 
         // Shuffle to prevent getting the routes always in the same order
         List<Point> availableNextPointsShuffled = new ArrayList<>(availableNextPoints);
@@ -97,8 +98,8 @@ public class Route extends ArrayList<Point> {
                              .anyMatch(this.toString()::contains);
     }
 
-    private int getDistanceTo(Point destination) {
-        return getLastPoint().linkedPoints()
-                             .get(destination);
+    private int getDistanceTo(Point destinationPoint) {
+        return getLastPoint().linkedPointsDistance()
+                             .get(destinationPoint);
     }
 }

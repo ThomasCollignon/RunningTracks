@@ -51,6 +51,7 @@ Ernage-gare Cortil1 1800
 Delvaux Tombes 290
 Tombes Commune-Chastre 800
 Gotteaux Delvaux 1200
+Bouvier Monument 220
 Bouvier Gotteaux 650
 Bouvier Cortil1 400
 Ernage-pont Ernage 850
