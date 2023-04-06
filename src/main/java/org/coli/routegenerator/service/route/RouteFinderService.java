@@ -71,9 +71,11 @@ public class RouteFinderService {
     }
 
     private boolean noSimilarRouteAlreadyAdded(Route route, List<Route> routes) {
-        return routes.stream()
-                     .noneMatch(routeInList -> percentageOfSimilarity(routeInList, route) * 100 >
-                             options.getSimilarityExclusionPercentage());
+        // Clone needed to avoid concurrent modification issue with cache loading at startup.
+        List<Route> routesClone = new ArrayList<>(routes);
+        return routesClone.stream()
+                          .noneMatch(routeInList -> percentageOfSimilarity(routeInList, route) * 100 >
+                                  options.getSimilarityExclusionPercentage());
     }
 
     /**
