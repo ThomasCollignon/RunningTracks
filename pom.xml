@@ -103,6 +103,7 @@
                                     </limits>
                                     <excludes>
                                         <exclude>org.coli.routegenerator.RTApplication</exclude>
+                                        <exclude>org.coli.routegenerator.scheduler.PingMyself</exclude>
                                         <exclude>*Test</exclude>
                                     </excludes>
                                 </rule>
