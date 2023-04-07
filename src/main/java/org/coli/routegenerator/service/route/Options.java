@@ -15,7 +15,9 @@ public class Options {
 
     static final int DEFAULT_EXTRA_DISTANCE_METERS = 500;
     static final int DEFAULT_EXTRA_DISTANCE_PERCENTAGE = 10;
-    static final int DEFAULT_SIMILARITY_EXCLUSION_PERCENTAGE = 75;
+
+    static final int DEFAULT_SIMILARITY_EXCLUSION_PERCENTAGE = 60;
+
     /**
      * If false the path won't include turnarounds
      */
