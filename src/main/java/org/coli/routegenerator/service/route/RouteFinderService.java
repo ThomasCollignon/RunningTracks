@@ -39,15 +39,15 @@ public class RouteFinderService {
      */
     private Options options;
 
-    public List<Route> findAndSortRoutes(String runZone, int distance, Options providedOptions) {
-        log.info("Finding routes in " + runZone + " of " + distance + " meters");
+    public List<Route> findAndSortRoutes(String runZone, int distanceInMeters, Options providedOptions) {
+        log.info("Finding routes in " + runZone + " of " + distanceInMeters + " meters");
         log.debug("with " + providedOptions);
         PointsMap pointsMap = runZone.equals(RUN_ZONE_LIBERSART)
                               ? pointsLoader.getPointsMapLibersart()
                               : pointsLoader.getPointsMapChastre();
         options = providedOptions;
         routes = new ArrayList<>();
-        search(new Route(pointsMap), distance);
+        search(new Route(pointsMap), distanceInMeters);
         return sortedRoutes();
     }
 

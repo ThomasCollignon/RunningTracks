@@ -1,9 +1,9 @@
 package org.coli.routegenerator.service.route;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.coli.routegenerator.data.PointsLoader;
 import org.coli.routegenerator.data.PointsMap;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
 @RequiredArgsConstructor(onConstructor = @__(@Autowired)) // or @Autowired on the properties
-@Slf4j
+@Tag("slow")
 class PartialRouteCaseIT {
 
     private final PartialRoutesService partialRoutesService;
