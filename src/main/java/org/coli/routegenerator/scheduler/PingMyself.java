@@ -9,14 +9,17 @@ import org.springframework.web.client.RestTemplate;
 import static java.util.concurrent.TimeUnit.MINUTES;
 
 /**
- * Every 30min Heroku stops the app, it restarts at next query. Issue is that it takes 30min to reload the cache.
- * Preventing the app from going down allows the cached data to always be directly available.
+ * Every 30min (sometimes less, like 20min.) Heroku stops the app, it restarts at next query. Issue is that it takes
+ * 30min to reload the cache. Preventing the app from going down allows the cached data to always be directly
+ * available.
  */
 @Component
 @Slf4j
 public class PingMyself {
 
-    @Scheduled(fixedDelay = 29, initialDelay = 29, timeUnit = MINUTES)
+    private static final int SELF_PING_DELAY_MINUTES = 15;
+
+    @Scheduled(fixedDelay = SELF_PING_DELAY_MINUTES, initialDelay = SELF_PING_DELAY_MINUTES, timeUnit = MINUTES)
     private void pingMyself() {
         final String URL = "https://main--nimble-choux-2eecbe.netlify.app/";
         RestTemplate restTemplate = new RestTemplate();
