@@ -4,3 +4,4 @@ htmlReport/
 .idea/
 *iml
 flight.jfr
+h2/db.trace.db

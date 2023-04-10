@@ -1,6 +1,6 @@
 package org.coli.routegenerator.restapi;
 
-import org.coli.routegenerator.service.cache.CacheService;
+import org.coli.routegenerator.service.RouteService;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +8,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.coli.routegenerator.constant.TestConstants.SHORT_ROUTE_LIBERSART;
 import static org.coli.routegenerator.constant.TestConstants.SHORT_ROUTE_LIBERSART_COORDINATES;
 import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.ArgumentMatchers.any;
@@ -31,11 +30,11 @@ class RTControllerTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private CacheService cacheServiceMock;
+    private RouteService routeServiceMock;
 
     @Test
     void home() {
-        when(cacheServiceMock.getAnotherRoute(anyInt(), any())).thenReturn(SHORT_ROUTE_LIBERSART);
+        when(routeServiceMock.getAnotherRouteCoords(anyInt(), any())).thenReturn(SHORT_ROUTE_LIBERSART_COORDINATES);
         try {
             this.mockMvc.perform(get("/"))
                         .andDo(print())

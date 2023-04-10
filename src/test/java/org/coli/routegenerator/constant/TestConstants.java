@@ -20,13 +20,25 @@ public class TestConstants {
                                                                                 "50.65458508553609, 4.721509615286826",
                                                                                 "50.65292179181078, 4.718251399671132");
 
+    public final static List<String> LONG_ROUTE_LIBERSART_COORDINATES = asList("50.65292179181078, 4.718251399671132",
+                                                                               "50.64997714337066, 4.713064208095772",
+                                                                               "50.65311797305349, 4.711112599509838",
+                                                                               "50.654271499892204, 4.707996542900266",
+                                                                               "50.655289633857144, 4.70529910285595",
+                                                                               "50.66302132662438, 4.715784370885922",
+                                                                               "50.65458508553609, 4.721509615286826",
+                                                                               "50.65292179181078, 4.718251399671132");
+
     public final static double ONE_METER = 0.00001d; // approx
 
     public final static List<String> PARTIAL_ROUTE_LIBERSART_VALID = asList("Tumuli", "Sablière", "C", "L");
 
     public final static List<String> PARTIAL_ROUTE_LIBERSART_INVALID = asList("Daix", "C", "Sablière");
 
-    // Libersart
+    public final static Point point_c = new Point("C"); // long route
+
+    public final static Point point_sabliere = new Point("Sablière"); // long route
+
     private final static Point point_home = new Point("Home");
 
     private final static Point point_tumuli = new Point("Tumuli");
@@ -35,11 +47,7 @@ public class TestConstants {
 
     private final static Point point_daix = new Point("Daix");
 
-    public final static Point point_c = new Point("C"); // long route
-
     private final static Point point_l = new Point("L"); // long route
-
-    public final static Point point_sabliere = new Point("Sablière"); // long route
 
     public final static PointsMap TEST_POINTS_LIBERSART = initPointsMapLibersart();
 
@@ -47,7 +55,6 @@ public class TestConstants {
 
     public final static Route SHORT_ROUTE_LIBERSART = initShortRouteLibersart();
 
-    // Chastre
     private final static Point point_commune_chastre = new Point("Commune-Chastre");
 
     private final static Point point_c1 = new Point("C1");
@@ -63,15 +70,15 @@ public class TestConstants {
     public final static Route ROUTE_CHASTRE = initRouteChastre();
 
     public static Route initLongRouteLibersart() {
-        Route longRoute = new Route(TEST_POINTS_LIBERSART);
-        longRoute.add(point_anglee);
-        longRoute.add(point_daix);
-        longRoute.add(point_l);
-        longRoute.add(point_c);
-        longRoute.add(point_sabliere);
-        longRoute.add(point_tumuli);
-        longRoute.add(point_home);
-        return longRoute;
+        Route longRouteLibersart = new Route(TEST_POINTS_LIBERSART);
+        longRouteLibersart.add(point_anglee);
+        longRouteLibersart.add(point_daix);
+        longRouteLibersart.add(point_l);
+        longRouteLibersart.add(point_c);
+        longRouteLibersart.add(point_sabliere);
+        longRouteLibersart.add(point_tumuli);
+        longRouteLibersart.add(point_home);
+        return longRouteLibersart;
     }
 
     private static PointsMap initPointsMapChastre() {
