@@ -22,7 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * Using @MockBean is bad for test performance. Still, no better way to have a UT of the web part with lower tiers
  * mocked.
  */
-@WebMvcTest
+@WebMvcTest // Limited set of web-related beans are loaded, @Service and @Repository are not.
 @Tag("slow")
 class RTControllerTest {
 
