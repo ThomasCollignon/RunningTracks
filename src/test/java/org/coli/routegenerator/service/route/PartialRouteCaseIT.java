@@ -44,7 +44,8 @@ class PartialRouteCaseIT {
         route.add(pointsChastre.get(route.getStartingPointLabel()));
 
         Route routeOut = partialRoutesService.applyPartialRoutesTo(route);
-        String expectedRouteString = "Commune-Chastre - Tombes - Cortil4 - SG2 - Champs7 - Tunnel - Commune-Chastre";
+        String expectedRouteString =
+                "Commune-Chastre - Tombes - Cortil4 - SG2 - Champs3 - Tchatche - C2 - Tunnel - Commune-Chastre";
         assertEquals(expectedRouteString, routeOut.toString());
     }
 }
