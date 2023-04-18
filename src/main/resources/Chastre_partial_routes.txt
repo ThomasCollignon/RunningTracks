@@ -6,8 +6,17 @@ Ernage-pont Ernage-pont-bis Cortil2 Cortil3 Cortil4
 Cortil4 Monument Bouvier Gotteaux Delvaux Tombes
 Montagne-base Montagne-top Pierrère Hévillers-top Gare-Blanmont Chateau Marais
 SG2 SG1 Croix-St-Géry Champs6 Champs7 Champs3 Moineaux Villeroux-Bonniers Villeroux-village Chapelle-NDBS Cimetière-bas Montagne-top MSG3 MSG-Rond-point
-Tunnel Rond-Point Sucrerie Prés Prés2 Ernage Ernage-pont Gembloux
+Chapelle-NDBS Cimetière-bas Montagne-base
+Tunnel Rond-Point Sucrerie Prés Prés2 E2 Ernage Ernage-pont Gembloux
+Perbais-école Prés Prés2
 Tollet Al-Poudre-bas Al-Poudre B1 Féchère
 Cimetière-bas Cimetière Chapelle
 Pierrère Cimetière Chapelle
 Champs7 Champs3 Champs1 Champs2 Tchatche Chapelle C2 C3 Tunnel Marais Chateau
+Ernage E2 E1 W1 W2 W3 W6 W5 Triangle
+Commune-Chastre Rond-Point Perbais Perbais-école Recyparc Drève Bono W6
+Bio-Planet Margot Nil-Tiège Trichon W4 Bono W3
+Alvaux NP1 Trois-Fontaines Nil-Tiège
+Villeroux-Bonniers Villeroux-St-Géry Champs1 Champs2
+Champs7 Champs6 Champs5 Noirmont Gotteaux
+Bouvier Cortil1 Cortil2 Ernage-pont-bis Ernage-pont

@@ -21,7 +21,7 @@ public class RouteDBInitService {
 
     private static final int FROM = 8;
 
-    private static final int TO = 16;
+    private static final int TO = 14;
 
     private final RouteService routeService;
 
