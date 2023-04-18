@@ -11,7 +11,7 @@ class CoordinatesTest {
 
     @Test
     void getOrException() {
-        assertEquals("50.61593118996567, 4.640497808776313", coordinates().getOrException("Tunnel"));
+        assertEquals("50.61593, 4.64050", coordinates().getOrException("Tunnel"));
         Coordinates coordinatesInstance = coordinates();
         assertThrows(RTException.class, () -> coordinatesInstance.getOrException("not found"));
     }

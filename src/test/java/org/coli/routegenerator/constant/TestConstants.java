@@ -14,20 +14,20 @@ import static org.coli.routegenerator.constant.Constant.STARTING_POINT_LIBERSART
 
 public class TestConstants {
 
-    public final static List<String> SHORT_ROUTE_LIBERSART_COORDINATES = asList("50.65292179181078, 4.718251399671132",
-                                                                                "50.64997714337066, 4.713064208095772",
-                                                                                "50.65311797305349, 4.711112599509838",
-                                                                                "50.65458508553609, 4.721509615286826",
-                                                                                "50.65292179181078, 4.718251399671132");
+    public final static List<String> SHORT_ROUTE_LIBERSART_COORDINATES = asList("50.65292, 4.71825",
+                                                                                "50.64998, 4.71306",
+                                                                                "50.65312, 4.71111",
+                                                                                "50.65459, 4.72151",
+                                                                                "50.65292, 4.71825");
 
-    public final static List<String> LONG_ROUTE_LIBERSART_COORDINATES = asList("50.65292179181078, 4.718251399671132",
-                                                                               "50.64997714337066, 4.713064208095772",
-                                                                               "50.65311797305349, 4.711112599509838",
-                                                                               "50.654271499892204, 4.707996542900266",
-                                                                               "50.655289633857144, 4.70529910285595",
-                                                                               "50.66302132662438, 4.715784370885922",
-                                                                               "50.65458508553609, 4.721509615286826",
-                                                                               "50.65292179181078, 4.718251399671132");
+    public final static List<String> LONG_ROUTE_LIBERSART_COORDINATES = asList("50.65292, 4.71825",
+                                                                               "50.64998, 4.71306",
+                                                                               "50.65312, 4.71111",
+                                                                               "50.65427, 4.70800",
+                                                                               "50.65529, 4.70530",
+                                                                               "50.66302, 4.71578",
+                                                                               "50.65459, 4.72151",
+                                                                               "50.65292, 4.71825");
 
     public final static double ONE_METER = 0.00001d; // approx
 
@@ -150,8 +150,8 @@ public class TestConstants {
         routeChastre.add(point_tunnel);
         routeChastre.add(point_rond_point);
         routeChastre.add(point_commune_chastre);
-        routeChastre.setCenterLat(50.61168620856658);
-        routeChastre.setCenterLng(4.641632367203793);
+        routeChastre.setCenterLat(50.61168);
+        routeChastre.setCenterLng(4.64163);
         return routeChastre;
     }
 
@@ -161,8 +161,8 @@ public class TestConstants {
         shortRouteLibersart.add(point_daix);
         shortRouteLibersart.add(point_tumuli);
         shortRouteLibersart.add(point_home);
-        shortRouteLibersart.setCenterLat(50.65256006732008);
-        shortRouteLibersart.setCenterLng(4.715228807630812);
+        shortRouteLibersart.setCenterLat(50.65256);
+        shortRouteLibersart.setCenterLng(4.71522);
         return shortRouteLibersart;
     }
 }

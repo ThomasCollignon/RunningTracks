@@ -130,7 +130,6 @@ Alvaux Genister 1200
 Trois-Fontaines Genister 1000
 Trois-Fontaines NP1 400
 Trois-Fontaines Camion 450
-Nil-Tiège Genister 650
 Camion NP1 550
 B3 B4 240
 B5 B4 400
