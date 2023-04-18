@@ -1,13 +1,14 @@
-Alvaux Scavée MSG-Tunnel MSG1 MSG-Rond-point
+Alvaux Scavée MSG-Tunnel MSG1 MSG4
 Commune-Chastre Tunnel Marais Chateau
 Commune-Chastre Tunnel Hévillers-top Tollet MSG2 MSG3
 Commune-Chastre C1 C2 Chapelle Chapelle-NDBS
 Ernage-pont Ernage-pont-bis Cortil2 Cortil3 Cortil4
 Cortil4 Monument Bouvier Gotteaux Delvaux Tombes
 Montagne-base Montagne-top Pierrère Hévillers-top Gare-Blanmont Chateau Marais
-SG2 SG1 Croix-St-Géry Champs6 Champs7 Champs3 Moineaux Villeroux-Bonniers Villeroux-village Chapelle-NDBS Cimetière-bas Montagne-top MSG3 MSG-Rond-point
+SG2 SG1 Croix-St-Géry Champs6 Champs7 Champs3 Moineaux Villeroux-Bonniers Villeroux-village Chapelle-NDBS Cimetière-bas Montagne-top MSG3 MSG4 MSG-Rond-point
 Chapelle-NDBS Cimetière-bas Montagne-base
 Tunnel Rond-Point Sucrerie Prés Prés2 E2 Ernage Ernage-pont Gembloux
+Ernage-gare Ernage-pont Gembloux
 Perbais-école Prés Prés2
 Tollet Al-Poudre-bas Al-Poudre B1 Féchère
 Cimetière-bas Cimetière Chapelle
@@ -20,3 +21,4 @@ Alvaux NP1 Trois-Fontaines Nil-Tiège
 Villeroux-Bonniers Villeroux-St-Géry Champs1 Champs2
 Champs7 Champs6 Champs5 Noirmont Gotteaux
 Bouvier Cortil1 Cortil2 Ernage-pont-bis Ernage-pont
+MSG3 Riquau Ferme-Ornoy MSG7 H1 Justice
