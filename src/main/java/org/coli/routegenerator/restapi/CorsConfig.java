@@ -13,13 +13,16 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class CorsConfig implements WebMvcConfigurer {
 
-    @Value("${frontend-host:}") // Strangely a default blank value is mandatory for the tests
-    private String frontendHost;
+    @Value("${frontend-host-chastre:}") // Strangely a default blank value is mandatory for the tests
+    private String frontendHostChastre;
+
+    @Value("${frontend-host-libersart:}") // Strangely a default blank value is mandatory for the tests
+    private String frontendHostLibersart;
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins(frontendHost);
+                .allowedOrigins(frontendHostChastre, frontendHostLibersart);
     }
 }
 

@@ -10,8 +10,10 @@ import org.springframework.util.StopWatch;
 
 import java.util.List;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 import static org.coli.routegenerator.constant.Constant.RUN_ZONE_CHASTRE;
+import static org.coli.routegenerator.constant.Constant.RUN_ZONE_LIBERSART;
 import static org.coli.routegenerator.service.RouteService.buildRouteKey;
 
 @Service
@@ -32,13 +34,13 @@ public class RouteDBInitService {
      */
     @EventListener(ContextRefreshedEvent.class)
     public void fillDBAtStartup() {
-        final String runZone = RUN_ZONE_CHASTRE;
+        Stream.of(RUN_ZONE_CHASTRE, RUN_ZONE_LIBERSART).forEach(this::fillForRunZone);
+    }
 
-        List<Integer> distancesThatMissRecord =
-                IntStream.range(FROM, TO + 1)
-                         .filter(distanceKm -> !routeDBRepository.existsById(buildRouteKey(distanceKm, runZone)))
-                         .boxed()
-                         .toList();
+    private void fillForRunZone(String runZone) {
+        List<Integer> distancesThatMissRecord = IntStream.range(FROM, TO + 1)
+                                                         .filter(distanceKm -> !routeDBRepository.existsById(
+                                                                 buildRouteKey(distanceKm, runZone))).boxed().toList();
         if (distancesThatMissRecord.isEmpty()) return;
         StopWatch fillDBStopWatch = new StopWatch();
         fillDBStopWatch.start();
