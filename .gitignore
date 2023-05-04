@@ -3,5 +3,5 @@ target/
 htmlReport/
 .idea/
 *iml
-flight.jfr
+tmp/
 h2/db.trace.db
