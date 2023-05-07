@@ -118,7 +118,7 @@
                                     </limits>
                                     <excludes>
                                         <exclude>org.coli.routegenerator.RTApplication</exclude>
-                                        <exclude>org.coli.routegenerator.service.RouteDBInitService</exclude>
+                                        <exclude>org.coli.routegenerator.persistence.RouteDBRepository</exclude>
                                         <exclude>*Test</exclude>
                                     </excludes>
                                 </rule>

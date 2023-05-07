@@ -51,6 +51,10 @@ public class RouteFinderService {
         return sortedRoutes();
     }
 
+    public List<Route> findAndSortRoutes(String runZone, int distanceInMeters) {
+        return findAndSortRoutes(runZone, distanceInMeters, Options.builder().build());
+    }
+
     private List<Route> sortedRoutes() {
         shuffle(routes);
         return routeSortService.rtSort2(routes);

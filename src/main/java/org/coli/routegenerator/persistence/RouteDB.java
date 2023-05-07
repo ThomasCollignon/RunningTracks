@@ -1,21 +1,24 @@
 package org.coli.routegenerator.persistence;
 
-import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.JdbcTypeCode;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.List;
 
 import static org.hibernate.type.SqlTypes.JSON;
 
-@Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class RouteDB {
+public class RouteDB implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     @Id
     private String routeKey; // 'key' is a reserved keyword in H2

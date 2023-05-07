@@ -15,9 +15,7 @@ public class Coordinates extends HashMap<String, String> {
     }
 
     public static Coordinates coordinates() {
-        if (instance == null) {
-            instance = new Coordinates();
-        }
+        if (instance == null) instance = new Coordinates();
         return instance;
     }
 
