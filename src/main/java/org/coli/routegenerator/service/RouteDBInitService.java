@@ -40,7 +40,8 @@ public class RouteDBInitService {
     private void fillForRunZone(String runZone) {
         List<Integer> distancesThatMissRecord = IntStream.range(FROM, TO + 1)
                                                          .filter(distanceKm -> !routeDBRepository.existsById(
-                                                                 buildRouteKey(distanceKm, runZone))).boxed().toList();
+                                                                 buildRouteKey(distanceKm, runZone)))
+                                                         .boxed().toList();
         if (distancesThatMissRecord.isEmpty()) return;
         StopWatch fillDBStopWatch = new StopWatch();
         fillDBStopWatch.start();

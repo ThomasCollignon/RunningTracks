@@ -8,6 +8,7 @@ import org.coli.routegenerator.persistence.RouteDBRepository;
 import org.coli.routegenerator.service.route.Options;
 import org.coli.routegenerator.service.route.Route;
 import org.coli.routegenerator.service.route.RouteFinderService;
+import org.coli.routegenerator.service.route.RouteIndexService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,6 +22,8 @@ public class RouteService {
 
     private final RouteDBRepository routeDBRepository;
 
+    private final RouteIndexService routeIndexService;
+
     static String buildRouteKey(int distanceKm, String runZone) {
         return runZone + "-" + distanceKm;
     }
@@ -29,9 +32,8 @@ public class RouteService {
         String routeKey = buildRouteKey(distanceKm, runZone);
         RouteDB routeDB = routeDBRepository.findById(routeKey)
                                            .orElseGet(() -> getAnotherRouteWhenEmptyDB(distanceKm, runZone, routeKey));
-        List<String> routeCoords = routeDB.getRoutes().get(routeDB.getCurrentIndex());
-        incrementIndex(routeDB);
-        return routeCoords;
+        int indexOfReturnedRouteCoords = routeIndexService.getRouteIndex(routeDB);
+        return routeDB.getRoutes().get(indexOfReturnedRouteCoords);
     }
 
     RouteDB getAnotherRouteWhenEmptyDB(int distanceKm, String runZone, String routeKey) {
@@ -42,12 +44,5 @@ public class RouteService {
                                                      .map(Mapper::toListOfCoordinates)
                                                      .toList();
         return routeDBRepository.save(new RouteDB(routeKey, routesCoordinates, 0));
-    }
-
-    private void incrementIndex(RouteDB routeDB) {
-        long routesListSize = routeDB.getRoutes().size();
-        int currentIndex = routeDB.getCurrentIndex();
-        routeDB.setCurrentIndex(currentIndex < routesListSize - 1 ? currentIndex + 1 : 0);
-        routeDBRepository.save(routeDB);
     }
 }
