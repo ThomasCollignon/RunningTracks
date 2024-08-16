@@ -35,6 +35,6 @@ class Reader {
         } catch (Exception e) {
             throw new RTException("Issue reading or parsing file " + filename + "\n" + e.getMessage());
         }
-        return Arrays.stream(fileString.split("\n"));
+        return Arrays.stream(fileString.split("\n")).map(s -> s.replace("\r", ""));
     }
 }
